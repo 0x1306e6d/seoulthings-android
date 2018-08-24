@@ -1,11 +1,13 @@
 package migong.seoulthings.ui.signin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.signup.SignUpActivity;
 import org.apache.commons.lang3.StringUtils;
 
 public class SignInActivity extends AppCompatActivity implements SignInView {
@@ -59,6 +61,12 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
   @Override
   public String getPassword() {
     return mPasswordEditText == null ? StringUtils.EMPTY : mPasswordEditText.getText().toString();
+  }
+
+  @Override
+  public void startSignUpActivity() {
+    Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+    startActivity(intent);
   }
 
   @Override

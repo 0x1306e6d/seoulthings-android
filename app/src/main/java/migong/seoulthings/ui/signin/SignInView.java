@@ -6,6 +6,8 @@ public interface SignInView {
 
   String getPassword();
 
+  void startSignUpActivity();
+
   void showSignInFailure();
 
   void showValidEmailInputRequest();

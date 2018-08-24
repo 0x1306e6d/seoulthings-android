@@ -64,7 +64,7 @@ public class SignInPresenter implements Presenter {
   }
 
   public void onSignUpButtonClicked() {
-    // TODO(@gihwan): SignUpActivity 실행
+    mView.startSignUpActivity();
   }
 
   private void completeSignIn(@NonNull Task<AuthResult> task) {

@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+import com.google.android.gms.common.SignInButton;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.signup.SignUpActivity;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +17,7 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
   private TextInputEditText mPasswordEditText;
   private Button mSignInButton;
   private Button mSignUpButton;
+  private SignInButton mGoogleSignInButton;
 
   private SignInPresenter mPresenter;
 
@@ -30,6 +32,8 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
     mSignInButton.setOnClickListener(v -> mPresenter.onSignInButtonClicked());
     mSignUpButton = findViewById(R.id.signin_signup_button);
     mSignUpButton.setOnClickListener(v -> mPresenter.onSignUpButtonClicked());
+    mGoogleSignInButton = findViewById(R.id.signin_google_button);
+    mGoogleSignInButton.setSize(SignInButton.SIZE_ICON_ONLY);
 
     mPresenter = new SignInPresenter(this);
     mPresenter.onCreate(savedInstanceState);

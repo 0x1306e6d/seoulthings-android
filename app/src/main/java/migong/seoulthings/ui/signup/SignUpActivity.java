@@ -54,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView {
   @Override
   public void startSignInActivity() {
     Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     startActivity(intent);
-    finish();
   }
 }

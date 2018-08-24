@@ -1,3 +1,12 @@
 <resources>
   <string name="app_name">서울띵즈</string>
+
+  <string name="email">이메일</string>
+  <string name="password">비밀번호</string>
+  <string name="signin">로그인</string>
+  <string name="signup">회원가입</string>
+
+  <string name="failed_to_signin">로그인을 실패하였습니다.</string>
+  <string name="valid_email_input_request">올바른 이메일 주소를 입력해주세요.</string>
+  <string name="valid_password_input_request">올바른 비밀번호를 입력해주세요.</string>
 </resources>

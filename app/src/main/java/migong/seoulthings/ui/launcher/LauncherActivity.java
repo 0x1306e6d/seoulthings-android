@@ -1,8 +1,10 @@
 package migong.seoulthings.ui.launcher;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.signin.SignInActivity;
 
 public class LauncherActivity extends AppCompatActivity implements LauncherView {
 
@@ -33,5 +35,13 @@ public class LauncherActivity extends AppCompatActivity implements LauncherView 
   protected void onDestroy() {
     super.onDestroy();
     mPresenter.onDestroy();
+  }
+
+  @Override
+  public void startSignInActivity() {
+    Intent intent = new Intent(LauncherActivity.this, SignInActivity.class);
+    startActivity(intent);
+    finish();
+    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
   }
 }

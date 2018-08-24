@@ -1,9 +1,11 @@
 package migong.seoulthings.ui.launcher;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import migong.seoulthings.SeoulThingsConstants;
 import migong.seoulthings.ui.Presenter;
 
 public class LauncherPresenter implements Presenter {
@@ -25,6 +27,9 @@ public class LauncherPresenter implements Presenter {
   @Override
   public void onResume() {
     Log.d(TAG, "onResume() called");
+
+    new Handler()
+        .postDelayed(mView::startSignInActivity, SeoulThingsConstants.SPLASH_TIME_IN_MILLIS);
   }
 
   @Override

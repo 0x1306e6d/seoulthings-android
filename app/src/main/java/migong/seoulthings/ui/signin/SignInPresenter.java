@@ -63,8 +63,7 @@ public class SignInPresenter implements Presenter {
       return;
     }
 
-    mAuth.signInWithEmailAndPassword(email, password)
-        .addOnCompleteListener(this::completeFirebaseAuth);
+    firebaseAuthWithEmailPassword(email, password);
   }
 
   public void onSignUpButtonClicked() {
@@ -89,6 +88,11 @@ public class SignInPresenter implements Presenter {
       mView.showSignInFailure();
       Log.w(TAG, "completeSignIn: failure.", task.getException());
     }
+  }
+
+  private void firebaseAuthWithEmailPassword(@NonNull String email, @NonNull String password) {
+    mAuth.signInWithEmailAndPassword(email, password)
+        .addOnCompleteListener(this::completeFirebaseAuth);
   }
 
   public void completeGoogleSignIn(@Nullable Task<GoogleSignInAccount> task) {

@@ -6,7 +6,12 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.tasks.Task;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.signup.SignUpActivity;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +24,7 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
   private Button mSignUpButton;
   private SignInButton mGoogleSignInButton;
 
+  private GoogleSignInClient mGoogleSignInClient;
   private SignInPresenter mPresenter;
 
   @Override
@@ -34,6 +40,13 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
     mSignUpButton.setOnClickListener(v -> mPresenter.onSignUpButtonClicked());
     mGoogleSignInButton = findViewById(R.id.signin_google_button);
     mGoogleSignInButton.setSize(SignInButton.SIZE_ICON_ONLY);
+    mGoogleSignInButton.setOnClickListener(v -> mPresenter.onGoogleSignInButtonClicked());
+
+    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestIdToken(getString(R.string.default_web_client_id))
+        .requestEmail()
+        .build();
+    mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
     mPresenter = new SignInPresenter(this);
     mPresenter.onCreate(savedInstanceState);
@@ -58,6 +71,18 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
   }
 
   @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+
+    switch (requestCode) {
+      case RC_GOOGLE_SIGN_IN:
+        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+        mPresenter.completeGoogleSignIn(task);
+        break;
+    }
+  }
+
+  @Override
   public String getEmail() {
     return mEmailEditText == null ? StringUtils.EMPTY : mEmailEditText.getText().toString();
   }
@@ -71,6 +96,12 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
   public void startSignUpActivity() {
     Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
     startActivity(intent);
+  }
+
+  @Override
+  public void startGoogleSignInIntent() {
+    Intent intent = mGoogleSignInClient.getSignInIntent();
+    startActivityForResult(intent, RC_GOOGLE_SIGN_IN);
   }
 
   @Override

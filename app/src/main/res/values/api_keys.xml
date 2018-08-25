@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Facebook -->
+  <string name="facebook_app_id">Your Facebook API Key</string>
+  <string name="fb_login_protocol_scheme">Yout Facebook Login Protocol Scheme</string>
+</resources>

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="migong.seoulthings">
 
+  <uses-permission android:name="android.permission.INTERNET"/>
+
   <application
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
@@ -10,6 +12,8 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
+
+
     <activity android:name=".ui.launcher.LauncherActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -19,6 +23,30 @@
     </activity>
     <activity android:name=".ui.signin.SignInActivity"/>
     <activity android:name=".ui.signup.SignUpActivity"/>
+
+    <!-- Facebook Login meta-data 요소 -->
+    <meta-data
+      android:name="com.facebook.sdk.ApplicationId"
+      android:value="@string/facebook_app_id"/>
+
+    <!-- Facebook Login 인텐트 -->
+    <activity
+      android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+      android:label="@string/app_name"
+      android:name="com.facebook.FacebookActivity"/>
+    <activity
+      android:exported="true"
+      android:name="com.facebook.CustomTabActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data android:scheme="@string/fb_login_protocol_scheme"/>
+      </intent-filter>
+    </activity>
+
   </application>
 
 </manifest>

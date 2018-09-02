@@ -12,8 +12,6 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-
-
     <activity android:name=".ui.launcher.LauncherActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -23,6 +21,7 @@
     </activity>
     <activity android:name=".ui.signin.SignInActivity"/>
     <activity android:name=".ui.signup.SignUpActivity"/>
+    <activity android:name=".ui.main.MainActivity"/>
 
     <!-- Facebook Login meta-data 요소 -->
     <meta-data

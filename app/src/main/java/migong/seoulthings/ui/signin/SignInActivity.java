@@ -18,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.Task;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.main.MainActivity;
 import migong.seoulthings.ui.signup.SignUpActivity;
 import org.apache.commons.lang3.StringUtils;
 
@@ -120,6 +121,13 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
   @Override
   public String getPassword() {
     return mPasswordEditText == null ? StringUtils.EMPTY : mPasswordEditText.getText().toString();
+  }
+
+  @Override
+  public void startMainActivity() {
+    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+    startActivity(intent);
+    finish();
   }
 
   @Override

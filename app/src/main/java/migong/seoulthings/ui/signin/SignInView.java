@@ -8,6 +8,8 @@ public interface SignInView {
 
   String getPassword();
 
+  void startMainActivity();
+
   void startSignUpActivity();
 
   void startGoogleSignInIntent();

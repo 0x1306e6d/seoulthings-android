@@ -88,6 +88,7 @@ public class SignInPresenter implements Presenter {
 
       // TODO(@gihwan): 로그인 성공 처리
       Log.d(TAG, "completeSignIn: success, user.uid=" + mAuth.getCurrentUser().getUid());
+      mView.startMainActivity();
     } else {
       mView.showSignInFailure();
       Log.w(TAG, "completeSignIn: failure.", task.getException());

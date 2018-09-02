@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Colors for primary -->
-  <color name="colorPrimary">#688ACB</color>
-  <color name="colorPrimaryVariant">#4071C1</color>
+  <color name="colorPrimary">#2F7AD3</color>
+  <color name="colorPrimaryVariant">#16539B</color>
 
   <!-- Colors for secondary -->
-  <color name="colorSecondary">#24364A</color>
+  <color name="colorSecondary">#F9D746</color>
 
   <!-- Colors for background, surface and error -->
   <color name="colorBackground">#FFFFFF</color>

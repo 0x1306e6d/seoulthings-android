@@ -41,6 +41,10 @@ public class SignInPresenter implements Presenter {
   @Override
   public void onResume() {
     Log.d(TAG, "onResume() called");
+
+    if (isCurrentlySignedIn()) {
+      mView.startMainActivity();
+    }
   }
 
   @Override
@@ -76,6 +80,10 @@ public class SignInPresenter implements Presenter {
 
   public void onGoogleSignInButtonClicked() {
     mView.startGoogleSignInIntent();
+  }
+
+  private boolean isCurrentlySignedIn() {
+    return mAuth.getCurrentUser() != null;
   }
 
   private void completeFirebaseAuth(@NonNull Task<AuthResult> task) {

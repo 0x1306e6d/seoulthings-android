@@ -5,7 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.MenuItem;
+import migong.seoulthings.R;
 import migong.seoulthings.ui.Presenter;
+import migong.seoulthings.ui.category.CategoryFragment;
+import migong.seoulthings.ui.community.CommunityFragment;
+import migong.seoulthings.ui.notification.NotificationFragment;
+import migong.seoulthings.ui.profile.ProfileFragment;
 
 public class MainPresenter implements Presenter {
 
@@ -21,6 +26,8 @@ public class MainPresenter implements Presenter {
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
+
+    mView.addFragment(new CategoryFragment());
   }
 
   @Override
@@ -41,8 +48,21 @@ public class MainPresenter implements Presenter {
   public boolean onBottomNavigationItemSelected(@NonNull MenuItem item) {
     Log.d(TAG, "onBottomNavigationItemSelected() called with: item = [" + item + "]");
 
-    // TODO(@gihwan): replace fragment
+    switch (item.getItemId()) {
+      case R.id.bottom_navigation_category:
+        mView.replaceFragment(new CategoryFragment());
+        return true;
+      case R.id.bottom_navigation_community:
+        mView.replaceFragment(new CommunityFragment());
+        return true;
+      case R.id.bottom_navigation_notification:
+        mView.replaceFragment(new NotificationFragment());
+        return true;
+      case R.id.bottom_navigation_profile:
+        mView.replaceFragment(new ProfileFragment());
+        return true;
+    }
 
-    return true;
+    return false;
   }
 }

@@ -1,7 +1,9 @@
 package migong.seoulthings.ui.main;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import migong.seoulthings.R;
 
@@ -45,5 +47,21 @@ public class MainActivity extends AppCompatActivity implements MainView {
   protected void onDestroy() {
     super.onDestroy();
     mPresenter.onDestroy();
+  }
+
+  @Override
+  public void addFragment(@NonNull Fragment fragment) {
+    getSupportFragmentManager()
+        .beginTransaction()
+        .add(R.id.main_fragment_container, fragment)
+        .commit();
+  }
+
+  @Override
+  public void replaceFragment(@NonNull Fragment fragment) {
+    getSupportFragmentManager()
+        .beginTransaction()
+        .replace(R.id.main_fragment_container, fragment)
+        .commit();
   }
 }

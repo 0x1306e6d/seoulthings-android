@@ -9,9 +9,9 @@
     android:icon="@drawable/outline_people_black_24"
     android:title="@string/community"/>
   <item
-    android:id="@+id/bottom_navigation_notice"
+    android:id="@+id/bottom_navigation_notification"
     android:icon="@drawable/outline_notifications_black_24"
-    android:title="@string/notice"/>
+    android:title="@string/notification"/>
   <item
     android:id="@+id/bottom_navigation_profile"
     android:icon="@drawable/outline_person_black_24"

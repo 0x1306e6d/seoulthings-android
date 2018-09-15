@@ -5,6 +5,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:background="@color/colorBackground"
   tools:context=".ui.main.MainActivity">
 
   <FrameLayout
@@ -20,7 +21,7 @@
     android:id="@+id/main_bottom_navigation"
     android:layout_width="0dp"
     android:layout_height="@dimen/bottom_navigation_height"
-    android:background="@color/colorSurface"
+    android:background="@drawable/bottom_navigation"
     app:itemIconTint="@color/bottom_navigation"
     app:itemTextColor="@color/bottom_navigation"
     app:labelVisibilityMode="labeled"

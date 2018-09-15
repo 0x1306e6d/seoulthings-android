@@ -5,14 +5,130 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:paddingStart="@dimen/spacing_unit_normal"
+  android:paddingEnd="@dimen/spacing_unit_normal"
   tools:context=".ui.category.CategoryFragment">
 
-  <TextView
-    android:layout_width="wrap_content"
+  <android.support.design.widget.TextInputLayout
+    android:id="@+id/category_search_layout"
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:text="@string/category"
-    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_marginTop="@dimen/spacing_unit_normal"
+    android:layout_marginBottom="@dimen/spacing_unit_normal"
+    android:layout_marginStart="@dimen/spacing_unit_normal"
+    android:layout_marginEnd="@dimen/spacing_unit_normal"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"/>
+    app:layout_constraintTop_toTopOf="parent">
+
+    <android.support.design.widget.TextInputEditText
+      android:id="@+id/category_search_edittext"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingStart="@dimen/spacing_unit_normal"
+      android:paddingEnd="@dimen/spacing_unit_normal"
+      android:hint="@string/msg_search"/>
+  </android.support.design.widget.TextInputLayout>
+
+  <Button
+    android:id="@+id/category_button_1"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginTop="@dimen/spacing_unit_normal"
+    android:layout_marginBottom="@dimen/spacing_unit_narrow"
+    android:layout_marginStart="@dimen/spacing_unit_normal"
+    android:layout_marginEnd="@dimen/spacing_unit_narrow"
+    android:paddingTop="@dimen/spacing_unit_normal"
+    android:background="@drawable/category_button"
+    android:drawableTop="@drawable/ic_mockup_black_48"
+    android:text="@string/category_1"
+    app:layout_constraintBottom_toTopOf="@id/category_button_3"
+    app:layout_constraintEnd_toStartOf="@id/category_button_2"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/category_search_layout"/>
+
+  <Button
+    android:id="@+id/category_button_2"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginTop="@dimen/spacing_unit_normal"
+    android:layout_marginBottom="@dimen/spacing_unit_narrow"
+    android:layout_marginStart="@dimen/spacing_unit_narrow"
+    android:layout_marginEnd="@dimen/spacing_unit_normal"
+    android:paddingTop="@dimen/spacing_unit_normal"
+    android:background="@drawable/category_button"
+    android:drawableTop="@drawable/ic_mockup_black_48"
+    android:text="@string/category_2"
+    app:layout_constraintBottom_toTopOf="@id/category_button_4"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@id/category_button_1"
+    app:layout_constraintTop_toBottomOf="@id/category_search_layout"/>
+
+  <Button
+    android:id="@+id/category_button_3"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginTop="@dimen/spacing_unit_narrow"
+    android:layout_marginBottom="@dimen/spacing_unit_narrow"
+    android:layout_marginStart="@dimen/spacing_unit_normal"
+    android:layout_marginEnd="@dimen/spacing_unit_narrow"
+    android:paddingTop="@dimen/spacing_unit_normal"
+    android:background="@drawable/category_button"
+    android:drawableTop="@drawable/ic_mockup_black_48"
+    android:text="@string/category_3"
+    app:layout_constraintBottom_toTopOf="@id/category_button_5"
+    app:layout_constraintEnd_toStartOf="@id/category_button_4"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/category_button_1"/>
+
+  <Button
+    android:id="@+id/category_button_4"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginTop="@dimen/spacing_unit_narrow"
+    android:layout_marginBottom="@dimen/spacing_unit_narrow"
+    android:layout_marginStart="@dimen/spacing_unit_narrow"
+    android:layout_marginEnd="@dimen/spacing_unit_normal"
+    android:paddingTop="@dimen/spacing_unit_normal"
+    android:background="@drawable/category_button"
+    android:drawableTop="@drawable/ic_mockup_black_48"
+    android:text="@string/category_4"
+    app:layout_constraintBottom_toTopOf="@id/category_button_6"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@id/category_button_3"
+    app:layout_constraintTop_toBottomOf="@id/category_button_2"/>
+
+  <Button
+    android:id="@+id/category_button_5"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginTop="@dimen/spacing_unit_narrow"
+    android:layout_marginBottom="@dimen/spacing_unit_normal"
+    android:layout_marginStart="@dimen/spacing_unit_normal"
+    android:layout_marginEnd="@dimen/spacing_unit_narrow"
+    android:paddingTop="@dimen/spacing_unit_normal"
+    android:background="@drawable/category_button"
+    android:drawableTop="@drawable/ic_mockup_black_48"
+    android:text="@string/category_5"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@id/category_button_6"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/category_button_3"/>
+
+  <Button
+    android:id="@+id/category_button_6"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginTop="@dimen/spacing_unit_narrow"
+    android:layout_marginBottom="@dimen/spacing_unit_normal"
+    android:layout_marginStart="@dimen/spacing_unit_narrow"
+    android:layout_marginEnd="@dimen/spacing_unit_normal"
+    android:paddingTop="@dimen/spacing_unit_normal"
+    android:background="@drawable/category_button"
+    android:drawableTop="@drawable/ic_mockup_black_48"
+    android:text="@string/category_6"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@id/category_button_5"
+    app:layout_constraintTop_toBottomOf="@id/category_button_4"/>
 </android.support.constraint.ConstraintLayout>

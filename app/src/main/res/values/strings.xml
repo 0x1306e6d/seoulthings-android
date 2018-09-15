@@ -11,8 +11,16 @@
   <string name="notification">알림</string>
   <string name="profile">프로필</string>
 
+  <string name="category_1">카테고리 1</string>
+  <string name="category_2">카테고리 2</string>
+  <string name="category_3">카테고리 3</string>
+  <string name="category_4">카테고리 4</string>
+  <string name="category_5">카테고리 5</string>
+  <string name="category_6">카테고리 6</string>
+
   <string name="failed_to_signin">로그인을 실패하였습니다.</string>
   <string name="failed_to_signup">회원가입을 실패하였습니다.</string>
   <string name="valid_email_input_request">올바른 이메일 주소를 입력해주세요.</string>
   <string name="valid_password_input_request">올바른 비밀번호를 입력해주세요.</string>
+  <string name="msg_search">대여할 물건을 검색해보세요.</string>
 </resources>

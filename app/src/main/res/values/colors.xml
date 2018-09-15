@@ -8,9 +8,10 @@
   <color name="colorSecondary">#F9D746</color>
 
   <!-- Colors for background, surface and error -->
-  <color name="colorBackground">#FFFFFF</color>
+  <color name="colorBackground">#EFEFEF</color>
   <color name="colorSurface">#FFFFFF</color>
   <color name="colorError">#951F34</color>
+  <color name="colorStroke">#242424</color>
 
   <!-- Colors for typography and iconography -->
   <color name="colorOnPrimary">#FFFFFF</color>

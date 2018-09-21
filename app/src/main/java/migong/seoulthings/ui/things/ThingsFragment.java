@@ -5,13 +5,19 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.things.adapter.ThingsRecyclerAdapter;
 
 public class ThingsFragment extends Fragment implements ThingsView {
+
+  private RecyclerView mRecycler;
+  private ThingsRecyclerAdapter mRecyclerAdapter;
 
   private ThingsPresenter mPresenter;
 
@@ -27,6 +33,7 @@ public class ThingsFragment extends Fragment implements ThingsView {
     super.onViewCreated(view, savedInstanceState);
 
     setupToolbar(view);
+    setupRecycler(view);
   }
 
   @Override
@@ -74,5 +81,13 @@ public class ThingsFragment extends Fragment implements ThingsView {
     }
     activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+  }
+
+  private void setupRecycler(@NonNull View view) {
+    mRecycler = view.findViewById(R.id.things_recycler);
+    mRecycler.setHasFixedSize(true);
+    mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+    mRecyclerAdapter = new ThingsRecyclerAdapter();
+    mRecycler.setAdapter(mRecyclerAdapter);
   }
 }

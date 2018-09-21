@@ -36,4 +36,20 @@ public class CategoryPresenter implements Presenter {
   public void onDestroy() {
     Log.d(TAG, "onDestroy() called");
   }
+
+  public void onCategoryButtonClicked(int categoryId) {
+    switch (categoryId) {
+      case CategoryView.CATEGORY_BICYCLE:
+      case CategoryView.CATEGORY_TOY:
+      case CategoryView.CATEGORY_TOOL:
+      case CategoryView.CATEGORY_MEDICAL_DEVICE:
+      case CategoryView.CATEGORY_POWER_BANK:
+      case CategoryView.CATEGORY_SUIT:
+        mView.startThingsActivity(categoryId);
+        break;
+      default:
+        // TODO(@gihwan): 올바르지 않은 카테고리
+        break;
+    }
+  }
 }

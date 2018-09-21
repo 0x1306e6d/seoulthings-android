@@ -31,7 +31,7 @@
   </android.support.design.widget.TextInputLayout>
 
   <Button
-    android:id="@+id/category_button_1"
+    android:id="@+id/category_button_bicycle"
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:layout_marginTop="@dimen/spacing_unit_normal"
@@ -41,14 +41,14 @@
     android:paddingTop="@dimen/spacing_unit_normal"
     android:background="@drawable/category_button"
     android:drawableTop="@drawable/ic_mockup_black_48"
-    android:text="@string/category_1"
-    app:layout_constraintBottom_toTopOf="@id/category_button_3"
-    app:layout_constraintEnd_toStartOf="@id/category_button_2"
+    android:text="@string/bicycle"
+    app:layout_constraintBottom_toTopOf="@id/category_button_tool"
+    app:layout_constraintEnd_toStartOf="@id/category_button_toy"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/category_search_layout"/>
 
   <Button
-    android:id="@+id/category_button_2"
+    android:id="@+id/category_button_toy"
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:layout_marginTop="@dimen/spacing_unit_normal"
@@ -58,14 +58,14 @@
     android:paddingTop="@dimen/spacing_unit_normal"
     android:background="@drawable/category_button"
     android:drawableTop="@drawable/ic_mockup_black_48"
-    android:text="@string/category_2"
-    app:layout_constraintBottom_toTopOf="@id/category_button_4"
+    android:text="@string/toy"
+    app:layout_constraintBottom_toTopOf="@id/category_button_medical_device"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@id/category_button_1"
+    app:layout_constraintStart_toEndOf="@id/category_button_bicycle"
     app:layout_constraintTop_toBottomOf="@id/category_search_layout"/>
 
   <Button
-    android:id="@+id/category_button_3"
+    android:id="@+id/category_button_tool"
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:layout_marginTop="@dimen/spacing_unit_narrow"
@@ -75,14 +75,14 @@
     android:paddingTop="@dimen/spacing_unit_normal"
     android:background="@drawable/category_button"
     android:drawableTop="@drawable/ic_mockup_black_48"
-    android:text="@string/category_3"
-    app:layout_constraintBottom_toTopOf="@id/category_button_5"
-    app:layout_constraintEnd_toStartOf="@id/category_button_4"
+    android:text="@string/tool"
+    app:layout_constraintBottom_toTopOf="@id/category_button_power_bank"
+    app:layout_constraintEnd_toStartOf="@id/category_button_medical_device"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/category_button_1"/>
+    app:layout_constraintTop_toBottomOf="@id/category_button_bicycle"/>
 
   <Button
-    android:id="@+id/category_button_4"
+    android:id="@+id/category_button_medical_device"
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:layout_marginTop="@dimen/spacing_unit_narrow"
@@ -92,14 +92,14 @@
     android:paddingTop="@dimen/spacing_unit_normal"
     android:background="@drawable/category_button"
     android:drawableTop="@drawable/ic_mockup_black_48"
-    android:text="@string/category_4"
-    app:layout_constraintBottom_toTopOf="@id/category_button_6"
+    android:text="@string/medical_device"
+    app:layout_constraintBottom_toTopOf="@id/category_button_suit"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@id/category_button_3"
-    app:layout_constraintTop_toBottomOf="@id/category_button_2"/>
+    app:layout_constraintStart_toEndOf="@id/category_button_tool"
+    app:layout_constraintTop_toBottomOf="@id/category_button_toy"/>
 
   <Button
-    android:id="@+id/category_button_5"
+    android:id="@+id/category_button_power_bank"
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:layout_marginTop="@dimen/spacing_unit_narrow"
@@ -109,14 +109,14 @@
     android:paddingTop="@dimen/spacing_unit_normal"
     android:background="@drawable/category_button"
     android:drawableTop="@drawable/ic_mockup_black_48"
-    android:text="@string/category_5"
+    android:text="@string/power_bank"
     app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toStartOf="@id/category_button_6"
+    app:layout_constraintEnd_toStartOf="@id/category_button_suit"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/category_button_3"/>
+    app:layout_constraintTop_toBottomOf="@id/category_button_tool"/>
 
   <Button
-    android:id="@+id/category_button_6"
+    android:id="@+id/category_button_suit"
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:layout_marginTop="@dimen/spacing_unit_narrow"
@@ -126,9 +126,9 @@
     android:paddingTop="@dimen/spacing_unit_normal"
     android:background="@drawable/category_button"
     android:drawableTop="@drawable/ic_mockup_black_48"
-    android:text="@string/category_6"
+    android:text="@string/suit"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@id/category_button_5"
-    app:layout_constraintTop_toBottomOf="@id/category_button_4"/>
+    app:layout_constraintStart_toEndOf="@id/category_button_power_bank"
+    app:layout_constraintTop_toBottomOf="@id/category_button_medical_device"/>
 </android.support.constraint.ConstraintLayout>

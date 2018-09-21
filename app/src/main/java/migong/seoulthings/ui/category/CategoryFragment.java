@@ -1,5 +1,6 @@
 package migong.seoulthings.ui.category;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,16 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.things.ThingsActivity;
+import migong.seoulthings.ui.things.ThingsView;
 
 public class CategoryFragment extends Fragment implements CategoryView {
 
   private TextInputEditText mSearchEditText;
-  private Button mCategory1Button;
-  private Button mCategory2Button;
-  private Button mCategory3Button;
-  private Button mCategory4Button;
-  private Button mCategory5Button;
-  private Button mCategory6Button;
+  private Button mBicycleCategoryButton;
+  private Button mToyCategoryButton;
+  private Button mToolCategoryButton;
+  private Button mMedicalDeviceCategoryButton;
+  private Button mPowerBankCategoryButton;
+  private Button mSuitCategoryButton;
 
   private CategoryPresenter mPresenter;
 
@@ -35,12 +38,36 @@ public class CategoryFragment extends Fragment implements CategoryView {
     super.onViewCreated(view, savedInstanceState);
 
     mSearchEditText = view.findViewById(R.id.category_search_edittext);
-    mCategory1Button = view.findViewById(R.id.category_button_1);
-    mCategory2Button = view.findViewById(R.id.category_button_2);
-    mCategory3Button = view.findViewById(R.id.category_button_3);
-    mCategory4Button = view.findViewById(R.id.category_button_4);
-    mCategory5Button = view.findViewById(R.id.category_button_5);
-    mCategory6Button = view.findViewById(R.id.category_button_6);
+
+    mBicycleCategoryButton = view.findViewById(R.id.category_button_bicycle);
+    mBicycleCategoryButton.setOnClickListener(v -> {
+      mPresenter.onCategoryButtonClicked(CATEGORY_BICYCLE);
+    });
+
+    mToyCategoryButton = view.findViewById(R.id.category_button_toy);
+    mToyCategoryButton.setOnClickListener(v -> {
+      mPresenter.onCategoryButtonClicked(CATEGORY_TOY);
+    });
+
+    mToolCategoryButton = view.findViewById(R.id.category_button_tool);
+    mToolCategoryButton.setOnClickListener(v -> {
+      mPresenter.onCategoryButtonClicked(CATEGORY_TOOL);
+    });
+
+    mMedicalDeviceCategoryButton = view.findViewById(R.id.category_button_medical_device);
+    mMedicalDeviceCategoryButton.setOnClickListener(v -> {
+      mPresenter.onCategoryButtonClicked(CATEGORY_MEDICAL_DEVICE);
+    });
+
+    mPowerBankCategoryButton = view.findViewById(R.id.category_button_power_bank);
+    mPowerBankCategoryButton.setOnClickListener(v -> {
+      mPresenter.onCategoryButtonClicked(CATEGORY_POWER_BANK);
+    });
+
+    mSuitCategoryButton = view.findViewById(R.id.category_button_suit);
+    mSuitCategoryButton.setOnClickListener(v -> {
+      mPresenter.onCategoryButtonClicked(CATEGORY_SUIT);
+    });
   }
 
   @Override
@@ -67,5 +94,16 @@ public class CategoryFragment extends Fragment implements CategoryView {
   public void onDestroy() {
     super.onDestroy();
     mPresenter.onDestroy();
+  }
+
+  @Override
+  public void startThingsActivity(int categoryId) {
+    Intent intent = new Intent(getActivity(), ThingsActivity.class);
+
+    Bundle args = new Bundle();
+    args.putInt(ThingsView.KEY_CATEGORY_ID, categoryId);
+    intent.putExtras(args);
+
+    startActivity(intent);
   }
 }

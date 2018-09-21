@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import migong.seoulthings.R;
 
 public class ThingsActivity extends AppCompatActivity {
@@ -22,5 +23,16 @@ public class ThingsActivity extends AppCompatActivity {
         .beginTransaction()
         .replace(R.id.things_activity, thingsFragment)
         .commit();
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        finish();
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
   }
 }

@@ -1,16 +1,19 @@
 package migong.seoulthings.ui.things;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.things.adapter.ThingsRecyclerAdapter;
 
@@ -19,6 +22,7 @@ public class ThingsFragment extends Fragment implements ThingsView {
   private RecyclerView mRecycler;
   private ThingsRecyclerAdapter mRecyclerAdapter;
 
+  private ThingsViewModel mThingsViewModel;
   private ThingsPresenter mPresenter;
 
   @Nullable
@@ -40,19 +44,21 @@ public class ThingsFragment extends Fragment implements ThingsView {
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    mThingsViewModel = ViewModelProviders.of(this).get(ThingsViewModel.class);
+
     mPresenter = new ThingsPresenter(this);
     mPresenter.onCreate(savedInstanceState);
+
+    if (getArguments() != null) {
+      String category = getArguments().getString(ThingsView.KEY_CATEGORY);
+      mThingsViewModel.setCategory(category);
+    }
   }
 
   @Override
   public void onResume() {
     super.onResume();
     mPresenter.onResume();
-
-    if (getArguments() != null) {
-      int categoryId = getArguments().getInt(ThingsView.KEY_CATEGORY_ID);
-      mPresenter.setCategoryId(categoryId);
-    }
   }
 
   @Override
@@ -87,7 +93,11 @@ public class ThingsFragment extends Fragment implements ThingsView {
     mRecycler = view.findViewById(R.id.things_recycler);
     mRecycler.setHasFixedSize(true);
     mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+    mRecycler.addItemDecoration(new DividerItemDecoration(mRecycler.getContext(),
+        LinearLayout.VERTICAL));
+
     mRecyclerAdapter = new ThingsRecyclerAdapter();
     mRecycler.setAdapter(mRecyclerAdapter);
+    mThingsViewModel.getThings().observe(this, mRecyclerAdapter::submitList);
   }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import migong.seoulthings.data.Category;
 import migong.seoulthings.ui.Presenter;
 
 public class CategoryPresenter implements Presenter {
@@ -37,15 +38,15 @@ public class CategoryPresenter implements Presenter {
     Log.d(TAG, "onDestroy() called");
   }
 
-  public void onCategoryButtonClicked(int categoryId) {
-    switch (categoryId) {
-      case CategoryView.CATEGORY_BICYCLE:
-      case CategoryView.CATEGORY_TOY:
-      case CategoryView.CATEGORY_TOOL:
-      case CategoryView.CATEGORY_MEDICAL_DEVICE:
-      case CategoryView.CATEGORY_POWER_BANK:
-      case CategoryView.CATEGORY_SUIT:
-        mView.startThingsActivity(categoryId);
+  public void onCategoryButtonClicked(@NonNull String category) {
+    switch (category) {
+      case Category.BICYCLE:
+      case Category.MEDICAL_DEVICE:
+      case Category.POWER_BANK:
+      case Category.SUIT:
+      case Category.TOOL:
+      case Category.TOY:
+        mView.startThingsActivity(category);
         break;
       default:
         // TODO(@gihwan): 올바르지 않은 카테고리

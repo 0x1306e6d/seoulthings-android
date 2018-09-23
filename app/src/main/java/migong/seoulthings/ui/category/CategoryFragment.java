@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import migong.seoulthings.R;
+import migong.seoulthings.data.Category;
 import migong.seoulthings.ui.things.ThingsActivity;
 import migong.seoulthings.ui.things.ThingsView;
 
@@ -41,32 +42,32 @@ public class CategoryFragment extends Fragment implements CategoryView {
 
     mBicycleCategoryButton = view.findViewById(R.id.category_button_bicycle);
     mBicycleCategoryButton.setOnClickListener(v -> {
-      mPresenter.onCategoryButtonClicked(CATEGORY_BICYCLE);
+      mPresenter.onCategoryButtonClicked(Category.BICYCLE);
     });
 
     mToyCategoryButton = view.findViewById(R.id.category_button_toy);
     mToyCategoryButton.setOnClickListener(v -> {
-      mPresenter.onCategoryButtonClicked(CATEGORY_TOY);
+      mPresenter.onCategoryButtonClicked(Category.TOY);
     });
 
     mToolCategoryButton = view.findViewById(R.id.category_button_tool);
     mToolCategoryButton.setOnClickListener(v -> {
-      mPresenter.onCategoryButtonClicked(CATEGORY_TOOL);
+      mPresenter.onCategoryButtonClicked(Category.TOOL);
     });
 
     mMedicalDeviceCategoryButton = view.findViewById(R.id.category_button_medical_device);
     mMedicalDeviceCategoryButton.setOnClickListener(v -> {
-      mPresenter.onCategoryButtonClicked(CATEGORY_MEDICAL_DEVICE);
+      mPresenter.onCategoryButtonClicked(Category.MEDICAL_DEVICE);
     });
 
     mPowerBankCategoryButton = view.findViewById(R.id.category_button_power_bank);
     mPowerBankCategoryButton.setOnClickListener(v -> {
-      mPresenter.onCategoryButtonClicked(CATEGORY_POWER_BANK);
+      mPresenter.onCategoryButtonClicked(Category.POWER_BANK);
     });
 
     mSuitCategoryButton = view.findViewById(R.id.category_button_suit);
     mSuitCategoryButton.setOnClickListener(v -> {
-      mPresenter.onCategoryButtonClicked(CATEGORY_SUIT);
+      mPresenter.onCategoryButtonClicked(Category.SUIT);
     });
   }
 
@@ -97,11 +98,11 @@ public class CategoryFragment extends Fragment implements CategoryView {
   }
 
   @Override
-  public void startThingsActivity(int categoryId) {
+  public void startThingsActivity(@NonNull String category) {
     Intent intent = new Intent(getActivity(), ThingsActivity.class);
 
     Bundle args = new Bundle();
-    args.putInt(ThingsView.KEY_CATEGORY_ID, categoryId);
+    args.putString(ThingsView.KEY_CATEGORY, category);
     intent.putExtras(args);
 
     startActivity(intent);

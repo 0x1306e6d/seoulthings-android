@@ -36,8 +36,4 @@ public class ThingsPresenter implements Presenter {
   public void onDestroy() {
     Log.d(TAG, "onDestroy() called");
   }
-
-  public void setCategoryId(int categoryId) {
-    Log.d(TAG, "setCategoryId() called with: categoryId = [" + categoryId + "]");
-  }
 }

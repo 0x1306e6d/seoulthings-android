@@ -11,7 +11,8 @@
     android:name=".SeoulThingsApplication"
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
-    android:theme="@style/AppTheme">
+    android:theme="@style/AppTheme"
+    android:usesCleartextTraffic="true">
     <activity android:name=".ui.launcher.LauncherActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>

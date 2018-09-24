@@ -5,11 +5,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import migong.seoulthings.ui.Presenter;
+import org.apache.commons.lang3.StringUtils;
 
 public class CommunityPresenter implements Presenter {
 
   private static final String TAG = CommunityPresenter.class.getSimpleName();
 
+  private boolean mSearching;
   @NonNull
   private CommunityView mView;
 
@@ -35,5 +37,27 @@ public class CommunityPresenter implements Presenter {
   @Override
   public void onDestroy() {
     Log.d(TAG, "onDestroy() called");
+  }
+
+  public void onSearchButtonClicked(String query) {
+    Log.d(TAG, "onSearchButtonClicked() called with: query = [" + query + "]");
+
+    if (mSearching) {
+      // TODO(@gihwan): 검색
+    } else {
+      mSearching = true;
+      mView.showSearchView();
+    }
+  }
+
+  public void onClearSearchButtonClicked(String query) {
+    Log.d(TAG, "onClearSearchButtonClicked() called with: query = [" + query + "]");
+
+    if (StringUtils.isEmpty(query)) {
+      mView.hideSearchView();
+      mSearching = false;
+    } else {
+      mView.clearSearchView();
+    }
   }
 }

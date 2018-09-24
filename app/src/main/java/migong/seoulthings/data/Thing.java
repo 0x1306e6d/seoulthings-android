@@ -19,7 +19,7 @@ public class Thing {
   private final String mContents;
 
   @NonNull
-  @SerializedName("locations")
+  @SerializedName("location")
   private final Location mLocation;
 
   public Thing(@NonNull UUID id, @NonNull String category, @NonNull String contents,

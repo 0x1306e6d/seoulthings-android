@@ -18,12 +18,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.things.adapter.ThingsRecyclerAdapter;
 import org.apache.commons.lang3.StringUtils;
 
 public class ThingsFragment extends Fragment implements ThingsView {
 
+  private TextView mTitleText;
   private EditText mSearchEditText;
   private ImageButton mSearchButton;
   private ImageButton mClearSearchButton;
@@ -46,8 +48,8 @@ public class ThingsFragment extends Fragment implements ThingsView {
     super.onViewCreated(view, savedInstanceState);
 
     setupToolbar(view);
-    setupSearchView(view);
     setupRecycler(view);
+    setupSearchView(view);
   }
 
   @Override
@@ -123,20 +125,10 @@ public class ThingsFragment extends Fragment implements ThingsView {
       return;
     }
     activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    activity.getSupportActionBar().setDisplayShowTitleEnabled(true);
-    activity.getSupportActionBar().setTitle(mPresenter.getTitleResId(mCategory));
-  }
+    activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-  private void setupRecycler(@NonNull View view) {
-    mRecycler = view.findViewById(R.id.things_recycler);
-    mRecycler.setHasFixedSize(true);
-    mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-    mRecycler.addItemDecoration(new DividerItemDecoration(mRecycler.getContext(),
-        LinearLayout.VERTICAL));
-
-    mRecyclerAdapter = new ThingsRecyclerAdapter();
-    mRecycler.setAdapter(mRecyclerAdapter);
-    mThingsViewModel.getThings().observe(this, mRecyclerAdapter::submitList);
+    mTitleText = view.findViewById(R.id.things_title);
+    mTitleText.setText(mPresenter.getTitleResId(mCategory));
   }
 
   private void setupSearchView(@NonNull View view) {
@@ -155,6 +147,18 @@ public class ThingsFragment extends Fragment implements ThingsView {
     });
   }
 
+  private void setupRecycler(@NonNull View view) {
+    mRecycler = view.findViewById(R.id.things_recycler);
+    mRecycler.setHasFixedSize(true);
+    mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+    mRecycler.addItemDecoration(new DividerItemDecoration(mRecycler.getContext(),
+        LinearLayout.VERTICAL));
+
+    mRecyclerAdapter = new ThingsRecyclerAdapter();
+    mRecycler.setAdapter(mRecyclerAdapter);
+    mThingsViewModel.getThings().observe(this, mRecyclerAdapter::submitList);
+  }
+
   private void showToolbarTitle() {
     if (getActivity() == null) {
       return;
@@ -166,7 +170,7 @@ public class ThingsFragment extends Fragment implements ThingsView {
     }
 
     activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    activity.getSupportActionBar().setDisplayShowTitleEnabled(true);
+    mTitleText.setVisibility(View.VISIBLE);
   }
 
   private void hideToolbarTitle() {
@@ -180,7 +184,7 @@ public class ThingsFragment extends Fragment implements ThingsView {
     }
 
     activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-    activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+    mTitleText.setVisibility(View.GONE);
   }
 
   private void showSoftInput(View view) {

@@ -1,6 +1,7 @@
 package migong.seoulthings.ui.things;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,15 +14,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.things.adapter.ThingsRecyclerAdapter;
+import org.apache.commons.lang3.StringUtils;
 
 public class ThingsFragment extends Fragment implements ThingsView {
 
+  private EditText mSearchEditText;
+  private ImageButton mSearchButton;
+  private ImageButton mClearSearchButton;
   private RecyclerView mRecycler;
   private ThingsRecyclerAdapter mRecyclerAdapter;
 
+  private String mCategory;
   private ThingsViewModel mThingsViewModel;
   private ThingsPresenter mPresenter;
 
@@ -37,6 +46,7 @@ public class ThingsFragment extends Fragment implements ThingsView {
     super.onViewCreated(view, savedInstanceState);
 
     setupToolbar(view);
+    setupSearchView(view);
     setupRecycler(view);
   }
 
@@ -50,8 +60,10 @@ public class ThingsFragment extends Fragment implements ThingsView {
     mPresenter.onCreate(savedInstanceState);
 
     if (getArguments() != null) {
-      String category = getArguments().getString(ThingsView.KEY_CATEGORY);
-      mThingsViewModel.setCategory(category);
+      mCategory = getArguments().getString(ThingsView.KEY_CATEGORY);
+      if (mCategory != null) {
+        mThingsViewModel.setCategory(mCategory);
+      }
     }
   }
 
@@ -73,6 +85,31 @@ public class ThingsFragment extends Fragment implements ThingsView {
     mPresenter.onDestroy();
   }
 
+  @Override
+  public void showSearchView() {
+    mSearchEditText.setVisibility(View.VISIBLE);
+    mSearchEditText.requestFocus();
+    mClearSearchButton.setVisibility(View.VISIBLE);
+
+    hideToolbarTitle();
+    showSoftInput(mSearchEditText);
+  }
+
+  @Override
+  public void hideSearchView() {
+    hideSoftInput(mSearchEditText);
+    showToolbarTitle();
+
+    mSearchEditText.clearFocus();
+    mSearchEditText.setVisibility(View.GONE);
+    mClearSearchButton.setVisibility(View.GONE);
+  }
+
+  @Override
+  public void clearSearchView() {
+    mSearchEditText.setText(StringUtils.EMPTY);
+  }
+
   private void setupToolbar(@NonNull View view) {
     if (getActivity() == null) {
       return;
@@ -86,7 +123,8 @@ public class ThingsFragment extends Fragment implements ThingsView {
       return;
     }
     activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+    activity.getSupportActionBar().setDisplayShowTitleEnabled(true);
+    activity.getSupportActionBar().setTitle(mPresenter.getTitleResId(mCategory));
   }
 
   private void setupRecycler(@NonNull View view) {
@@ -99,5 +137,77 @@ public class ThingsFragment extends Fragment implements ThingsView {
     mRecyclerAdapter = new ThingsRecyclerAdapter();
     mRecycler.setAdapter(mRecyclerAdapter);
     mThingsViewModel.getThings().observe(this, mRecyclerAdapter::submitList);
+  }
+
+  private void setupSearchView(@NonNull View view) {
+    mSearchEditText = view.findViewById(R.id.things_search_edittext);
+
+    mSearchButton = view.findViewById(R.id.things_search_button);
+    mSearchButton.setOnClickListener(v -> {
+      final String query = mSearchEditText.getText().toString();
+      mPresenter.onSearchButtonClicked(query);
+    });
+
+    mClearSearchButton = view.findViewById(R.id.things_search_clear_button);
+    mClearSearchButton.setOnClickListener(v -> {
+      final String query = mSearchEditText.getText().toString();
+      mPresenter.onClearSearchButtonClicked(query);
+    });
+  }
+
+  private void showToolbarTitle() {
+    if (getActivity() == null) {
+      return;
+    }
+
+    final AppCompatActivity activity = (AppCompatActivity) getActivity();
+    if (activity.getSupportActionBar() == null) {
+      return;
+    }
+
+    activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    activity.getSupportActionBar().setDisplayShowTitleEnabled(true);
+  }
+
+  private void hideToolbarTitle() {
+    if (getActivity() == null) {
+      return;
+    }
+
+    final AppCompatActivity activity = (AppCompatActivity) getActivity();
+    if (activity.getSupportActionBar() == null) {
+      return;
+    }
+
+    activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+  }
+
+  private void showSoftInput(View view) {
+    if (getContext() == null) {
+      return;
+    }
+
+    InputMethodManager imm = (InputMethodManager) getContext()
+        .getSystemService(Context.INPUT_METHOD_SERVICE);
+    if (imm == null) {
+      return;
+    }
+
+    imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+  }
+
+  private void hideSoftInput(View view) {
+    if (getContext() == null) {
+      return;
+    }
+
+    InputMethodManager imm = (InputMethodManager) getContext()
+        .getSystemService(Context.INPUT_METHOD_SERVICE);
+    if (imm == null) {
+      return;
+    }
+
+    imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
   }
 }

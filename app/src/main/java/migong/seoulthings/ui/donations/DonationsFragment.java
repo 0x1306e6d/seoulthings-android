@@ -9,11 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.firebase.firestore.Query;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.donations.adapter.DonationsRecyclerAdapter;
 
 public class DonationsFragment extends Fragment implements DonationsView {
 
   private RecyclerView mRecyclerView;
+  private DonationsRecyclerAdapter mRecyclerAdapter;
 
   private DonationsPresenter mPresenter;
 
@@ -29,14 +32,14 @@ public class DonationsFragment extends Fragment implements DonationsView {
     super.onViewCreated(view, savedInstanceState);
 
     setupRecycler(view);
+
+    mPresenter = new DonationsPresenter(this);
+    mPresenter.onCreate(savedInstanceState);
   }
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    mPresenter = new DonationsPresenter(this);
-    mPresenter.onCreate(savedInstanceState);
   }
 
   @Override
@@ -57,9 +60,32 @@ public class DonationsFragment extends Fragment implements DonationsView {
     mPresenter.onDestroy();
   }
 
+  @Override
+  public void setQuery(Query query) {
+    if (mRecyclerAdapter != null) {
+      mRecyclerAdapter.setQuery(query);
+    }
+  }
+
+  @Override
+  public void startListening() {
+    if (mRecyclerAdapter != null) {
+      mRecyclerAdapter.startListening();
+    }
+  }
+
+  @Override
+  public void stopListening() {
+    if (mRecyclerAdapter != null) {
+      mRecyclerAdapter.stopListening();
+    }
+  }
+
   private void setupRecycler(@NonNull View view) {
     mRecyclerView = view.findViewById(R.id.donations_recycler);
     mRecyclerView.setHasFixedSize(true);
     mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), GRID_LAYOUT_SPAN_COUNT));
+    mRecyclerAdapter = new DonationsRecyclerAdapter();
+    mRecyclerView.setAdapter(mRecyclerAdapter);
   }
 }

@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.View;
 import migong.seoulthings.data.Category;
 import migong.seoulthings.ui.Presenter;
-import org.apache.commons.lang3.StringUtils;
 
 public class CategoryPresenter implements Presenter {
 
@@ -38,30 +36,6 @@ public class CategoryPresenter implements Presenter {
   @Override
   public void onDestroy() {
     Log.d(TAG, "onDestroy() called");
-  }
-
-  public void onSearchViewFocusChanged(View v, boolean hasFocus) {
-    Log.d(TAG, "onSearchViewFocusChanged() called with: hasFocus = [" + hasFocus + "]");
-
-    if (hasFocus) {
-      mView.showSearchView();
-    }
-  }
-
-  public void onSearchButtonClicked(String query) {
-    Log.d(TAG, "onSearchButtonClicked() called with: query = [" + query + "]");
-
-    // TODO(@gihwan): 검색
-  }
-
-  public void onClearSearchButtonClicked(String query) {
-    Log.d(TAG, "onClearSearchButtonClicked() called with: query = [" + query + "]");
-
-    if (StringUtils.isEmpty(query)) {
-      mView.hideSearchView();
-    } else {
-      mView.clearSearchView();
-    }
   }
 
   public void onCategoryButtonClicked(@NonNull String category) {

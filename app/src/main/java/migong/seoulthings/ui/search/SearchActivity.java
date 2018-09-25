@@ -1,5 +1,6 @@
 package migong.seoulthings.ui.search;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -16,6 +17,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView {
   private EditText mQueryEditText;
   private ImageButton mClearQueryButton;
 
+  private String mScope;
   private SearchPresenter mPresenter;
 
   @Override
@@ -23,9 +25,22 @@ public class SearchActivity extends AppCompatActivity implements SearchView {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.search_activity);
 
+    final Intent intent = getIntent();
+    final Bundle args = intent.getExtras();
+    if (args == null) {
+      finish();
+      return;
+    }
+
+    mScope = args.getString(KEY_SCOPE);
+    if (StringUtils.isEmpty(mScope)) {
+      finish();
+      return;
+    }
+
     setupQueryView();
 
-    mPresenter = new SearchPresenter(this);
+    mPresenter = new SearchPresenter(this, mScope);
     mPresenter.onCreate(savedInstanceState);
   }
 

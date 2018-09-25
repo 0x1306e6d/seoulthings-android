@@ -13,6 +13,7 @@ import android.widget.Button;
 import migong.seoulthings.R;
 import migong.seoulthings.data.Category;
 import migong.seoulthings.ui.search.SearchActivity;
+import migong.seoulthings.ui.search.SearchView;
 import migong.seoulthings.ui.things.ThingsActivity;
 import migong.seoulthings.ui.things.ThingsView;
 
@@ -99,8 +100,19 @@ public class CategoryFragment extends Fragment implements CategoryView {
   }
 
   @Override
+  public void startSearchActivity() {
+    Intent intent = new Intent(getContext(), SearchActivity.class);
+
+    Bundle args = new Bundle();
+    args.putString(SearchView.KEY_SCOPE, Category.ALL);
+    intent.putExtras(args);
+
+    startActivity(intent);
+  }
+
+  @Override
   public void startThingsActivity(@NonNull String category) {
-    Intent intent = new Intent(getActivity(), ThingsActivity.class);
+    Intent intent = new Intent(getContext(), ThingsActivity.class);
 
     Bundle args = new Bundle();
     args.putString(ThingsView.KEY_CATEGORY, category);
@@ -111,9 +123,6 @@ public class CategoryFragment extends Fragment implements CategoryView {
 
   private void setupAppBar(@NonNull View view) {
     mAppBarLayout = view.findViewById(R.id.category_app_bar_layout);
-    mAppBarLayout.setOnClickListener(v -> {
-      Intent intent = new Intent(getContext(), SearchActivity.class);
-      startActivity(intent);
-    });
+    mAppBarLayout.setOnClickListener(v -> mPresenter.onSearchButtonClicked());
   }
 }

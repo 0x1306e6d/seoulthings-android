@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public final class Category {
 
+  public static final String ALL = "ALL";
   public static final String BICYCLE = "BICYCLE";
   public static final String MEDICAL_DEVICE = "MEDICALDEVICE";
   public static final String POWER_BANK = "POWERBANK";
@@ -15,7 +16,8 @@ public final class Category {
     if (category == null) {
       return false;
     }
-    return StringUtils.equalsAny(category, BICYCLE, MEDICAL_DEVICE, POWER_BANK, SUIT, TOOL, TOY);
+    return StringUtils.equalsAny(category,
+        ALL, BICYCLE, MEDICAL_DEVICE, POWER_BANK, SUIT, TOOL, TOY);
   }
 
   private Category() {

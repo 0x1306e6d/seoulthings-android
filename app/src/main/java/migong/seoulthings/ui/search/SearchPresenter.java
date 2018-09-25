@@ -12,15 +12,19 @@ public class SearchPresenter implements Presenter {
   private static final String TAG = SearchPresenter.class.getSimpleName();
 
   @NonNull
+  private final String mScope;
+  @NonNull
   private final SearchView mView;
 
-  public SearchPresenter(@NonNull SearchView view) {
+  public SearchPresenter(@NonNull SearchView view, @NonNull String scope) {
     this.mView = view;
+    this.mScope = scope;
   }
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
+    Log.d(TAG, "onCreate: scope is " + mScope);
   }
 
   @Override

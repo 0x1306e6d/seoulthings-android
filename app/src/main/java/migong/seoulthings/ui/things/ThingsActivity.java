@@ -14,6 +14,7 @@ import android.widget.TextView;
 import migong.seoulthings.R;
 import migong.seoulthings.data.Category;
 import migong.seoulthings.ui.search.SearchActivity;
+import migong.seoulthings.ui.search.SearchView;
 import migong.seoulthings.ui.things.adapter.ThingsRecyclerAdapter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -75,6 +76,11 @@ public class ThingsActivity extends AppCompatActivity implements ThingsView {
   @Override
   public void startSearchActivity() {
     Intent intent = new Intent(this, SearchActivity.class);
+
+    Bundle args = new Bundle();
+    args.putString(SearchView.KEY_SCOPE, mCategory);
+    intent.putExtras(args);
+
     startActivity(intent);
   }
 

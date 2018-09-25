@@ -38,6 +38,10 @@ public class CategoryPresenter implements Presenter {
     Log.d(TAG, "onDestroy() called");
   }
 
+  public void onSearchButtonClicked() {
+    mView.startSearchActivity();
+  }
+
   public void onCategoryButtonClicked(@NonNull String category) {
     switch (category) {
       case Category.BICYCLE:

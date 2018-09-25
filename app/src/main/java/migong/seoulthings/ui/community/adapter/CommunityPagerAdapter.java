@@ -4,8 +4,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import migong.seoulthings.ui.donation.DonationFragment;
-import migong.seoulthings.ui.review.ReviewFragment;
+import migong.seoulthings.ui.donations.DonationsFragment;
+import migong.seoulthings.ui.reviews.ReviewsFragment;
 
 public class CommunityPagerAdapter extends FragmentPagerAdapter {
 
@@ -17,9 +17,9 @@ public class CommunityPagerAdapter extends FragmentPagerAdapter {
   public Fragment getItem(int position) {
     switch (position) {
       case 0:
-        return new DonationFragment();
+        return new DonationsFragment();
       case 1:
-        return new ReviewFragment();
+        return new ReviewsFragment();
       default:
         return null;
     }

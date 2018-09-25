@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.donations.adapter.DonationsRecyclerViewHolder.OnClickListener;
 
 public class DonationsRecyclerAdapter extends Adapter<DonationsRecyclerViewHolder>
     implements EventListener<QuerySnapshot> {
@@ -26,9 +27,13 @@ public class DonationsRecyclerAdapter extends Adapter<DonationsRecyclerViewHolde
   private Query mQuery;
   private ListenerRegistration mRegistration;
   @NonNull
+  private OnClickListener mOnClickListener;
+  @NonNull
   private final List<DocumentSnapshot> mSnapshots;
 
-  public DonationsRecyclerAdapter() {
+  public DonationsRecyclerAdapter(Query query, @NonNull OnClickListener onClickListener) {
+    mQuery = query;
+    mOnClickListener = onClickListener;
     mSnapshots = new ArrayList<>();
   }
 
@@ -37,7 +42,7 @@ public class DonationsRecyclerAdapter extends Adapter<DonationsRecyclerViewHolde
   public DonationsRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     final View view = LayoutInflater.from(parent.getContext())
         .inflate(R.layout.donation_listitem, parent, false);
-    return new DonationsRecyclerViewHolder(view);
+    return new DonationsRecyclerViewHolder(view, mOnClickListener);
   }
 
   @Override

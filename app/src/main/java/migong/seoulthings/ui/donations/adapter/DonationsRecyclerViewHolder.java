@@ -8,18 +8,37 @@ import android.widget.TextView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import migong.seoulthings.R;
 import migong.seoulthings.data.Donation;
+import org.apache.commons.lang3.StringUtils;
 
 public class DonationsRecyclerViewHolder extends ViewHolder {
 
   private static final String TAG = DonationsRecyclerViewHolder.class.getSimpleName();
 
+  public interface OnClickListener {
+
+    void onClick(@NonNull String donationId);
+
+  }
+
   private TextView mTitleView;
   private TextView mLocationView;
 
-  public DonationsRecyclerViewHolder(@NonNull View itemView) {
+  private String mDonationId;
+  @NonNull
+  private final OnClickListener mOnClickListener;
+
+  public DonationsRecyclerViewHolder(@NonNull View itemView,
+      @NonNull OnClickListener onClickListener) {
     super(itemView);
     mTitleView = itemView.findViewById(R.id.donation_listitem_title);
     mLocationView = itemView.findViewById(R.id.donation_listitem_location);
+    mOnClickListener = onClickListener;
+
+    itemView.setOnClickListener(v -> {
+      if (StringUtils.isNotEmpty(mDonationId)) {
+        mOnClickListener.onClick(mDonationId);
+      }
+    });
   }
 
   public void bind(final DocumentSnapshot snapshot) {
@@ -29,6 +48,7 @@ public class DonationsRecyclerViewHolder extends ViewHolder {
       return;
     }
 
+    mDonationId = snapshot.getId();
     mTitleView.setText(donation.getTitle());
     mLocationView.setText(donation.getLocation());
   }

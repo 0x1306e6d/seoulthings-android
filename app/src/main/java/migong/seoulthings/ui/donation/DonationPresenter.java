@@ -11,15 +11,19 @@ public class DonationPresenter implements Presenter {
   private static final String TAG = DonationPresenter.class.getSimpleName();
 
   @NonNull
+  private final String mDonationId;
+  @NonNull
   private final DonationView mView;
 
-  public DonationPresenter(@NonNull DonationView view) {
+  public DonationPresenter(@NonNull DonationView view, @NonNull String donationId) {
     this.mView = view;
+    this.mDonationId = donationId;
   }
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
+    Log.d(TAG, "onCreate: donationId is " + mDonationId);
   }
 
   @Override

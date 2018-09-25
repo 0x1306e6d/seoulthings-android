@@ -51,4 +51,10 @@ public class DonationsPresenter implements Presenter {
   public void onDestroy() {
     Log.d(TAG, "onDestroy() called");
   }
+
+  public void onRecyclerViewHolderClicked(@NonNull String donationId) {
+    Log.d(TAG, "onRecyclerViewHolderClicked() called with: donationId = [" + donationId + "]");
+
+    mView.startDonationActivity(donationId);
+  }
 }

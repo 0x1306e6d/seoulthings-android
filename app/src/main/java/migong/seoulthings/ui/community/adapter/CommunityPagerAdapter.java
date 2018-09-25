@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import migong.seoulthings.ui.community.CommunityView;
 import migong.seoulthings.ui.donations.DonationsFragment;
 import migong.seoulthings.ui.reviews.ReviewsFragment;
 
@@ -16,9 +17,9 @@ public class CommunityPagerAdapter extends FragmentPagerAdapter {
   @Override
   public Fragment getItem(int position) {
     switch (position) {
-      case 0:
+      case CommunityView.DONATIONS_POSITION:
         return new DonationsFragment();
-      case 1:
+      case CommunityView.REVIEWS_POSITION:
         return new ReviewsFragment();
       default:
         return null;
@@ -34,9 +35,9 @@ public class CommunityPagerAdapter extends FragmentPagerAdapter {
   @Override
   public CharSequence getPageTitle(int position) {
     switch (position) {
-      case 0:
+      case CommunityView.DONATIONS_POSITION:
         return "물품나눔";
-      case 1:
+      case CommunityView.REVIEWS_POSITION:
         return "대여후기";
     }
     return super.getPageTitle(position);

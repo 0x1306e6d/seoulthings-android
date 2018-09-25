@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -27,6 +28,7 @@ public class CommunityFragment extends Fragment implements CommunityView {
   private ViewPager mViewPager;
   private TabLayout mTabLayout;
   private CommunityPagerAdapter mPagerAdapter;
+  private FloatingActionButton mFAB;
 
   private CommunityPresenter mPresenter;
 
@@ -44,6 +46,7 @@ public class CommunityFragment extends Fragment implements CommunityView {
     setupTitle(view);
     setupSearchView(view);
     setupTab(view);
+    setupFAB(view);
   }
 
   @Override
@@ -123,6 +126,17 @@ public class CommunityFragment extends Fragment implements CommunityView {
     mPagerAdapter = new CommunityPagerAdapter(getChildFragmentManager());
     mViewPager.setAdapter(mPagerAdapter);
     mTabLayout.setupWithViewPager(mViewPager);
+  }
+
+  private void setupFAB(@NonNull View view) {
+    mFAB = view.findViewById(R.id.community_fab);
+    mFAB.setOnClickListener(v -> {
+      if (mViewPager == null) {
+        return;
+      }
+
+      mPresenter.onFABClicked(mViewPager.getCurrentItem());
+    });
   }
 
   private void showTitle() {

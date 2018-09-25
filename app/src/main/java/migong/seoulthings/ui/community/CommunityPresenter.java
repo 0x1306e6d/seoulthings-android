@@ -60,4 +60,8 @@ public class CommunityPresenter implements Presenter {
       mView.clearSearchView();
     }
   }
+
+  public void onFABClicked(int currentItem) {
+    Log.d(TAG, "onFABClicked() called with: currentItem = [" + currentItem + "]");
+  }
 }

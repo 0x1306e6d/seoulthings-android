@@ -4,7 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.community.adapter.CommunityPagerAdapter;
 import org.apache.commons.lang3.StringUtils;
 
 public class CommunityFragment extends Fragment implements CommunityView {
@@ -21,6 +25,10 @@ public class CommunityFragment extends Fragment implements CommunityView {
   private EditText mSearchEditText;
   private ImageButton mSearchButton;
   private ImageButton mClearSearchButton;
+  private ViewPager mViewPager;
+  private TabLayout mTabLayout;
+  private CommunityPagerAdapter mPagerAdapter;
+  private FloatingActionButton mFAB;
 
   private CommunityPresenter mPresenter;
 
@@ -37,6 +45,8 @@ public class CommunityFragment extends Fragment implements CommunityView {
 
     setupTitle(view);
     setupSearchView(view);
+    setupTab(view);
+    setupFAB(view);
   }
 
   @Override
@@ -107,6 +117,25 @@ public class CommunityFragment extends Fragment implements CommunityView {
     mClearSearchButton.setOnClickListener(v -> {
       final String query = mSearchEditText.getText().toString();
       mPresenter.onClearSearchButtonClicked(query);
+    });
+  }
+
+  private void setupTab(@NonNull View view) {
+    mViewPager = view.findViewById(R.id.community_viewpager);
+    mTabLayout = view.findViewById(R.id.community_tablayout);
+    mPagerAdapter = new CommunityPagerAdapter(getChildFragmentManager());
+    mViewPager.setAdapter(mPagerAdapter);
+    mTabLayout.setupWithViewPager(mViewPager);
+  }
+
+  private void setupFAB(@NonNull View view) {
+    mFAB = view.findViewById(R.id.community_fab);
+    mFAB.setOnClickListener(v -> {
+      if (mViewPager == null) {
+        return;
+      }
+
+      mPresenter.onFABClicked(mViewPager.getCurrentItem());
     });
   }
 

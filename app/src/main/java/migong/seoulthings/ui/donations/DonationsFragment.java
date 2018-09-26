@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import com.google.firebase.firestore.Query;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.donation.DonationActivity;
@@ -35,6 +36,7 @@ public class DonationsFragment extends Fragment implements DonationsView {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
+    setupAppBar(view);
     setupRecycler(view);
   }
 
@@ -62,6 +64,11 @@ public class DonationsFragment extends Fragment implements DonationsView {
   public void onDestroy() {
     super.onDestroy();
     mPresenter.onDestroy();
+  }
+
+  @Override
+  public void startSearchActivity() {
+
   }
 
   @Override
@@ -96,6 +103,11 @@ public class DonationsFragment extends Fragment implements DonationsView {
     if (mRecyclerAdapter != null) {
       mRecyclerAdapter.stopListening();
     }
+  }
+
+  private void setupAppBar(@NonNull View view) {
+    ImageButton searchButton = view.findViewById(R.id.donations_search_button);
+    searchButton.setOnClickListener(v -> mPresenter.onSearchButtonClicked());
   }
 
   private void setupRecycler(@NonNull View view) {

@@ -7,6 +7,8 @@ public interface DonationsView {
 
   int GRID_LAYOUT_SPAN_COUNT = 3;
 
+  void startSearchActivity();
+
   void startDonationActivity(@NonNull String donationId);
 
   void setQuery(Query query);

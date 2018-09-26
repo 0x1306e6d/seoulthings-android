@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.Presenter;
 import migong.seoulthings.ui.category.CategoryFragment;
-import migong.seoulthings.ui.community.CommunityFragment;
+import migong.seoulthings.ui.donations.DonationsFragment;
 import migong.seoulthings.ui.notification.NotificationFragment;
 import migong.seoulthings.ui.profile.ProfileFragment;
 
@@ -52,8 +52,8 @@ public class MainPresenter implements Presenter {
       case R.id.bottom_navigation_category:
         mView.replaceFragment(new CategoryFragment());
         return true;
-      case R.id.bottom_navigation_community:
-        mView.replaceFragment(new CommunityFragment());
+      case R.id.bottom_navigation_donation:
+        mView.replaceFragment(new DonationsFragment());
         return true;
       case R.id.bottom_navigation_notification:
         mView.replaceFragment(new NotificationFragment());

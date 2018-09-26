@@ -23,6 +23,8 @@
   <string name="valid_email_input_request">올바른 이메일 주소를 입력해주세요.</string>
   <string name="valid_password_input_request">올바른 비밀번호를 입력해주세요.</string>
   <string name="msg_loading">불러오는 중…</string>
-  <string name="msg_search">대여할 물건을 검색해보세요.</string>
+  <string name="msg_search_things">대여할 물건들을 검색해보세요.</string>
+  <string name="msg_search_things_category">대여할 %s들을 검색해보세요.</string>
+  <string name="msg_search_donations">나눔들을 검색해보세요.</string>
   <string name="msg_search_result_is_empty">검색 결과가 없습니다.</string>
 </resources>

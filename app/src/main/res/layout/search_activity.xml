@@ -38,7 +38,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@null"
-        android:hint="@string/msg_search"
+        android:hint="@string/msg_search_things"
         android:inputType="text"
         android:maxLines="1"
         android:textSize="16sp"

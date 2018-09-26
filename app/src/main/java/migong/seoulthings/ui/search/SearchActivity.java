@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.List;
 import migong.seoulthings.R;
+import migong.seoulthings.data.Category;
 import migong.seoulthings.ui.search.adapter.SearchResultRecyclerAdapter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -130,6 +131,20 @@ public class SearchActivity extends AppCompatActivity implements SearchView {
         mPresenter.onQueryChanged(s.toString());
       }
     });
+    switch (mScope) {
+      case SCOPE_THINGS:
+        if (StringUtils.equals(Category.ALL, mCategory)) {
+          mQueryEditText.setHint(R.string.msg_search_things);
+        } else {
+          final String category = Category.valueOf(this, mCategory);
+          mQueryEditText.setHint(getString(R.string.msg_search_things_category, category));
+        }
+        break;
+      case SCOPE_DONATIONS:
+        mQueryEditText.setHint(R.string.msg_search_donations);
+        break;
+    }
+
     mClearQueryButton = findViewById(R.id.search_clear_query_button);
     mClearQueryButton.setOnClickListener(v -> mPresenter.onClearQueryButtonClicked());
   }

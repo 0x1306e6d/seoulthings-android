@@ -4,10 +4,12 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,8 +22,10 @@ import org.apache.commons.lang3.StringUtils;
 
 public class ThingsActivity extends AppCompatActivity implements ThingsView {
 
-  private RecyclerView mRecycler;
-  private ThingsRecyclerAdapter mRecyclerAdapter;
+  private ContentLoadingProgressBar mProgressBar;
+  private TextView mEmptyView;
+  private RecyclerView mThingsRecyclerView;
+  private ThingsRecyclerAdapter mThingsRecyclerAdapter;
 
   private String mCategory;
   private ThingsViewModel mThingsViewModel;
@@ -49,6 +53,7 @@ public class ThingsActivity extends AppCompatActivity implements ThingsView {
     mThingsViewModel.setCategory(mCategory);
 
     setupAppBar();
+    setupInteraction();
     setupRecycler();
 
     mPresenter = new ThingsPresenter(this);
@@ -96,16 +101,34 @@ public class ThingsActivity extends AppCompatActivity implements ThingsView {
     searchButton.setOnClickListener(v -> mPresenter.onSearchButtonClicked());
   }
 
-  private void setupRecycler() {
-    mRecycler = findViewById(R.id.things_recycler);
-    mRecycler.setHasFixedSize(true);
-    mRecycler.setLayoutManager(new LinearLayoutManager(this));
-    mRecycler.addItemDecoration(new DividerItemDecoration(mRecycler.getContext(),
-        LinearLayout.VERTICAL));
+  private void setupInteraction() {
+    mProgressBar = findViewById(R.id.things_progressbar);
+    mProgressBar.show();
 
-    mRecyclerAdapter = new ThingsRecyclerAdapter();
-    mRecycler.setAdapter(mRecyclerAdapter);
-    mThingsViewModel.getThings().observe(this, mRecyclerAdapter::submitList);
+    mEmptyView = findViewById(R.id.things_empty);
+    mEmptyView.setVisibility(View.GONE);
+  }
+
+  private void setupRecycler() {
+    mThingsRecyclerView = findViewById(R.id.things_recycler);
+    mThingsRecyclerView.setHasFixedSize(true);
+    mThingsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    mThingsRecyclerView
+        .addItemDecoration(new DividerItemDecoration(mThingsRecyclerView.getContext(),
+            LinearLayout.VERTICAL));
+
+    mThingsRecyclerAdapter = new ThingsRecyclerAdapter();
+    mThingsRecyclerView.setAdapter(mThingsRecyclerAdapter);
+    mThingsViewModel.getThings().observe(this, things -> {
+      mProgressBar.hide();
+      mThingsRecyclerAdapter.submitList(things);
+
+      if (things == null || things.size() == 0) {
+        mEmptyView.setVisibility(View.VISIBLE);
+      } else {
+        mEmptyView.setVisibility(View.GONE);
+      }
+    });
   }
 
   @StringRes

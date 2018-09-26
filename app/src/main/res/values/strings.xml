@@ -27,4 +27,5 @@
   <string name="msg_search_things_category">대여할 %s들을 검색해보세요.</string>
   <string name="msg_search_donations">나눔들을 검색해보세요.</string>
   <string name="msg_search_result_is_empty">검색 결과가 없습니다.</string>
+  <string name="msg_things_are_empty">대여할 수 있는 물건들이 없습니다.</string>
 </resources>

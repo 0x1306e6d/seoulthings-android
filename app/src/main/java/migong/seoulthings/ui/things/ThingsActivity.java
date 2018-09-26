@@ -78,7 +78,8 @@ public class ThingsActivity extends AppCompatActivity implements ThingsView {
     Intent intent = new Intent(this, SearchActivity.class);
 
     Bundle args = new Bundle();
-    args.putString(SearchView.KEY_SCOPE, mCategory);
+    args.putString(SearchView.KEY_SCOPE, SearchView.SCOPE_THINGS);
+    args.putString(SearchView.KEY_CATEGORY, mCategory);
     intent.putExtras(args);
 
     startActivity(intent);

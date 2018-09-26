@@ -104,7 +104,8 @@ public class CategoryFragment extends Fragment implements CategoryView {
     Intent intent = new Intent(getContext(), SearchActivity.class);
 
     Bundle args = new Bundle();
-    args.putString(SearchView.KEY_SCOPE, Category.ALL);
+    args.putString(SearchView.KEY_SCOPE, SearchView.SCOPE_THINGS);
+    args.putString(SearchView.KEY_CATEGORY, Category.ALL);
     intent.putExtras(args);
 
     startActivity(intent);

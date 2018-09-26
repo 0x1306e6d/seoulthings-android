@@ -1,7 +1,6 @@
 package migong.seoulthings.ui.search;
 
 import java.util.List;
-import migong.seoulthings.data.Thing;
 
 public interface SearchView {
 
@@ -10,7 +9,7 @@ public interface SearchView {
   String SCOPE_THINGS = "SCOPE_THINGS";
   String SCOPE_DONATIONS = "SCOPE_DONATIONS";
 
-  void changeSearchResult(List<Thing> searchResult);
+  void changeSearchResult(List<SearchResult> searchResults);
 
   void clearSearchResult();
 

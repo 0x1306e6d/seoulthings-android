@@ -7,9 +7,12 @@ import android.util.Log;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import java.util.ArrayList;
+import java.util.List;
 import migong.seoulthings.SeoulThingsConstants;
 import migong.seoulthings.api.SearchAPI;
 import migong.seoulthings.data.Category;
+import migong.seoulthings.data.Thing;
 import org.apache.commons.lang3.StringUtils;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -79,10 +82,17 @@ public class SearchThingsPresenter extends SearchPresenter {
               .subscribeOn(Schedulers.io())
               .subscribe(
                   response -> {
-                    mView.hideProgressBar();
-                    mView.changeSearchResult(response.getThings());
+                    List<SearchResult> searchResults = new ArrayList<>();
+                    for (Thing thing : response.getThings()) {
+                      final SearchResult result = new SearchResult(SearchView.SCOPE_THINGS,
+                          thing.getId(), thing.getLocation().getName(), thing.getContents(), null);
+                      searchResults.add(result);
+                    }
 
-                    if (response.getThings().size() == 0) {
+                    mView.hideProgressBar();
+                    mView.changeSearchResult(searchResults);
+
+                    if (searchResults.size() == 0) {
                       mView.showEmptyView();
                     }
                   },
@@ -98,10 +108,17 @@ public class SearchThingsPresenter extends SearchPresenter {
               .subscribeOn(Schedulers.io())
               .subscribe(
                   response -> {
-                    mView.hideProgressBar();
-                    mView.changeSearchResult(response.getThings());
+                    List<SearchResult> searchResults = new ArrayList<>();
+                    for (Thing thing : response.getThings()) {
+                      final SearchResult result = new SearchResult(SearchView.SCOPE_THINGS,
+                          thing.getId(), thing.getLocation().getName(), thing.getContents(), null);
+                      searchResults.add(result);
+                    }
 
-                    if (response.getThings().size() == 0) {
+                    mView.hideProgressBar();
+                    mView.changeSearchResult(searchResults);
+
+                    if (searchResults.size() == 0) {
                       mView.showEmptyView();
                     }
                   },

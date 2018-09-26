@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import java.util.List;
 import migong.seoulthings.R;
-import migong.seoulthings.data.Thing;
+import migong.seoulthings.ui.search.SearchResult;
 
 public class SearchResultRecyclerAdapter
     extends RecyclerView.Adapter<SearchResultRecyclerViewHolder> {
 
-  private List<Thing> mDataSet;
+  private List<SearchResult> mDataSet;
 
   @NonNull
   @Override
@@ -25,12 +25,12 @@ public class SearchResultRecyclerAdapter
 
   @Override
   public void onBindViewHolder(@NonNull SearchResultRecyclerViewHolder holder, int position) {
-    Thing thing = mDataSet.get(position);
-    if (thing == null) {
+    SearchResult result = mDataSet.get(position);
+    if (result == null) {
       return;
     }
 
-    holder.bind(thing.getLocation().getName(), thing.getContents());
+    holder.bind(result);
   }
 
   @Override
@@ -38,7 +38,7 @@ public class SearchResultRecyclerAdapter
     return mDataSet == null ? 0 : mDataSet.size();
   }
 
-  public void changeDataSet(List<Thing> dataSet) {
+  public void changeDataSet(List<SearchResult> dataSet) {
     mDataSet = dataSet;
   }
 }

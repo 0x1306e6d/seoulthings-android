@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.search.SearchResult;
 
 public class SearchResultRecyclerViewHolder extends RecyclerView.ViewHolder {
 
@@ -20,9 +21,9 @@ public class SearchResultRecyclerViewHolder extends RecyclerView.ViewHolder {
     mContentsText = itemView.findViewById(R.id.search_result_listitem_contents);
   }
 
-  public void bind(String title, String contents) {
-    mTitleText.setText(title);
-    mContentsText.setText(contents);
+  public void bind(@NonNull SearchResult result) {
+    mTitleText.setText(result.getTitle());
+    mContentsText.setText(result.getContents());
   }
 
   public void clear() {

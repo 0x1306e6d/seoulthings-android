@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.List;
 import migong.seoulthings.R;
-import migong.seoulthings.data.Thing;
 import migong.seoulthings.ui.search.adapter.SearchResultRecyclerAdapter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -70,6 +69,8 @@ public class SearchActivity extends AppCompatActivity implements SearchView {
         mPresenter.onCreate(savedInstanceState);
         break;
       case SCOPE_DONATIONS:
+        mPresenter = new SearchDonationsPresenter(this);
+        mPresenter.onCreate(savedInstanceState);
         break;
       default:
         Log.e(TAG, "onCreate: invalid scope. scope is " + mScope);
@@ -153,8 +154,8 @@ public class SearchActivity extends AppCompatActivity implements SearchView {
   }
 
   @Override
-  public void changeSearchResult(List<Thing> searchResult) {
-    mResultRecyclerAdapter.changeDataSet(searchResult);
+  public void changeSearchResult(List<SearchResult> searchResults) {
+    mResultRecyclerAdapter.changeDataSet(searchResults);
     mResultRecyclerAdapter.notifyDataSetChanged();
   }
 

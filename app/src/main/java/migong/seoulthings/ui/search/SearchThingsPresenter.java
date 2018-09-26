@@ -64,12 +64,14 @@ public class SearchThingsPresenter extends SearchPresenter {
   protected void search(String query) {
     Log.d(TAG, "search() called with: query = [" + query + "]");
     mCompositeDisposable.clear();
+    mView.hideEmptyView();
 
     if (StringUtils.isEmpty(query)) {
       mView.clearSearchResult();
       return;
     }
 
+    mView.showProgressBar();
     if (StringUtils.isEmpty(mCategory) || StringUtils.equals(Category.ALL, mCategory)) {
       mCompositeDisposable.add(
           mSearchAPI.searchThings(query)
@@ -77,8 +79,12 @@ public class SearchThingsPresenter extends SearchPresenter {
               .subscribeOn(Schedulers.io())
               .subscribe(
                   response -> {
-                    Log.d(TAG, "search: response is " + response);
+                    mView.hideProgressBar();
                     mView.changeSearchResult(response.getThings());
+
+                    if (response.getThings().size() == 0) {
+                      mView.showEmptyView();
+                    }
                   },
                   error -> {
                     Log.e(TAG, "Failed to search things.", error);
@@ -92,8 +98,12 @@ public class SearchThingsPresenter extends SearchPresenter {
               .subscribeOn(Schedulers.io())
               .subscribe(
                   response -> {
-                    Log.d(TAG, "search: response is " + response);
+                    mView.hideProgressBar();
                     mView.changeSearchResult(response.getThings());
+
+                    if (response.getThings().size() == 0) {
+                      mView.showEmptyView();
+                    }
                   },
                   error -> {
                     Log.e(TAG, "Failed to search " + mCategory + " things.", error);

@@ -3,6 +3,7 @@ package migong.seoulthings.ui.search;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import java.util.List;
 import migong.seoulthings.R;
 import migong.seoulthings.data.Thing;
@@ -27,6 +29,8 @@ public class SearchActivity extends AppCompatActivity implements SearchView {
   private ImageButton mBackButton;
   private EditText mQueryEditText;
   private ImageButton mClearQueryButton;
+  private ContentLoadingProgressBar mProgressBar;
+  private TextView mEmptyView;
   private RecyclerView mResultRecyclerView;
   private SearchResultRecyclerAdapter mResultRecyclerAdapter;
 
@@ -57,6 +61,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView {
     }
 
     setupQueryView();
+    setupInteraction();
     setupRecycler();
 
     switch (mScope) {
@@ -128,6 +133,14 @@ public class SearchActivity extends AppCompatActivity implements SearchView {
     mClearQueryButton.setOnClickListener(v -> mPresenter.onClearQueryButtonClicked());
   }
 
+  private void setupInteraction() {
+    mProgressBar = findViewById(R.id.search_result_progressbar);
+    mProgressBar.hide();
+
+    mEmptyView = findViewById(R.id.search_result_empty);
+    mEmptyView.setVisibility(View.GONE);
+  }
+
   private void setupRecycler() {
     mResultRecyclerView = findViewById(R.id.search_result_recycler);
     mResultRecyclerView.setHasFixedSize(true);
@@ -163,5 +176,25 @@ public class SearchActivity extends AppCompatActivity implements SearchView {
   @Override
   public void hideClearQueryButton() {
     mClearQueryButton.setVisibility(View.GONE);
+  }
+
+  @Override
+  public void showProgressBar() {
+    mProgressBar.show();
+  }
+
+  @Override
+  public void hideProgressBar() {
+    mProgressBar.hide();
+  }
+
+  @Override
+  public void showEmptyView() {
+    mEmptyView.setVisibility(View.VISIBLE);
+  }
+
+  @Override
+  public void hideEmptyView() {
+    mEmptyView.setVisibility(View.GONE);
   }
 }

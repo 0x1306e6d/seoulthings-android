@@ -19,4 +19,12 @@ public interface SearchView {
   void showClearQueryButton();
 
   void hideClearQueryButton();
+
+  void showProgressBar();
+
+  void hideProgressBar();
+
+  void showEmptyView();
+
+  void hideEmptyView();
 }

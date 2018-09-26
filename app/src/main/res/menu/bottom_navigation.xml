@@ -5,9 +5,9 @@
     android:icon="@drawable/outline_category_black_24"
     android:title="@string/category"/>
   <item
-    android:id="@+id/bottom_navigation_community"
+    android:id="@+id/bottom_navigation_donation"
     android:icon="@drawable/outline_people_black_24"
-    android:title="@string/community"/>
+    android:title="@string/donation"/>
   <item
     android:id="@+id/bottom_navigation_notification"
     android:icon="@drawable/outline_notifications_black_24"

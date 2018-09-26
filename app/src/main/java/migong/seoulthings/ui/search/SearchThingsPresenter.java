@@ -64,6 +64,16 @@ public class SearchThingsPresenter extends SearchPresenter {
   }
 
   @Override
+  public void onSearchResultRecyclerViewHolderClicked(@NonNull String id) {
+    if (StringUtils.isEmpty(id)) {
+      Log.e(TAG, "onSearchResultRecyclerViewHolderClicked: id is empty. id is " + id);
+      return;
+    }
+
+    mView.startThingActivity(id);
+  }
+
+  @Override
   protected void search(String query) {
     Log.d(TAG, "search() called with: query = [" + query + "]");
     mCompositeDisposable.clear();

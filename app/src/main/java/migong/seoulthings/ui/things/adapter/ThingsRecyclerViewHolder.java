@@ -12,7 +12,7 @@ public class ThingsRecyclerViewHolder extends RecyclerView.ViewHolder {
 
   public interface ClickListener {
 
-    void onClick(String thingId);
+    void onClick(@NonNull String thingId);
 
   }
 
@@ -31,7 +31,7 @@ public class ThingsRecyclerViewHolder extends RecyclerView.ViewHolder {
     mClickListener = clickListener;
 
     itemView.setOnClickListener(v -> {
-      if (mClickListener != null) {
+      if (mClickListener != null && mThingId != null) {
         mClickListener.onClick(mThingId);
       }
     });

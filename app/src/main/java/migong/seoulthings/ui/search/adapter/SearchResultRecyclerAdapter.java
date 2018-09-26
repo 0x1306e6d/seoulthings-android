@@ -13,6 +13,13 @@ public class SearchResultRecyclerAdapter
     extends RecyclerView.Adapter<SearchResultRecyclerViewHolder> {
 
   private List<SearchResult> mDataSet;
+  private SearchResultRecyclerViewHolder.ClickListener mViewHolderClickListener;
+
+  public SearchResultRecyclerAdapter(
+      SearchResultRecyclerViewHolder.ClickListener viewHolderClickListener) {
+    super();
+    mViewHolderClickListener = viewHolderClickListener;
+  }
 
   @NonNull
   @Override
@@ -20,17 +27,17 @@ public class SearchResultRecyclerAdapter
       @NonNull ViewGroup parent, int viewType) {
     final View itemView = LayoutInflater.from(parent.getContext())
         .inflate(R.layout.search_result_listitem, parent, false);
-    return new SearchResultRecyclerViewHolder(itemView);
+    return new SearchResultRecyclerViewHolder(itemView, mViewHolderClickListener);
   }
 
   @Override
   public void onBindViewHolder(@NonNull SearchResultRecyclerViewHolder holder, int position) {
-    SearchResult result = mDataSet.get(position);
-    if (result == null) {
-      return;
+    final SearchResult result = mDataSet.get(position);
+    if (result != null) {
+      holder.bind(result);
+    } else {
+      holder.clear();
     }
-
-    holder.bind(result);
   }
 
   @Override

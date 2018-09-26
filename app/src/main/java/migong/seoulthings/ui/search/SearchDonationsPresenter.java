@@ -54,6 +54,16 @@ public class SearchDonationsPresenter extends SearchPresenter {
   }
 
   @Override
+  public void onSearchResultRecyclerViewHolderClicked(@NonNull String id) {
+    if (StringUtils.isEmpty(id)) {
+      Log.e(TAG, "onSearchResultRecyclerViewHolderClicked: id is empty. id is " + id);
+      return;
+    }
+
+    mView.startDonationActivity(id);
+  }
+
+  @Override
   protected void search(String query) {
     Log.d(TAG, "sesarch() called with: query = [" + query + "]");
     stopListening();

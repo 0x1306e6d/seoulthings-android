@@ -16,6 +16,8 @@ public abstract class SearchPresenter implements Presenter {
     mView = view;
   }
 
+  public abstract void onSearchResultRecyclerViewHolderClicked(@NonNull String id);
+
   protected abstract void search(String query);
 
   public void onQueryChanged(String query) {

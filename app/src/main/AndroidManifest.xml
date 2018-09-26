@@ -25,6 +25,7 @@
     <activity android:name=".ui.main.MainActivity"/>
     <activity android:name=".ui.things.ThingsActivity"/>
     <activity android:name=".ui.donation.DonationActivity"/>
+    <activity android:name=".ui.search.SearchActivity"/>
 
     <!-- Facebook Login meta-data 요소 -->
     <meta-data

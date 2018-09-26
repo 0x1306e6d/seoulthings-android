@@ -5,14 +5,14 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".ui.things.ThingsFragment">
+  tools:context=".ui.search.SearchActivity">
 
   <android.support.design.widget.AppBarLayout
-    android:id="@+id/things_app_bar_layout"
+    android:id="@+id/search_app_bar_layout"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:background="@drawable/toolbar"
-    app:layout_constraintBottom_toTopOf="@id/things_recycler"
+    app:elevation="0dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
@@ -21,60 +21,35 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/app_bar_height">
 
-      <TextView
-        android:id="@+id/things_title"
-        android:textStyle="bold"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:textColor="@color/colorOnBackgroundHighEmphasis"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-      <android.support.v7.widget.Toolbar
-        android:id="@+id/things_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/colorOnBackgroundHighEmphasis"/>
-
       <ImageButton
-        android:id="@+id/things_search_button"
+        android:id="@+id/search_back_button"
         style="@style/Widget.AppCompat.Toolbar.Button.Navigation"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/spacing_unit_narrow"
-        android:paddingEnd="@dimen/spacing_unit_narrow"
-        android:src="@drawable/ic_search_black_24"
+        android:layout_height="0dp"
+        android:paddingStart="@dimen/spacing_unit_normal"
+        android:paddingEnd="@dimen/spacing_unit_normal"
+        android:src="@drawable/ic_back_black_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/things_search_edittext"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@id/search_query_edittext"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
       <EditText
-        android:id="@+id/things_search_edittext"
+        android:id="@+id/search_query_edittext"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@null"
-        android:hint="@string/msg_search"
+        android:hint="@string/msg_search_things"
         android:inputType="text"
         android:maxLines="1"
-        android:visibility="gone"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/things_search_clear_button"
-        app:layout_constraintStart_toEndOf="@id/things_search_button"
+        app:layout_constraintEnd_toStartOf="@id/search_clear_query_button"
+        app:layout_constraintStart_toEndOf="@id/search_back_button"
         app:layout_constraintTop_toTopOf="parent"/>
 
       <ImageButton
-        android:id="@+id/things_search_clear_button"
+        android:id="@+id/search_clear_query_button"
         style="@style/Widget.AppCompat.Toolbar.Button.Navigation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,17 +59,38 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/things_search_edittext"
+        app:layout_constraintStart_toEndOf="@id/search_query_edittext"
         app:layout_constraintTop_toTopOf="parent"/>
     </android.support.constraint.ConstraintLayout>
   </android.support.design.widget.AppBarLayout>
 
+  <android.support.v4.widget.ContentLoadingProgressBar
+    android:id="@+id/search_result_progressbar"
+    style="@style/Widget.AppCompat.ProgressBar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_unit_very_wide"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/search_app_bar_layout"/>
+
+  <TextView
+    android:id="@+id/search_result_empty"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_unit_very_wide"
+    android:text="@string/msg_search_result_is_empty"
+    android:visibility="gone"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/search_app_bar_layout"/>
+
   <android.support.v7.widget.RecyclerView
-    android:id="@+id/things_recycler"
+    android:id="@+id/search_result_recycler"
     android:layout_width="0dp"
     android:layout_height="0dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/things_app_bar_layout"/>
+    app:layout_constraintTop_toBottomOf="@id/search_app_bar_layout"/>
 </android.support.constraint.ConstraintLayout>

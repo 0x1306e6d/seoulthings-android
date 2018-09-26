@@ -1,32 +1,25 @@
 package migong.seoulthings.ui.category;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import migong.seoulthings.R;
 import migong.seoulthings.data.Category;
+import migong.seoulthings.ui.search.SearchActivity;
+import migong.seoulthings.ui.search.SearchView;
 import migong.seoulthings.ui.things.ThingsActivity;
 import migong.seoulthings.ui.things.ThingsView;
-import org.apache.commons.lang3.StringUtils;
 
 public class CategoryFragment extends Fragment implements CategoryView {
 
-  private EditText mSearchEditText;
-  private ImageButton mSearchButton;
-  private ImageButton mClearSearchButton;
-
+  private AppBarLayout mAppBarLayout;
   private Button mBicycleCategoryButton;
   private Button mToyCategoryButton;
   private Button mToolCategoryButton;
@@ -47,8 +40,7 @@ public class CategoryFragment extends Fragment implements CategoryView {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    setupToolbar(view);
-    setupSearchView(view);
+    setupAppBar(view);
 
     mBicycleCategoryButton = view.findViewById(R.id.category_button_bicycle);
     mBicycleCategoryButton.setOnClickListener(v -> {
@@ -108,8 +100,20 @@ public class CategoryFragment extends Fragment implements CategoryView {
   }
 
   @Override
+  public void startSearchActivity() {
+    Intent intent = new Intent(getContext(), SearchActivity.class);
+
+    Bundle args = new Bundle();
+    args.putString(SearchView.KEY_SCOPE, SearchView.SCOPE_THINGS);
+    args.putString(SearchView.KEY_CATEGORY, Category.ALL);
+    intent.putExtras(args);
+
+    startActivity(intent);
+  }
+
+  @Override
   public void startThingsActivity(@NonNull String category) {
-    Intent intent = new Intent(getActivity(), ThingsActivity.class);
+    Intent intent = new Intent(getContext(), ThingsActivity.class);
 
     Bundle args = new Bundle();
     args.putString(ThingsView.KEY_CATEGORY, category);
@@ -118,68 +122,8 @@ public class CategoryFragment extends Fragment implements CategoryView {
     startActivity(intent);
   }
 
-  @Override
-  public void showSearchView() {
-    mClearSearchButton.setVisibility(View.VISIBLE);
-  }
-
-  @Override
-  public void hideSearchView() {
-    hideSoftInput(mSearchEditText);
-
-    mSearchEditText.clearFocus();
-    mClearSearchButton.setVisibility(View.GONE);
-  }
-
-  @Override
-  public void clearSearchView() {
-    mSearchEditText.setText(StringUtils.EMPTY);
-  }
-
-  private void setupToolbar(@NonNull View view) {
-    if (getActivity() == null) {
-      return;
-    }
-
-    final Toolbar toolbar = view.findViewById(R.id.category_toolbar);
-    final AppCompatActivity activity = (AppCompatActivity) getActivity();
-    activity.setSupportActionBar(toolbar);
-
-    if (activity.getSupportActionBar() == null) {
-      return;
-    }
-    activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-    activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
-  }
-
-  private void setupSearchView(@NonNull View view) {
-    mSearchEditText = view.findViewById(R.id.category_search_edittext);
-    mSearchEditText.setOnFocusChangeListener(mPresenter::onSearchViewFocusChanged);
-
-    mSearchButton = view.findViewById(R.id.category_search_button);
-    mSearchButton.setOnClickListener(v -> {
-      final String query = mSearchEditText.getText().toString();
-      mPresenter.onSearchButtonClicked(query);
-    });
-
-    mClearSearchButton = view.findViewById(R.id.category_search_clear_button);
-    mClearSearchButton.setOnClickListener(v -> {
-      final String query = mSearchEditText.getText().toString();
-      mPresenter.onClearSearchButtonClicked(query);
-    });
-  }
-
-  private void hideSoftInput(View view) {
-    if (getContext() == null) {
-      return;
-    }
-
-    InputMethodManager imm = (InputMethodManager) getContext()
-        .getSystemService(Context.INPUT_METHOD_SERVICE);
-    if (imm == null) {
-      return;
-    }
-
-    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+  private void setupAppBar(@NonNull View view) {
+    mAppBarLayout = view.findViewById(R.id.category_app_bar_layout);
+    mAppBarLayout.setOnClickListener(v -> mPresenter.onSearchButtonClicked());
   }
 }

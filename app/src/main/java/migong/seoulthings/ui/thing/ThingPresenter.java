@@ -68,12 +68,15 @@ public class ThingPresenter implements Presenter {
                     mView.finishLoading();
 
                     mView.setTitle(mThing.getLocation().getName());
+
                     if (mThing.getLocation().getLatitude() != null &&
                         mThing.getLocation().getLongitude() != null) {
                       final double latitude = mThing.getLocation().getLatitude();
                       final double longitude = mThing.getLocation().getLongitude();
                       mView.setGoogleMap(mThing.getLocation().getName(), latitude, longitude);
                     }
+
+                    mView.setAddress(mThing.getLocation().getAddress());
                   }
                 },
                 error -> {

@@ -8,5 +8,7 @@ public interface ThingView {
 
   void setGoogleMap(String title, double latitude, double longitude);
 
+  void setAddress(String address);
+
   void finishLoading();
 }

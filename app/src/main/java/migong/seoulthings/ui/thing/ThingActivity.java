@@ -25,6 +25,7 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   private ContentLoadingProgressBar mProgressBar;
   private ConstraintLayout mDetailLayout;
   private SupportMapFragment mGoogleMapFragment;
+  private TextView mAddressText;
 
   private String mThingId;
   private GoogleMap mGoogleMap;
@@ -53,7 +54,6 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
     setupAppBar();
     setupInteraction();
     setupDetailLayout();
-    setupGoogleMap();
 
     mPresenter = new ThingPresenter(this, mThingId);
     mPresenter.onCreate(savedInstanceState);
@@ -96,6 +96,13 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   }
 
   @Override
+  public void setAddress(String address) {
+    if (mAddressText != null) {
+      mAddressText.setText(address);
+    }
+  }
+
+  @Override
   public void finishLoading() {
     if (mProgressBar != null) {
       mProgressBar.hide();
@@ -120,15 +127,14 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   private void setupDetailLayout() {
     mDetailLayout = findViewById(R.id.thing_detail_layout);
     mDetailLayout.setVisibility(View.GONE);
-  }
 
-  private void setupGoogleMap() {
     mGoogleMapFragment = (SupportMapFragment) getSupportFragmentManager()
         .findFragmentById(R.id.thing_map);
     if (mGoogleMapFragment == null) {
       return;
     }
-
     mGoogleMapFragment.getMapAsync(googleMap -> mGoogleMap = googleMap);
+
+    mAddressText = findViewById(R.id.thing_address);
   }
 }

@@ -62,6 +62,7 @@
     android:id="@+id/thing_detail_layout"
     android:layout_width="0dp"
     android:layout_height="0dp"
+    android:visibility="gone"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -76,5 +77,32 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+      android:id="@+id/thing_address_layout"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/bg_address"
+      android:gravity="center"
+      android:orientation="horizontal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/thing_map">
+
+      <ImageView
+        android:id="@+id/thing_address_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_location_black_18"/>
+
+      <TextView
+        android:id="@+id/thing_address"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/msg_loading"
+        android:textColor="@color/colorOnSurfaceHighEmphasis"
+        android:textSize="16sp"/>
+    </LinearLayout>
   </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

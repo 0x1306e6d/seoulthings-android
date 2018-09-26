@@ -10,5 +10,7 @@ public interface ThingView {
 
   void setAddress(String address);
 
+  void setContents(String contents);
+
   void finishLoading();
 }

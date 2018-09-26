@@ -2,12 +2,12 @@ package migong.seoulthings.ui.thing;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,9 +23,10 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
 
   private TextView mTitleText;
   private ContentLoadingProgressBar mProgressBar;
-  private ConstraintLayout mDetailLayout;
+  private ScrollView mDetailView;
   private SupportMapFragment mGoogleMapFragment;
   private TextView mAddressText;
+  private TextView mContentsText;
 
   private String mThingId;
   private GoogleMap mGoogleMap;
@@ -103,12 +104,19 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   }
 
   @Override
+  public void setContents(String contents) {
+    if (mContentsText != null) {
+      mContentsText.setText(contents);
+    }
+  }
+
+  @Override
   public void finishLoading() {
     if (mProgressBar != null) {
       mProgressBar.hide();
     }
-    if (mDetailLayout != null) {
-      mDetailLayout.setVisibility(View.VISIBLE);
+    if (mDetailView != null) {
+      mDetailView.setVisibility(View.VISIBLE);
     }
   }
 
@@ -125,8 +133,8 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   }
 
   private void setupDetailLayout() {
-    mDetailLayout = findViewById(R.id.thing_detail_layout);
-    mDetailLayout.setVisibility(View.GONE);
+    mDetailView = findViewById(R.id.thing_detail);
+    mDetailView.setVisibility(View.GONE);
 
     mGoogleMapFragment = (SupportMapFragment) getSupportFragmentManager()
         .findFragmentById(R.id.thing_map);
@@ -136,5 +144,6 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
     mGoogleMapFragment.getMapAsync(googleMap -> mGoogleMap = googleMap);
 
     mAddressText = findViewById(R.id.thing_address);
+    mContentsText = findViewById(R.id.thing_contents);
   }
 }

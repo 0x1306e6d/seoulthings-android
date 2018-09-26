@@ -77,6 +77,7 @@ public class ThingPresenter implements Presenter {
                     }
 
                     mView.setAddress(mThing.getLocation().getAddress());
+                    mView.setContents(mThing.getContents());
                   }
                 },
                 error -> {

@@ -58,8 +58,8 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/thing_app_bar_layout"/>
 
-  <android.support.constraint.ConstraintLayout
-    android:id="@+id/thing_detail_layout"
+  <ScrollView
+    android:id="@+id/thing_detail"
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:visibility="gone"
@@ -68,41 +68,116 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/thing_app_bar_layout">
 
-    <fragment
-      android:id="@+id/thing_map"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      android:name="com.google.android.gms.maps.SupportMapFragment"
-      app:layout_constraintDimensionRatio="16:9"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"/>
+    <android.support.constraint.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
 
-    <LinearLayout
-      android:id="@+id/thing_address_layout"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:background="@drawable/bg_address"
-      android:gravity="center"
-      android:orientation="horizontal"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/thing_map">
+      <fragment
+        android:id="@+id/thing_map"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        app:layout_constraintDimensionRatio="16:9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-      <ImageView
-        android:id="@+id/thing_address_icon"
-        android:layout_width="wrap_content"
+      <LinearLayout
+        android:id="@+id/thing_address_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_location_black_18"/>
+        android:background="@drawable/bg_address"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/thing_contents_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thing_map">
+
+        <ImageView
+          android:id="@+id/thing_address_icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_location_black_18"/>
+
+        <TextView
+          android:id="@+id/thing_address"
+          android:textStyle="bold"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/msg_loading"
+          android:textColor="@color/colorOnSurfaceHighEmphasis"
+          android:textSize="16sp"/>
+      </LinearLayout>
 
       <TextView
-        android:id="@+id/thing_address"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
+        android:id="@+id/thing_contents_label"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_label"
+        android:text="@string/thing_contents"
+        android:textColor="@color/colorOnSurfaceMediumEmphasis"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/thing_contents"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thing_address_layout"/>
+
+      <TextView
+        android:id="@+id/thing_contents"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_unit_normal"
+        android:paddingBottom="@dimen/spacing_unit_wide"
+        android:paddingStart="@dimen/spacing_unit_wide"
+        android:paddingEnd="@dimen/spacing_unit_wide"
         android:text="@string/msg_loading"
         android:textColor="@color/colorOnSurfaceHighEmphasis"
-        android:textSize="16sp"/>
-    </LinearLayout>
-  </android.support.constraint.ConstraintLayout>
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/thing_location_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thing_contents_label"/>
+
+      <TextView
+        android:id="@+id/thing_location_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_label"
+        android:text="@string/thing_location"
+        android:textColor="@color/colorOnSurfaceMediumEmphasis"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/thing_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thing_contents"/>
+
+      <TextView
+        android:id="@+id/thing_location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_unit_normal"
+        android:paddingBottom="@dimen/spacing_unit_wide"
+        android:paddingStart="@dimen/spacing_unit_wide"
+        android:paddingEnd="@dimen/spacing_unit_wide"
+        android:text="@string/msg_loading"
+        android:textColor="@color/colorOnSurfaceHighEmphasis"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thing_location_label"/>
+
+      <TextView
+        android:id="@+id/thing_comments_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_label"
+        android:text="@string/thing_comments"
+        android:textColor="@color/colorOnSurfaceMediumEmphasis"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thing_location"/>
+    </android.support.constraint.ConstraintLayout>
+  </ScrollView>
 </android.support.constraint.ConstraintLayout>

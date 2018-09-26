@@ -16,6 +16,8 @@ import migong.seoulthings.R;
 import migong.seoulthings.ui.donation.DonationActivity;
 import migong.seoulthings.ui.donation.DonationView;
 import migong.seoulthings.ui.donations.adapter.DonationsRecyclerAdapter;
+import migong.seoulthings.ui.search.SearchActivity;
+import migong.seoulthings.ui.search.SearchView;
 
 public class DonationsFragment extends Fragment implements DonationsView {
 
@@ -68,7 +70,13 @@ public class DonationsFragment extends Fragment implements DonationsView {
 
   @Override
   public void startSearchActivity() {
+    Intent intent = new Intent(getContext(), SearchActivity.class);
 
+    Bundle args = new Bundle();
+    args.putString(SearchView.KEY_SCOPE, SearchView.SCOPE_DONATIONS);
+    intent.putExtras(args);
+
+    startActivity(intent);
   }
 
   @Override

@@ -2,11 +2,18 @@ package migong.seoulthings.ui.thing;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import migong.seoulthings.R;
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,8 +23,11 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
 
   private TextView mTitleText;
   private ContentLoadingProgressBar mProgressBar;
+  private ConstraintLayout mDetailLayout;
+  private SupportMapFragment mGoogleMapFragment;
 
   private String mThingId;
+  private GoogleMap mGoogleMap;
   private ThingPresenter mPresenter;
 
   @Override
@@ -42,6 +52,8 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
 
     setupAppBar();
     setupInteraction();
+    setupDetailLayout();
+    setupGoogleMap();
 
     mPresenter = new ThingPresenter(this, mThingId);
     mPresenter.onCreate(savedInstanceState);
@@ -73,9 +85,23 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   }
 
   @Override
-  public void hideProgressBar() {
+  public void setGoogleMap(String title, double latitude, double longitude) {
+    if (mGoogleMap == null) {
+      return;
+    }
+
+    LatLng location = new LatLng(latitude, longitude);
+    mGoogleMap.addMarker(new MarkerOptions().position(location).title(title));
+    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 13f));
+  }
+
+  @Override
+  public void finishLoading() {
     if (mProgressBar != null) {
       mProgressBar.hide();
+    }
+    if (mDetailLayout != null) {
+      mDetailLayout.setVisibility(View.VISIBLE);
     }
   }
 
@@ -89,5 +115,20 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   private void setupInteraction() {
     mProgressBar = findViewById(R.id.thing_progressbar);
     mProgressBar.show();
+  }
+
+  private void setupDetailLayout() {
+    mDetailLayout = findViewById(R.id.thing_detail_layout);
+    mDetailLayout.setVisibility(View.GONE);
+  }
+
+  private void setupGoogleMap() {
+    mGoogleMapFragment = (SupportMapFragment) getSupportFragmentManager()
+        .findFragmentById(R.id.thing_map);
+    if (mGoogleMapFragment == null) {
+      return;
+    }
+
+    mGoogleMapFragment.getMapAsync(googleMap -> mGoogleMap = googleMap);
   }
 }

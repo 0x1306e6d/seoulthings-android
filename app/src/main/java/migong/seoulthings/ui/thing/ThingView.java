@@ -6,5 +6,7 @@ public interface ThingView {
 
   void setTitle(String title);
 
-  void hideProgressBar();
+  void setGoogleMap(String title, double latitude, double longitude);
+
+  void finishLoading();
 }

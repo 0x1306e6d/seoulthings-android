@@ -65,8 +65,15 @@ public class ThingPresenter implements Presenter {
                     Log.e(TAG, "Failed to get a thing of id " + mThingAPI);
                   } else {
                     mThing = thing;
-                    mView.hideProgressBar();
+                    mView.finishLoading();
+
                     mView.setTitle(mThing.getLocation().getName());
+                    if (mThing.getLocation().getLatitude() != null &&
+                        mThing.getLocation().getLongitude() != null) {
+                      final double latitude = mThing.getLocation().getLatitude();
+                      final double longitude = mThing.getLocation().getLongitude();
+                      mView.setGoogleMap(mThing.getLocation().getName(), latitude, longitude);
+                    }
                   }
                 },
                 error -> {

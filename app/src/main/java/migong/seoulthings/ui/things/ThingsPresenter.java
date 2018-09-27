@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import migong.seoulthings.ui.Presenter;
+import org.apache.commons.lang3.StringUtils;
 
 public class ThingsPresenter implements Presenter {
 
@@ -39,5 +40,14 @@ public class ThingsPresenter implements Presenter {
 
   public void onSearchButtonClicked() {
     mView.startSearchActivity();
+  }
+
+  public void onThingsRecyclerViewHolderClicked(String thingId) {
+    if (StringUtils.isEmpty(thingId)) {
+      Log.e(TAG, "onThingsRecyclerViewHolderClicked: thingId is empty. thigId is " + thingId);
+      return;
+    }
+
+    mView.startThingActivity(thingId);
   }
 }

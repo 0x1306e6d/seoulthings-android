@@ -10,23 +10,41 @@ import migong.seoulthings.data.Thing;
 
 public class ThingsRecyclerViewHolder extends RecyclerView.ViewHolder {
 
+  public interface ClickListener {
+
+    void onClick(@NonNull String thingId);
+
+  }
+
   private ImageView mIconImageView;
   private TextView mLocationTextView;
   private TextView mContentsTextView;
 
-  public ThingsRecyclerViewHolder(@NonNull View itemView) {
+  private String mThingId;
+  private final ClickListener mClickListener;
+
+  public ThingsRecyclerViewHolder(@NonNull View itemView, ClickListener clickListener) {
     super(itemView);
-    this.mIconImageView = itemView.findViewById(R.id.thing_listitem_icon);
-    this.mLocationTextView = itemView.findViewById(R.id.thing_listitem_location);
-    this.mContentsTextView = itemView.findViewById(R.id.thing_listitem_contents);
+    mIconImageView = itemView.findViewById(R.id.thing_listitem_icon);
+    mLocationTextView = itemView.findViewById(R.id.thing_listitem_location);
+    mContentsTextView = itemView.findViewById(R.id.thing_listitem_contents);
+    mClickListener = clickListener;
+
+    itemView.setOnClickListener(v -> {
+      if (mClickListener != null && mThingId != null) {
+        mClickListener.onClick(mThingId);
+      }
+    });
   }
 
   public void bind(@NonNull Thing thing) {
+    mThingId = thing.getId();
     mLocationTextView.setText(thing.getLocation().getName());
     mContentsTextView.setText(thing.getContents());
   }
 
   public void clear() {
+    mThingId = null;
     mLocationTextView.setText(R.string.msg_loading);
     mContentsTextView.setText(R.string.msg_loading);
   }

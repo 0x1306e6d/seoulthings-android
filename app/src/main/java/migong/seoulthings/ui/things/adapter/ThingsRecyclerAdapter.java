@@ -13,8 +13,11 @@ import org.apache.commons.lang3.StringUtils;
 
 public class ThingsRecyclerAdapter extends PagedListAdapter<Thing, ThingsRecyclerViewHolder> {
 
-  public ThingsRecyclerAdapter() {
+  private ThingsRecyclerViewHolder.ClickListener mViewHolderClickListener;
+
+  public ThingsRecyclerAdapter(ThingsRecyclerViewHolder.ClickListener viewHolderClickListener) {
     super(DIFF_CALLBACK);
+    mViewHolderClickListener = viewHolderClickListener;
   }
 
   @NonNull
@@ -22,7 +25,7 @@ public class ThingsRecyclerAdapter extends PagedListAdapter<Thing, ThingsRecycle
   public ThingsRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     final View itemView = LayoutInflater.from(parent.getContext())
         .inflate(R.layout.thing_listitem, parent, false);
-    return new ThingsRecyclerViewHolder(itemView);
+    return new ThingsRecyclerViewHolder(itemView, mViewHolderClickListener);
   }
 
   @Override

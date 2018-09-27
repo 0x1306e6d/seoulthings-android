@@ -2,6 +2,7 @@ package migong.seoulthings.ui.search;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,11 @@ import android.widget.TextView;
 import java.util.List;
 import migong.seoulthings.R;
 import migong.seoulthings.data.Category;
+import migong.seoulthings.ui.donation.DonationActivity;
+import migong.seoulthings.ui.donation.DonationView;
 import migong.seoulthings.ui.search.adapter.SearchResultRecyclerAdapter;
+import migong.seoulthings.ui.thing.ThingActivity;
+import migong.seoulthings.ui.thing.ThingView;
 import org.apache.commons.lang3.StringUtils;
 
 public class SearchActivity extends AppCompatActivity implements SearchView {
@@ -164,8 +169,32 @@ public class SearchActivity extends AppCompatActivity implements SearchView {
     mResultRecyclerView.addItemDecoration(new DividerItemDecoration(
         mResultRecyclerView.getContext(), LinearLayout.VERTICAL));
 
-    mResultRecyclerAdapter = new SearchResultRecyclerAdapter();
+    mResultRecyclerAdapter = new SearchResultRecyclerAdapter(
+        id -> mPresenter.onSearchResultRecyclerViewHolderClicked(id)
+    );
     mResultRecyclerView.setAdapter(mResultRecyclerAdapter);
+  }
+
+  @Override
+  public void startThingActivity(@NonNull String thingId) {
+    Intent intent = new Intent(this, ThingActivity.class);
+
+    Bundle args = new Bundle();
+    args.putString(ThingView.KEY_THING_ID, thingId);
+    intent.putExtras(args);
+
+    startActivity(intent);
+  }
+
+  @Override
+  public void startDonationActivity(@NonNull String donationId) {
+    Intent intent = new Intent(this, DonationActivity.class);
+
+    Bundle args = new Bundle();
+    args.putString(DonationView.KEY_DONATION_ID, donationId);
+    intent.putExtras(args);
+
+    startActivity(intent);
   }
 
   @Override

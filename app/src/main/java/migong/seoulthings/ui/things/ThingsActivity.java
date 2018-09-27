@@ -3,6 +3,7 @@ package migong.seoulthings.ui.things;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,8 @@ import migong.seoulthings.R;
 import migong.seoulthings.data.Category;
 import migong.seoulthings.ui.search.SearchActivity;
 import migong.seoulthings.ui.search.SearchView;
+import migong.seoulthings.ui.thing.ThingActivity;
+import migong.seoulthings.ui.thing.ThingView;
 import migong.seoulthings.ui.things.adapter.ThingsRecyclerAdapter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -90,6 +93,17 @@ public class ThingsActivity extends AppCompatActivity implements ThingsView {
     startActivity(intent);
   }
 
+  @Override
+  public void startThingActivity(@NonNull String thingId) {
+    Intent intent = new Intent(this, ThingActivity.class);
+
+    Bundle args = new Bundle();
+    args.putString(ThingView.KEY_THING_ID, thingId);
+    intent.putExtras(args);
+
+    startActivity(intent);
+  }
+
   private void setupAppBar() {
     ImageButton backButton = findViewById(R.id.things_back_button);
     backButton.setOnClickListener(v -> onBackPressed());
@@ -117,7 +131,9 @@ public class ThingsActivity extends AppCompatActivity implements ThingsView {
         .addItemDecoration(new DividerItemDecoration(mThingsRecyclerView.getContext(),
             LinearLayout.VERTICAL));
 
-    mThingsRecyclerAdapter = new ThingsRecyclerAdapter();
+    mThingsRecyclerAdapter = new ThingsRecyclerAdapter(
+        thingId -> mPresenter.onThingsRecyclerViewHolderClicked(thingId)
+    );
     mThingsRecyclerView.setAdapter(mThingsRecyclerAdapter);
     mThingsViewModel.getThings().observe(this, things -> {
       mProgressBar.hide();

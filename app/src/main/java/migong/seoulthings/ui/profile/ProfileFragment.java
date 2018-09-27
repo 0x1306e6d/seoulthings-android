@@ -1,5 +1,6 @@
 package migong.seoulthings.ui.profile;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.profile.adapter.ProfilePagerAdapter;
+import migong.seoulthings.ui.profile.modify.ModifyProfileActivity;
 
 public class ProfileFragment extends Fragment implements ProfileView {
 
@@ -90,6 +92,12 @@ public class ProfileFragment extends Fragment implements ProfileView {
   @Override
   public void setEmail(String email) {
     mEmailText.setText(email);
+  }
+
+  @Override
+  public void startModifyProfileActivity() {
+    Intent intent = new Intent(getContext(), ModifyProfileActivity.class);
+    startActivity(intent);
   }
 
   private void setupAppBar(@NonNull View view) {

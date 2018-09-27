@@ -54,5 +54,7 @@ public class ProfilePresenter implements Presenter {
 
   public void onModifyButtonClicked() {
     Log.d(TAG, "onModifyButtonClicked() called");
+
+    mView.startModifyProfileActivity();
   }
 }

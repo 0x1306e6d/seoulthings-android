@@ -19,6 +19,7 @@
   <string name="suit">면접 정장</string>
 
   <string name="modify_profile">프로필 수정</string>
+  <string name="complete">완료</string>
 
   <string name="failed_to_signin">로그인을 실패하였습니다.</string>
   <string name="failed_to_signup">회원가입을 실패하였습니다.</string>

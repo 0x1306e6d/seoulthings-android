@@ -13,4 +13,6 @@ public interface ProfileView {
   void setPhoto(Uri uri);
 
   void setEmail(String email);
+
+  void startModifyProfileActivity();
 }

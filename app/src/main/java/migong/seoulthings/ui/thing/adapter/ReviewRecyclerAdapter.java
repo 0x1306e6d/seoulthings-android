@@ -107,23 +107,24 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerVi
 
   public void addSnapshot(int index, QueryDocumentSnapshot snapshot) {
     mSnapshots.add(index, snapshot);
-    notifyItemInserted(index);
+    notifyItemInserted(index + 1);
   }
 
   public void modifySnapshot(int oldIndex, int newIndex, QueryDocumentSnapshot snapshot) {
     if (oldIndex == newIndex) {
       mSnapshots.set(oldIndex, snapshot);
-      notifyItemChanged(oldIndex);
+      notifyItemChanged(oldIndex + 1);
     } else {
       mSnapshots.remove(oldIndex);
       mSnapshots.add(newIndex, snapshot);
-      notifyItemMoved(oldIndex, newIndex);
+      notifyItemMoved(oldIndex + 1, newIndex + 1);
+      notifyItemChanged(newIndex + 1);
     }
   }
 
   public void removeSnapshot(int index) {
     mSnapshots.remove(index);
-    notifyItemRemoved(index);
+    notifyItemRemoved(index + 1);
   }
 
   private DocumentSnapshot getSnapshot(int position) {

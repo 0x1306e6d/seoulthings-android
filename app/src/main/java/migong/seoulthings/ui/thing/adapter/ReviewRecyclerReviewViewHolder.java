@@ -7,6 +7,7 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -28,6 +29,7 @@ public class ReviewRecyclerReviewViewHolder extends ReviewRecyclerViewHolder {
   private ImageView mProfilePhotoImage;
   private TextView mProfileDisplayNameText;
   private TextView mUpdatedAtText;
+  private RatingBar mRatingBar;
   private TextView mContentsText;
 
   @NonNull
@@ -42,6 +44,7 @@ public class ReviewRecyclerReviewViewHolder extends ReviewRecyclerViewHolder {
     mProfilePhotoImage = itemView.findViewById(R.id.review_listitem_profile_photo);
     mProfileDisplayNameText = itemView.findViewById(R.id.review_listitem_profile_display_name);
     mUpdatedAtText = itemView.findViewById(R.id.review_listitem_updated_at);
+    mRatingBar = itemView.findViewById(R.id.review_listitem_rating_bar);
     mContentsText = itemView.findViewById(R.id.review_listitem_contents);
 
     mFirebaseAPI = firebaseAPI;
@@ -67,6 +70,7 @@ public class ReviewRecyclerReviewViewHolder extends ReviewRecyclerViewHolder {
 
                   mProfileDisplayNameText.setText(user.getDisplayName());
                   mUpdatedAtText.setText(DATE_FORMAT.format(review.getUpdatedAt().toDate()));
+                  mRatingBar.setRating(review.getRating());
                   mContentsText.setText(review.getContents());
 
                   if (StringUtils.isNotEmpty(user.getPhotoURL())) {
@@ -90,6 +94,7 @@ public class ReviewRecyclerReviewViewHolder extends ReviewRecyclerViewHolder {
     mProfilePhotoImage.setVisibility(View.GONE);
     mProfileDisplayNameText.setVisibility(View.GONE);
     mUpdatedAtText.setVisibility(View.GONE);
+    mRatingBar.setVisibility(View.GONE);
     mContentsText.setVisibility(View.GONE);
   }
 
@@ -99,6 +104,7 @@ public class ReviewRecyclerReviewViewHolder extends ReviewRecyclerViewHolder {
     mProfilePhotoImage.setVisibility(View.VISIBLE);
     mProfileDisplayNameText.setVisibility(View.VISIBLE);
     mUpdatedAtText.setVisibility(View.VISIBLE);
+    mRatingBar.setVisibility(View.VISIBLE);
     mContentsText.setVisibility(View.VISIBLE);
   }
 }

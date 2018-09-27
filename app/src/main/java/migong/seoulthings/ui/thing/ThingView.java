@@ -1,6 +1,8 @@
 package migong.seoulthings.ui.thing;
 
+import android.support.annotation.Nullable;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import migong.seoulthings.data.Review;
 
 public interface ThingView {
 
@@ -16,7 +18,7 @@ public interface ThingView {
 
   void finishLoading();
 
-  void showReviewDialog();
+  void showReviewDialog(@Nullable Review review);
 
   void addSnapshot(int index, QueryDocumentSnapshot snapshot);
 

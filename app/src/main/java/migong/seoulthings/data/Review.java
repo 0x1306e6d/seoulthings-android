@@ -1,9 +1,12 @@
 package migong.seoulthings.data;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.Exclude;
 
 public class Review {
 
+  @Exclude
+  private String mFirebaseId;
   private String mThingId;
   private String mAuthorId;
   private String mContents;
@@ -22,6 +25,14 @@ public class Review {
     mRating = rating;
     mCreatedAt = Timestamp.now();
     mUpdatedAt = mCreatedAt;
+  }
+
+  public String getFirebaseId() {
+    return mFirebaseId;
+  }
+
+  public void setFirebaseId(String firebaseId) {
+    mFirebaseId = firebaseId;
   }
 
   public String getThingId() {

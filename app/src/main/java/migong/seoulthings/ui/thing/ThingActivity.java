@@ -2,6 +2,7 @@ package migong.seoulthings.ui.thing;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import io.reactivex.disposables.CompositeDisposable;
 import migong.seoulthings.R;
+import migong.seoulthings.data.Review;
 import migong.seoulthings.ui.thing.adapter.ReviewRecyclerAdapter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -141,7 +143,7 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   }
 
   @Override
-  public void showReviewDialog() {
+  public void showReviewDialog(@Nullable Review review) {
     final LayoutInflater inflater = getLayoutInflater();
     final View view = inflater.inflate(R.layout.review_dialog, null);
     final AlertDialog.Builder builder = new AlertDialog.Builder(this)
@@ -153,12 +155,24 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
     final Button submitButton = view.findViewById(R.id.review_dialog_submit_button);
     final AlertDialog dialog = builder.create();
     dismissButton.setOnClickListener(v -> dialog.dismiss());
-    submitButton.setOnClickListener(
-        v -> mCompositeDisposable.add(
-            mPresenter.createReview(ratingBar.getRating(), contentsText.getText().toString())
-                .subscribe(dialog::dismiss, error -> Log.e(TAG, "showReviewDialog: error", error))
-        )
-    );
+    if (review == null) {
+      submitButton.setOnClickListener(
+          v -> mCompositeDisposable.add(
+              mPresenter.createReview(contentsText.getText().toString(), ratingBar.getRating())
+                  .subscribe(dialog::dismiss, error -> Log.e(TAG, "createReview: error", error))
+          )
+      );
+    } else {
+      ratingBar.setRating(review.getRating());
+      contentsText.setText(review.getContents());
+      submitButton.setOnClickListener(
+          v -> mCompositeDisposable.add(
+              mPresenter
+                  .modifyReview(review, contentsText.getText().toString(), ratingBar.getRating())
+                  .subscribe(dialog::dismiss, error -> Log.e(TAG, "modifyReview: error", error))
+          )
+      );
+    }
     dialog.show();
   }
 
@@ -217,7 +231,9 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
     mReviewRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
 
     mReviewRecyclerAdapter = new ReviewRecyclerAdapter(
-        () -> mPresenter.onMakeReviewSuggestionClicked());
+        () -> mPresenter.onMakeReviewSuggestionClicked(),
+        review -> mPresenter.onModifyReviewButtonClicked(review)
+    );
     mReviewRecyclerView.setAdapter(mReviewRecyclerAdapter);
   }
 }

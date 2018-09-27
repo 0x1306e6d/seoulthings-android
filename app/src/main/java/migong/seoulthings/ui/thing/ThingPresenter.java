@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
@@ -125,13 +126,31 @@ public class ThingPresenter implements Presenter {
   }
 
   public void onMakeReviewSuggestionClicked() {
-    mView.showReviewDialog();
+    mView.showReviewDialog(null);
   }
 
-  public Completable createReview(float rating, String contents) {
+  public void onModifyReviewButtonClicked(@NonNull Review review) {
+    mView.showReviewDialog(review);
+  }
+
+  public Completable createReview(String contents, float rating) {
     return Completable.create(
         emitter -> mFirestore.collection("reviews")
             .add(new Review(mThingId, mUser.getUid(), contents, rating))
+            .addOnSuccessListener(v -> emitter.onComplete())
+            .addOnFailureListener(emitter::onError)
+    );
+  }
+
+  public Completable modifyReview(@NonNull Review review, String contents, float rating) {
+    return Completable.create(
+        emitter -> mFirestore.collection("reviews")
+            .document(review.getFirebaseId())
+            .update(
+                "contents", contents,
+                "rating", rating,
+                "updatedAt", Timestamp.now()
+            )
             .addOnSuccessListener(v -> emitter.onComplete())
             .addOnFailureListener(emitter::onError)
     );

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -21,6 +22,12 @@ import org.apache.commons.lang3.StringUtils;
 
 public class ReviewRecyclerReviewViewHolder extends ReviewRecyclerViewHolder {
 
+  public interface ClickListener {
+
+    void onClick(@NonNull Review review);
+
+  }
+
   private static final String TAG = ReviewRecyclerReviewViewHolder.class.getSimpleName();
   @SuppressLint("SimpleDateFormat")
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
@@ -31,14 +38,21 @@ public class ReviewRecyclerReviewViewHolder extends ReviewRecyclerViewHolder {
   private TextView mUpdatedAtText;
   private RatingBar mRatingBar;
   private TextView mContentsText;
+  private Button mModifyButton;
 
+  private String mUid;
+  @NonNull
+  private Review mReview;
   @NonNull
   private final FirebaseAPI mFirebaseAPI;
   @NonNull
   private final CompositeDisposable mCompositeDisposable;
+  @NonNull
+  private final ClickListener mClickListener;
 
-  public ReviewRecyclerReviewViewHolder(@NonNull View itemView, @NonNull FirebaseAPI firebaseAPI,
-      @NonNull CompositeDisposable compositeDisposable) {
+  public ReviewRecyclerReviewViewHolder(@NonNull View itemView, String uid,
+      @NonNull FirebaseAPI firebaseAPI, @NonNull CompositeDisposable compositeDisposable,
+      @NonNull ClickListener clickListener) {
     super(itemView);
     mLoadingProgressBar = itemView.findViewById(R.id.review_listitem_loading_progressbar);
     mProfilePhotoImage = itemView.findViewById(R.id.review_listitem_profile_photo);
@@ -46,15 +60,19 @@ public class ReviewRecyclerReviewViewHolder extends ReviewRecyclerViewHolder {
     mUpdatedAtText = itemView.findViewById(R.id.review_listitem_updated_at);
     mRatingBar = itemView.findViewById(R.id.review_listitem_rating_bar);
     mContentsText = itemView.findViewById(R.id.review_listitem_contents);
+    mModifyButton = itemView.findViewById(R.id.review_listitem_modify_button);
 
+    mUid = uid;
     mFirebaseAPI = firebaseAPI;
     mCompositeDisposable = compositeDisposable;
+    mClickListener = clickListener;
     mLoadingProgressBar.show();
   }
 
   @Override
   public void bind(@NonNull Review review) {
     Log.d(TAG, "bind() called with: review = [" + review + "]");
+    mReview = review;
 
     mCompositeDisposable.add(
         mFirebaseAPI.getFirebaseUser(review.getAuthorId())
@@ -78,6 +96,10 @@ public class ReviewRecyclerReviewViewHolder extends ReviewRecyclerViewHolder {
                     Picasso.get()
                         .load(uri)
                         .into(mProfilePhotoImage);
+                  }
+                  if (StringUtils.equals(mUid, review.getAuthorId())) {
+                    mModifyButton.setVisibility(View.VISIBLE);
+                    mModifyButton.setOnClickListener(v -> mClickListener.onClick(mReview));
                   }
                 },
                 error -> {

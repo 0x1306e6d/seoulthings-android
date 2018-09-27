@@ -2,7 +2,6 @@ package migong.seoulthings.ui.thing.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +25,8 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerVi
   @NonNull
   private ReviewRecyclerFormViewHolder.ClickListener mFormViewHolderClickListener;
   @NonNull
+  private ReviewRecyclerReviewViewHolder.ClickListener mReviewViewHolderClickListener;
+  @NonNull
   private final FirebaseAuth mAuth;
   private final FirebaseUser mUser;
   @NonNull
@@ -38,9 +39,11 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerVi
   private final List<DocumentSnapshot> mSnapshots;
 
   public ReviewRecyclerAdapter(
-      @NonNull ReviewRecyclerFormViewHolder.ClickListener formViewHolderClickListener) {
+      @NonNull ReviewRecyclerFormViewHolder.ClickListener formViewHolderClickListener,
+      @NonNull ReviewRecyclerReviewViewHolder.ClickListener reviewViewHolderClickListener) {
     super();
     mFormViewHolderClickListener = formViewHolderClickListener;
+    mReviewViewHolderClickListener = reviewViewHolderClickListener;
     mAuth = FirebaseAuth.getInstance();
     mUser = mAuth.getCurrentUser();
     mRetrofit = new Retrofit.Builder()
@@ -63,16 +66,20 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerVi
     } else {
       final View view = LayoutInflater.from(parent.getContext())
           .inflate(R.layout.thing_reviews_listitem_review, parent, false);
-      return new ReviewRecyclerReviewViewHolder(view, mFirebaseAPI, mCompositeDisposable);
+      return new ReviewRecyclerReviewViewHolder(view, mAuth.getUid(), mFirebaseAPI,
+          mCompositeDisposable, mReviewViewHolderClickListener);
     }
   }
 
   @Override
   public void onBindViewHolder(@NonNull ReviewRecyclerViewHolder holder, int position) {
     if (position > 0) {
-      final Review review = getSnapshot(position).toObject(Review.class);
-      Log.d("ReviewRecyclerAdapter", "onBindViewHolder: review is " + review);
+      DocumentSnapshot snapshot = getSnapshot(position);
+      Review review = snapshot.toObject(Review.class);
+
       if (review != null) {
+        review.setFirebaseId(snapshot.getId());
+
         holder.bind(review);
       } else {
         holder.clear();

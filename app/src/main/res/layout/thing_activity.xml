@@ -163,21 +163,30 @@
         android:text="@string/msg_loading"
         android:textColor="@color/colorOnSurfaceHighEmphasis"
         android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/thing_reviews_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/thing_location_label"/>
 
       <TextView
-        android:id="@+id/thing_comments_label"
+        android:id="@+id/thing_reviews_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_label"
-        android:text="@string/thing_comments"
+        android:text="@string/thing_reviews"
         android:textColor="@color/colorOnSurfaceMediumEmphasis"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/thing_location"/>
+
+      <android.support.v7.widget.RecyclerView
+        android:id="@+id/thing_reviews_recycler"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thing_reviews_label"/>
     </android.support.constraint.ConstraintLayout>
   </ScrollView>
 </android.support.constraint.ConstraintLayout>

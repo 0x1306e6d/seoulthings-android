@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -14,7 +18,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.thing.adapter.ReviewRecyclerAdapter;
 import org.apache.commons.lang3.StringUtils;
 
 public class ThingActivity extends AppCompatActivity implements ThingView {
@@ -27,6 +33,8 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   private SupportMapFragment mGoogleMapFragment;
   private TextView mAddressText;
   private TextView mContentsText;
+  private RecyclerView mReviewRecyclerView;
+  private ReviewRecyclerAdapter mReviewRecyclerAdapter;
 
   private String mThingId;
   private GoogleMap mGoogleMap;
@@ -55,6 +63,7 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
     setupAppBar();
     setupInteraction();
     setupDetailLayout();
+    setupReviewRecycler();
 
     mPresenter = new ThingPresenter(this, mThingId);
     mPresenter.onCreate(savedInstanceState);
@@ -120,6 +129,27 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
     }
   }
 
+  @Override
+  public void addSnapshot(int index, QueryDocumentSnapshot snapshot) {
+    if (mReviewRecyclerAdapter != null) {
+      mReviewRecyclerAdapter.addSnapshot(index, snapshot);
+    }
+  }
+
+  @Override
+  public void modifySnapshot(int oldIndex, int newIndex, QueryDocumentSnapshot snapshot) {
+    if (mReviewRecyclerAdapter != null) {
+      mReviewRecyclerAdapter.modifySnapshot(oldIndex, newIndex, snapshot);
+    }
+  }
+
+  @Override
+  public void removeSnapshot(int index) {
+    if (mReviewRecyclerAdapter != null) {
+      mReviewRecyclerAdapter.removeSnapshot(index);
+    }
+  }
+
   private void setupAppBar() {
     ImageButton backButton = findViewById(R.id.thing_back_button);
     backButton.setOnClickListener(v -> onBackPressed());
@@ -145,5 +175,17 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
 
     mAddressText = findViewById(R.id.thing_address);
     mContentsText = findViewById(R.id.thing_contents);
+  }
+
+  private void setupReviewRecycler() {
+    mReviewRecyclerView = findViewById(R.id.thing_reviews_recycler);
+    mReviewRecyclerView.setHasFixedSize(true);
+    mReviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    mReviewRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
+
+    mReviewRecyclerAdapter = new ReviewRecyclerAdapter(() -> {
+
+    });
+    mReviewRecyclerView.setAdapter(mReviewRecyclerAdapter);
   }
 }

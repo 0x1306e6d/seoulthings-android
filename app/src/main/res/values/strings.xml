@@ -20,7 +20,7 @@
 
   <string name="thing_contents">보유중인 물품</string>
   <string name="thing_location">운영 정보</string>
-  <string name="thing_comments">댓글</string>
+  <string name="thing_reviews">한 줄 후기</string>
 
   <string name="modify_profile">프로필 수정</string>
 

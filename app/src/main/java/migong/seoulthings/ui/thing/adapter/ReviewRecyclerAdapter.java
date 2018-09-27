@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import io.reactivex.disposables.CompositeDisposable;
@@ -24,6 +26,9 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerVi
   @NonNull
   private ReviewRecyclerFormViewHolder.ClickListener mFormViewHolderClickListener;
   @NonNull
+  private final FirebaseAuth mAuth;
+  private final FirebaseUser mUser;
+  @NonNull
   private final Retrofit mRetrofit;
   @NonNull
   private final FirebaseAPI mFirebaseAPI;
@@ -36,6 +41,8 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerVi
       @NonNull ReviewRecyclerFormViewHolder.ClickListener formViewHolderClickListener) {
     super();
     mFormViewHolderClickListener = formViewHolderClickListener;
+    mAuth = FirebaseAuth.getInstance();
+    mUser = mAuth.getCurrentUser();
     mRetrofit = new Retrofit.Builder()
         .baseUrl(SeoulThingsConstants.SEOULTHINGS_SERVER_BASE_URL)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -52,7 +59,7 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerVi
     if (viewType == ReviewRecyclerViewHolder.VIEW_TYPE_FORM) {
       final View view = LayoutInflater.from(parent.getContext())
           .inflate(R.layout.thing_reviews_listitem_form, parent, false);
-      return new ReviewRecyclerFormViewHolder(view, mFormViewHolderClickListener);
+      return new ReviewRecyclerFormViewHolder(view, mUser, mFormViewHolderClickListener);
     } else {
       final View view = LayoutInflater.from(parent.getContext())
           .inflate(R.layout.thing_reviews_listitem_review, parent, false);

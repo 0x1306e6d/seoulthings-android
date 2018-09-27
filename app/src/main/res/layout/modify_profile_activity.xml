@@ -60,4 +60,30 @@
         app:layout_constraintTop_toTopOf="parent"/>
     </android.support.constraint.ConstraintLayout>
   </android.support.design.widget.AppBarLayout>
+
+  <com.makeramen.roundedimageview.RoundedImageView
+    android:id="@+id/modify_profile_photo"
+    android:layout_width="@dimen/profile_photo"
+    android:layout_height="@dimen/profile_photo"
+    android:layout_marginTop="@dimen/spacing_unit_very_wide"
+    android:layout_marginBottom="@dimen/spacing_unit_narrow"
+    app:layout_constraintBottom_toTopOf="@id/modify_profile_change_photo_button"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/modify_profile_app_bar_layout"
+    app:riv_oval="true"/>
+
+  <Button
+    android:id="@+id/modify_profile_change_photo_button"
+    style="@style/Widget.AppCompat.Button.Borderless"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_unit_narrow"
+    android:layout_marginBottom="@dimen/spacing_unit_very_wide"
+    android:text="@string/change_profile_photo"
+    android:textColor="@color/colorOnBackgroundMediumEmphasis"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/modify_profile_photo"/>
 </android.support.constraint.ConstraintLayout>

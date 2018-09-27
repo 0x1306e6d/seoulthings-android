@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.profile.adapter.ProfilePagerAdapter;
@@ -85,6 +86,12 @@ public class ProfileFragment extends Fragment implements ProfileView {
     Log.d("ProfileFragment", "setPhoto() called with: uri = [" + uri + "]");
     Picasso.get()
         .load(uri)
+        .fit()
+        .transform(new RoundedTransformationBuilder()
+            .borderColor(R.color.colorStroke)
+            .borderWidthDp(1.0f)
+            .oval(true)
+            .build())
         .placeholder(R.drawable.ic_person_black_48)
         .into(mPhotoImage);
   }

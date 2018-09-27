@@ -49,14 +49,15 @@
     </android.support.constraint.ConstraintLayout>
   </android.support.design.widget.AppBarLayout>
 
-  <ImageView
+  <com.makeramen.roundedimageview.RoundedImageView
     android:id="@+id/profile_photo"
-    android:layout_width="72dp"
-    android:layout_height="72dp"
+    android:layout_width="@dimen/profile_photo_thumbnail"
+    android:layout_height="@dimen/profile_photo_thumbnail"
     android:layout_margin="@dimen/spacing_unit_normal"
     app:layout_constraintBottom_toTopOf="@id/profile_viewpager"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/profile_app_bar_layout"/>
+    app:layout_constraintTop_toBottomOf="@id/profile_app_bar_layout"
+    app:riv_oval="true"/>
 
   <TextView
     android:id="@+id/profile_email_label"

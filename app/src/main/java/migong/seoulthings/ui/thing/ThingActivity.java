@@ -24,6 +24,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import io.reactivex.disposables.CompositeDisposable;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.thing.adapter.ReviewRecyclerAdapter;
 import org.apache.commons.lang3.StringUtils;
@@ -43,6 +44,7 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
 
   private String mThingId;
   private GoogleMap mGoogleMap;
+  private CompositeDisposable mCompositeDisposable;
   private ThingPresenter mPresenter;
 
   @Override
@@ -70,6 +72,8 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
     setupDetailLayout();
     setupReviewRecycler();
 
+    mCompositeDisposable = new CompositeDisposable();
+
     mPresenter = new ThingPresenter(this, mThingId);
     mPresenter.onCreate(savedInstanceState);
   }
@@ -90,6 +94,8 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   protected void onDestroy() {
     super.onDestroy();
     mPresenter.onDestroy();
+
+    mCompositeDisposable.dispose();
   }
 
   @Override
@@ -148,7 +154,10 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
     final AlertDialog dialog = builder.create();
     dismissButton.setOnClickListener(v -> dialog.dismiss());
     submitButton.setOnClickListener(
-        v -> mPresenter.createReview(ratingBar.getRating(), contentsText.getText().toString())
+        v -> mCompositeDisposable.add(
+            mPresenter.createReview(ratingBar.getRating(), contentsText.getText().toString())
+                .subscribe(dialog::dismiss, error -> Log.e(TAG, "showReviewDialog: error", error))
+        )
     );
     dialog.show();
   }

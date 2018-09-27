@@ -4,17 +4,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.Query.Direction;
+import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import migong.seoulthings.SeoulThingsConstants;
 import migong.seoulthings.api.ThingAPI;
+import migong.seoulthings.data.Review;
 import migong.seoulthings.data.Thing;
 import migong.seoulthings.ui.Presenter;
 import retrofit2.Retrofit;
@@ -28,6 +32,7 @@ public class ThingPresenter implements Presenter {
   private Retrofit mRetrofit;
   private ThingAPI mThingAPI;
   private Thing mThing;
+  private FirebaseUser mUser;
   private FirebaseFirestore mFirestore;
   private Query mQuery;
   private ListenerRegistration mRegistration;
@@ -56,6 +61,7 @@ public class ThingPresenter implements Presenter {
         .build();
     mThingAPI = mRetrofit.create(ThingAPI.class);
 
+    mUser = FirebaseAuth.getInstance().getCurrentUser();
     mFirestore = FirebaseFirestore.getInstance();
     mFirestore.setFirestoreSettings(new FirebaseFirestoreSettings.Builder()
         .setTimestampsInSnapshotsEnabled(true)
@@ -122,9 +128,13 @@ public class ThingPresenter implements Presenter {
     mView.showReviewDialog();
   }
 
-  public void createReview(float rating, String contents) {
-    Log.d(TAG,
-        "createReview() called with: rating = [" + rating + "], contents = [" + contents + "]");
+  public Completable createReview(float rating, String contents) {
+    return Completable.create(
+        emitter -> mFirestore.collection("reviews")
+            .add(new Review(mThingId, mUser.getUid(), contents, rating))
+            .addOnSuccessListener(v -> emitter.onComplete())
+            .addOnFailureListener(emitter::onError)
+    );
   }
 
   private void startListening() {

@@ -3,14 +3,19 @@ package migong.seoulthings.ui.thing;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -130,6 +135,25 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   }
 
   @Override
+  public void showReviewDialog() {
+    final LayoutInflater inflater = getLayoutInflater();
+    final View view = inflater.inflate(R.layout.review_dialog, null);
+    final AlertDialog.Builder builder = new AlertDialog.Builder(this)
+        .setView(view);
+
+    final RatingBar ratingBar = view.findViewById(R.id.review_dialog_rating_bar);
+    final EditText contentsText = view.findViewById(R.id.review_dialog_contents);
+    final Button dismissButton = view.findViewById(R.id.review_dialog_dismiss_button);
+    final Button submitButton = view.findViewById(R.id.review_dialog_submit_button);
+    final AlertDialog dialog = builder.create();
+    dismissButton.setOnClickListener(v -> dialog.dismiss());
+    submitButton.setOnClickListener(
+        v -> mPresenter.createReview(ratingBar.getRating(), contentsText.getText().toString())
+    );
+    dialog.show();
+  }
+
+  @Override
   public void addSnapshot(int index, QueryDocumentSnapshot snapshot) {
     if (mReviewRecyclerAdapter != null) {
       mReviewRecyclerAdapter.addSnapshot(index, snapshot);
@@ -183,9 +207,8 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
     mReviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     mReviewRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
 
-    mReviewRecyclerAdapter = new ReviewRecyclerAdapter(() -> {
-
-    });
+    mReviewRecyclerAdapter = new ReviewRecyclerAdapter(
+        () -> mPresenter.onMakeReviewSuggestionClicked());
     mReviewRecyclerView.setAdapter(mReviewRecyclerAdapter);
   }
 }

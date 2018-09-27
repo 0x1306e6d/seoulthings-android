@@ -118,6 +118,15 @@ public class ThingPresenter implements Presenter {
     Log.d(TAG, "onDestroy() called");
   }
 
+  public void onMakeReviewSuggestionClicked() {
+    mView.showReviewDialog();
+  }
+
+  public void createReview(float rating, String contents) {
+    Log.d(TAG,
+        "createReview() called with: rating = [" + rating + "], contents = [" + contents + "]");
+  }
+
   private void startListening() {
     if (mQuery != null && mRegistration == null) {
       mRegistration = mQuery.addSnapshotListener((snapshot, e) -> {

@@ -16,6 +16,8 @@ public interface ThingView {
 
   void finishLoading();
 
+  void showReviewDialog();
+
   void addSnapshot(int index, QueryDocumentSnapshot snapshot);
 
   void modifySnapshot(int oldIndex, int newIndex, QueryDocumentSnapshot snapshot);

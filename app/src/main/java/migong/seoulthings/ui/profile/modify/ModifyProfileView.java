@@ -8,5 +8,9 @@ public interface ModifyProfileView {
 
   void changePhoto(Uri photoUri);
 
+  void startUpdateProfile();
+
+  void finishUpdateProfile();
+
   void startTakePhotoIntent();
 }

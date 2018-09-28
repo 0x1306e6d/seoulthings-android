@@ -58,6 +58,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+      <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/modify_profile_complete_progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintBottom_toBottomOf="@id/modify_profile_complete_button"
+        app:layout_constraintEnd_toEndOf="@id/modify_profile_complete_button"
+        app:layout_constraintStart_toStartOf="@id/modify_profile_complete_button"
+        app:layout_constraintTop_toTopOf="@id/modify_profile_complete_button"/>
     </android.support.constraint.ConstraintLayout>
   </android.support.design.widget.AppBarLayout>
 

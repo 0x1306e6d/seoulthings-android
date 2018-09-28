@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore.Images.Media;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -18,6 +20,7 @@ public class ModifyProfileActivity extends AppCompatActivity implements ModifyPr
   private static final int REQUEST_IMAGE_CAPTURE = 0x00000001;
 
   private Button mCompleteButton;
+  private ContentLoadingProgressBar mCompleteProgressBar;
   private RoundedImageView mPhotoImage;
   private Button mChangePhotoButton;
 
@@ -82,6 +85,18 @@ public class ModifyProfileActivity extends AppCompatActivity implements ModifyPr
   }
 
   @Override
+  public void startUpdateProfile() {
+    mCompleteButton.setVisibility(View.INVISIBLE);
+    mCompleteProgressBar.show();
+  }
+
+  @Override
+  public void finishUpdateProfile() {
+    mCompleteButton.setVisibility(View.VISIBLE);
+    mCompleteProgressBar.hide();
+  }
+
+  @Override
   public void startTakePhotoIntent() {
     Intent takePhotoIntent = new Intent(Intent.ACTION_PICK, Media.EXTERNAL_CONTENT_URI);
     if (takePhotoIntent.resolveActivity(getPackageManager()) != null) {
@@ -95,6 +110,8 @@ public class ModifyProfileActivity extends AppCompatActivity implements ModifyPr
 
     mCompleteButton = findViewById(R.id.modify_profile_complete_button);
     mCompleteButton.setOnClickListener(v -> mPresenter.onCompleteButtonClicked());
+    mCompleteProgressBar = findViewById(R.id.modify_profile_complete_progress_bar);
+    mCompleteProgressBar.hide();
   }
 
   private void setupPhoto() {

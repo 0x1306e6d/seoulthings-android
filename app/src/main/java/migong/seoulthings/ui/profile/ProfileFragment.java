@@ -1,5 +1,6 @@
 package migong.seoulthings.ui.profile;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,9 +16,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.profile.adapter.ProfilePagerAdapter;
+import migong.seoulthings.ui.profile.modify.ModifyProfileActivity;
 
 public class ProfileFragment extends Fragment implements ProfileView {
 
@@ -83,6 +86,12 @@ public class ProfileFragment extends Fragment implements ProfileView {
     Log.d("ProfileFragment", "setPhoto() called with: uri = [" + uri + "]");
     Picasso.get()
         .load(uri)
+        .fit()
+        .transform(new RoundedTransformationBuilder()
+            .borderColor(R.color.colorStroke)
+            .borderWidthDp(1.0f)
+            .oval(true)
+            .build())
         .placeholder(R.drawable.ic_person_black_48)
         .into(mPhotoImage);
   }
@@ -90,6 +99,12 @@ public class ProfileFragment extends Fragment implements ProfileView {
   @Override
   public void setEmail(String email) {
     mEmailText.setText(email);
+  }
+
+  @Override
+  public void startModifyProfileActivity() {
+    Intent intent = new Intent(getContext(), ModifyProfileActivity.class);
+    startActivity(intent);
   }
 
   private void setupAppBar(@NonNull View view) {

@@ -9,4 +9,6 @@
   <dimen name="app_bar_height">56dp</dimen>
   <dimen name="bottom_navigation_height">56dp</dimen>
   <dimen name="thing_listitem_height">88dp</dimen>
+  <dimen name="profile_photo">128dp</dimen>
+  <dimen name="profile_photo_thumbnail">72dp</dimen>
 </resources>

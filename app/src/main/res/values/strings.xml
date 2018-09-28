@@ -7,6 +7,7 @@
   <string name="password">비밀번호</string>
   <string name="signin">로그인</string>
   <string name="signup">회원가입</string>
+  <string name="signout">로그아웃</string>
 
   <string name="category">카테고리</string>
   <string name="donation">나눔장터</string>
@@ -27,6 +28,11 @@
   <string name="complete_review">작성완료</string>
 
   <string name="modify_profile">프로필 수정</string>
+  <string name="change_profile_photo">프로필 사진 바꾸기</string>
+  <string name="profile_information">프로필 정보</string>
+  <string name="account_information">로그인 정보</string>
+  <string name="display_name">닉네임</string>
+  <string name="complete">완료</string>
 
   <string name="failed_to_signin">로그인을 실패하였습니다.</string>
   <string name="failed_to_signup">회원가입을 실패하였습니다.</string>

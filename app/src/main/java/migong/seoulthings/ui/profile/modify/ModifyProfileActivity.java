@@ -4,16 +4,21 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore.Images.Media;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import com.google.firebase.auth.FirebaseUser;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import migong.seoulthings.R;
+import org.apache.commons.lang3.StringUtils;
 
 public class ModifyProfileActivity extends AppCompatActivity implements ModifyProfileView {
 
@@ -23,6 +28,8 @@ public class ModifyProfileActivity extends AppCompatActivity implements ModifyPr
   private ContentLoadingProgressBar mCompleteProgressBar;
   private RoundedImageView mPhotoImage;
   private Button mChangePhotoButton;
+  private TextInputEditText mDisplayNameEditText;
+  private TextView mEmailText;
 
   private ModifyProfilePresenter mPresenter;
 
@@ -33,6 +40,8 @@ public class ModifyProfileActivity extends AppCompatActivity implements ModifyPr
 
     setupAppBar();
     setupPhoto();
+    setupProfileInformation();
+    setupSignOutButton();
 
     mPresenter = new ModifyProfilePresenter(this);
     mPresenter.onCreate(savedInstanceState);
@@ -71,6 +80,14 @@ public class ModifyProfileActivity extends AppCompatActivity implements ModifyPr
   }
 
   @Override
+  public void bindProfile(@NonNull FirebaseUser user) {
+    changePhoto(user.getPhotoUrl());
+    mDisplayNameEditText.setText(user.getDisplayName());
+    mDisplayNameEditText.clearFocus();
+    mEmailText.setText(user.getEmail());
+  }
+
+  @Override
   public void changePhoto(Uri photoUri) {
     Picasso.get()
         .load(photoUri)
@@ -82,6 +99,15 @@ public class ModifyProfileActivity extends AppCompatActivity implements ModifyPr
             .build())
         .placeholder(R.drawable.ic_person_black_48)
         .into(mPhotoImage);
+  }
+
+  @Override
+  public String getDisplayName() {
+    if (mDisplayNameEditText == null || mDisplayNameEditText.getText() == null) {
+      return StringUtils.EMPTY;
+    } else {
+      return mDisplayNameEditText.getText().toString();
+    }
   }
 
   @Override
@@ -119,5 +145,15 @@ public class ModifyProfileActivity extends AppCompatActivity implements ModifyPr
 
     mChangePhotoButton = findViewById(R.id.modify_profile_change_photo_button);
     mChangePhotoButton.setOnClickListener(v -> mPresenter.onChangePhotoButtonClicked());
+  }
+
+  private void setupProfileInformation() {
+    mDisplayNameEditText = findViewById(R.id.modify_profile_display_name_edittext);
+    mEmailText = findViewById(R.id.modify_profile_email);
+  }
+
+  private void setupSignOutButton() {
+    Button signOutButton = findViewById(R.id.modify_profile_signout_button);
+    signOutButton.setOnClickListener(v -> mPresenter.onSignOutButtonClicked());
   }
 }

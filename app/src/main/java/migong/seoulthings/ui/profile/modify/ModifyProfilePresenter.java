@@ -50,13 +50,13 @@ public class ModifyProfilePresenter implements Presenter {
     }
 
     mStorage = FirebaseStorage.getInstance();
-
-    mView.changePhoto(mUser.getPhotoUrl());
   }
 
   @Override
   public void onResume() {
     Log.d(TAG, "onResume() called");
+
+    mView.bindProfile(mUser);
   }
 
   @Override
@@ -104,6 +104,7 @@ public class ModifyProfilePresenter implements Presenter {
               final Uri photoUri = task.getResult();
               final UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
                   .setPhotoUri(photoUri)
+                  .setDisplayName(mView.getDisplayName())
                   .build();
               return mUser.updateProfile(request);
             })
@@ -119,6 +120,7 @@ public class ModifyProfilePresenter implements Presenter {
       Log.d(TAG, "onCompleteButtonClicked: photo is not changed.");
 
       final UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+          .setDisplayName(mView.getDisplayName())
           .build();
       mUser.updateProfile(request)
           .addOnCompleteListener(task -> mView.finishUpdateProfile())
@@ -131,6 +133,10 @@ public class ModifyProfilePresenter implements Presenter {
 
   public void onChangePhotoButtonClicked() {
     mView.startTakePhotoIntent();
+  }
+
+  public void onSignOutButtonClicked() {
+    Log.d(TAG, "onSignOutButtonClicked() called");
   }
 
   private byte[] resizePhoto() throws IOException {

@@ -5,7 +5,6 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:paddingTop="@dimen/spacing_unit_normal"
-  android:paddingBottom="@dimen/spacing_unit_normal"
   android:paddingStart="@dimen/spacing_unit_normal"
   android:paddingEnd="@dimen/spacing_unit_normal"
   android:minHeight="88dp">
@@ -19,17 +18,18 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"/>
 
-  <ImageView
+  <com.makeramen.roundedimageview.RoundedImageView
     android:id="@+id/review_listitem_profile_photo"
     android:layout_width="36dp"
     android:layout_height="36dp"
     android:visibility="gone"
-    app:layout_constraintEnd_toStartOf="@id/review_listitem_profile_display_name"
+    app:layout_constraintEnd_toStartOf="@id/review_listitem_title"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"/>
+    app:layout_constraintTop_toTopOf="parent"
+    app:riv_oval="true"/>
 
   <TextView
-    android:id="@+id/review_listitem_profile_display_name"
+    android:id="@+id/review_listitem_title"
     android:textStyle="bold"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
     app:layout_constraintTop_toTopOf="parent"/>
 
   <RatingBar
-    android:id="@+id/review_listitem_rating_bar"
+    android:id="@+id/review_listitem_ratingbar"
     style="@style/Widget.AppCompat.RatingBar.Small"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
     android:visibility="gone"
     app:layout_constraintBottom_toTopOf="@id/review_listitem_contents"
     app:layout_constraintStart_toEndOf="@id/review_listitem_profile_photo"
-    app:layout_constraintTop_toBottomOf="@id/review_listitem_profile_display_name"/>
+    app:layout_constraintTop_toBottomOf="@id/review_listitem_title"/>
 
   <TextView
     android:id="@+id/review_listitem_contents"
@@ -84,7 +84,7 @@
     app:layout_constraintBottom_toTopOf="@id/review_listitem_modify_button"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toEndOf="@id/review_listitem_profile_photo"
-    app:layout_constraintTop_toBottomOf="@id/review_listitem_rating_bar"/>
+    app:layout_constraintTop_toBottomOf="@id/review_listitem_ratingbar"/>
 
   <Button
     android:id="@+id/review_listitem_modify_button"

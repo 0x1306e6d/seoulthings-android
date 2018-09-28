@@ -38,12 +38,10 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerVi
   @NonNull
   private final List<DocumentSnapshot> mSnapshots;
 
-  public ReviewRecyclerAdapter(
+  public ReviewRecyclerAdapter(@NonNull CompositeDisposable compositeDisposable,
       @NonNull ReviewRecyclerFormViewHolder.ClickListener formViewHolderClickListener,
       @NonNull ReviewRecyclerReviewViewHolder.ClickListener reviewViewHolderClickListener) {
     super();
-    mFormViewHolderClickListener = formViewHolderClickListener;
-    mReviewViewHolderClickListener = reviewViewHolderClickListener;
     mAuth = FirebaseAuth.getInstance();
     mUser = mAuth.getCurrentUser();
     mRetrofit = new Retrofit.Builder()
@@ -52,7 +50,9 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerVi
         .addConverterFactory(GsonConverterFactory.create())
         .build();
     mFirebaseAPI = mRetrofit.create(FirebaseAPI.class);
-    mCompositeDisposable = new CompositeDisposable();
+    mCompositeDisposable = compositeDisposable;
+    mFormViewHolderClickListener = formViewHolderClickListener;
+    mReviewViewHolderClickListener = reviewViewHolderClickListener;
     mSnapshots = new ArrayList<>();
   }
 
@@ -61,11 +61,11 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerVi
   public ReviewRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     if (viewType == ReviewRecyclerViewHolder.VIEW_TYPE_FORM) {
       final View view = LayoutInflater.from(parent.getContext())
-          .inflate(R.layout.thing_reviews_listitem_form, parent, false);
+          .inflate(R.layout.review_suggestion, parent, false);
       return new ReviewRecyclerFormViewHolder(view, mUser, mFormViewHolderClickListener);
     } else {
       final View view = LayoutInflater.from(parent.getContext())
-          .inflate(R.layout.thing_reviews_listitem_review, parent, false);
+          .inflate(R.layout.review_listitem, parent, false);
       return new ReviewRecyclerReviewViewHolder(view, mAuth.getUid(), mFirebaseAPI,
           mCompositeDisposable, mReviewViewHolderClickListener);
     }
@@ -99,10 +99,6 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerVi
     } else {
       return ReviewRecyclerViewHolder.VIEW_TYPE_REVIEW;
     }
-  }
-
-  public void dispose() {
-    mCompositeDisposable.dispose();
   }
 
   public void addSnapshot(int index, QueryDocumentSnapshot snapshot) {

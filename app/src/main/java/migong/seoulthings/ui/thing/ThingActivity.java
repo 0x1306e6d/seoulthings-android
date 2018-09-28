@@ -230,10 +230,9 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
     mReviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     mReviewRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
 
-    mReviewRecyclerAdapter = new ReviewRecyclerAdapter(
+    mReviewRecyclerAdapter = new ReviewRecyclerAdapter(mCompositeDisposable,
         () -> mPresenter.onMakeReviewSuggestionClicked(),
-        review -> mPresenter.onModifyReviewButtonClicked(review)
-    );
+        review -> mPresenter.onModifyReviewButtonClicked(review));
     mReviewRecyclerView.setAdapter(mReviewRecyclerAdapter);
   }
 }

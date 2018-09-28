@@ -6,7 +6,7 @@ public interface ProfileView {
 
   int MY_THINGS_POSITION = 0;
   int MY_DONATIONS_POSITION = 1;
-  int MY_COMMENTS_POSITION = 2;
+  int MY_REVIEWS_POSITION = 2;
 
   void setTitle(String title);
 

@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import migong.seoulthings.ui.main.profile.ProfileView;
-import migong.seoulthings.ui.main.profile.comments.MyCommentsFragment;
 import migong.seoulthings.ui.main.profile.donations.MyDonationsFragment;
+import migong.seoulthings.ui.main.profile.reviews.MyReviewsFragment;
 import migong.seoulthings.ui.main.profile.things.MyThingsFragment;
 
 public class ProfilePagerAdapter extends FragmentPagerAdapter {
@@ -22,8 +22,8 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
         return new MyThingsFragment();
       case ProfileView.MY_DONATIONS_POSITION:
         return new MyDonationsFragment();
-      case ProfileView.MY_COMMENTS_POSITION:
-        return new MyCommentsFragment();
+      case ProfileView.MY_REVIEWS_POSITION:
+        return new MyReviewsFragment();
     }
     return null;
   }
@@ -41,7 +41,7 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
         return "대여 정보";
       case ProfileView.MY_DONATIONS_POSITION:
         return "내 글보기";
-      case ProfileView.MY_COMMENTS_POSITION:
+      case ProfileView.MY_REVIEWS_POSITION:
         return "내 댓글보기";
     }
     return super.getPageTitle(position);

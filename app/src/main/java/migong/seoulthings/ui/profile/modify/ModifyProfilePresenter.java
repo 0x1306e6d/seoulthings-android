@@ -1,30 +1,42 @@
 package migong.seoulthings.ui.profile.modify;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+import io.reactivex.disposables.CompositeDisposable;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import migong.seoulthings.SeoulThingsConstants;
 import migong.seoulthings.ui.Presenter;
 
 public class ModifyProfilePresenter implements Presenter {
 
   private static final String TAG = ModifyProfilePresenter.class.getSimpleName();
 
+  private boolean mPhotoChanged;
   private FirebaseUser mUser;
   private FirebaseStorage mStorage;
   private Uri mCurrentPhotoUri;
+  @NonNull
+  private final CompositeDisposable mCompositeDisposable;
   @NonNull
   private final ModifyProfileView mView;
 
   public ModifyProfilePresenter(@NonNull ModifyProfileView view) {
     mView = view;
+    mCompositeDisposable = new CompositeDisposable();
   }
 
   @Override
@@ -64,6 +76,7 @@ public class ModifyProfilePresenter implements Presenter {
       return;
     }
 
+    mPhotoChanged = true;
     mCurrentPhotoUri = photoUri;
     mView.changePhoto(photoUri);
   }
@@ -74,10 +87,71 @@ public class ModifyProfilePresenter implements Presenter {
     }
     mView.startUpdateProfile();
 
+    if (mPhotoChanged) {
+      Log.d(TAG, "onCompleteButtonClicked: photo is changed.");
+
+      try {
+        uploadPhoto()
+            .continueWithTask(task -> {
+              if (!task.isSuccessful()) {
+                if (task.getException() == null) {
+                  throw new Exception("Failed to get download url from Firebase Storage.");
+                } else {
+                  throw task.getException();
+                }
+              }
+
+              final Uri photoUri = task.getResult();
+              final UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                  .setPhotoUri(photoUri)
+                  .build();
+              return mUser.updateProfile(request);
+            })
+            .addOnCompleteListener(task -> mView.finishUpdateProfile())
+            .addOnFailureListener(error -> {
+              Log.e(TAG, "Failed to update profile.", error);
+            })
+            .addOnSuccessListener(v -> mView.finish());
+      } catch (IOException e) {
+        Log.e(TAG, "Failed to upload photo.", e);
+      }
+    } else {
+      Log.d(TAG, "onCompleteButtonClicked: photo is not changed.");
+
+      final UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+          .build();
+      mUser.updateProfile(request)
+          .addOnCompleteListener(task -> mView.finishUpdateProfile())
+          .addOnFailureListener(error -> {
+            Log.e(TAG, "Failed to update profile.", error);
+          })
+          .addOnSuccessListener(v -> mView.finish());
+    }
+  }
+
+  public void onChangePhotoButtonClicked() {
+    mView.startTakePhotoIntent();
+  }
+
+  private byte[] resizePhoto() throws IOException {
+    try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+      final Bitmap bitmap = Picasso.get()
+          .load(mCurrentPhotoUri)
+          .resize(SeoulThingsConstants.PROFILE_PHOTO_SIZE, SeoulThingsConstants.PROFILE_PHOTO_SIZE)
+          .get();
+      bitmap.compress(CompressFormat.JPEG, 100, outputStream);
+      return outputStream.toByteArray();
+    }
+  }
+
+  private Task<Uri> uploadPhoto() throws IOException {
+    final byte[] data = resizePhoto();
+
     final StorageReference reference = mStorage.getReference();
     final StorageReference photosRef = reference.child("photos");
     final StorageReference photoRef = photosRef.child(mUser.getUid());
-    photoRef.putFile(mCurrentPhotoUri)
+
+    return photoRef.putBytes(data)
         .continueWithTask(task -> {
           if (!task.isSuccessful()) {
             if (task.getException() == null) {
@@ -88,31 +162,6 @@ public class ModifyProfilePresenter implements Presenter {
           }
 
           return photoRef.getDownloadUrl();
-        })
-        .continueWithTask(task -> {
-          if (!task.isSuccessful()) {
-            if (task.getException() == null) {
-              throw new Exception("Failed to get download url from Firebase Storage.");
-            } else {
-              throw task.getException();
-            }
-          }
-
-          Uri photoUri = task.getResult();
-          return mUser.updateProfile(new UserProfileChangeRequest.Builder()
-              .setPhotoUri(photoUri)
-              .build());
-        })
-        .addOnCompleteListener(task -> mView.finishUpdateProfile())
-        .addOnSuccessListener(v -> mView.finish())
-        .addOnFailureListener(error -> {
-          Log.e(TAG, "Failed to update profile.", error);
         });
-  }
-
-  public void onChangePhotoButtonClicked() {
-    Log.d(TAG, "onChangePhotoButtonClicked() called");
-
-    mView.startTakePhotoIntent();
   }
 }

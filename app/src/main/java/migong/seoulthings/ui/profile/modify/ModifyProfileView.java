@@ -18,5 +18,7 @@ public interface ModifyProfileView {
 
   void finishUpdateProfile();
 
+  void startSignInActivity();
+
   void startTakePhotoIntent();
 }

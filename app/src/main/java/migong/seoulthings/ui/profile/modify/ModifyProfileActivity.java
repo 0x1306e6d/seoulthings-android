@@ -18,6 +18,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.signin.SignInActivity;
 import org.apache.commons.lang3.StringUtils;
 
 public class ModifyProfileActivity extends AppCompatActivity implements ModifyProfileView {
@@ -120,6 +121,14 @@ public class ModifyProfileActivity extends AppCompatActivity implements ModifyPr
   public void finishUpdateProfile() {
     mCompleteButton.setVisibility(View.VISIBLE);
     mCompleteProgressBar.hide();
+  }
+
+  @Override
+  public void startSignInActivity() {
+    Intent intent = new Intent(this, SignInActivity.class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(intent);
   }
 
   @Override

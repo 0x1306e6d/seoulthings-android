@@ -26,6 +26,7 @@ public class ModifyProfilePresenter implements Presenter {
   private static final String TAG = ModifyProfilePresenter.class.getSimpleName();
 
   private boolean mPhotoChanged;
+  private FirebaseAuth mAuth;
   private FirebaseUser mUser;
   private FirebaseStorage mStorage;
   private Uri mCurrentPhotoUri;
@@ -43,7 +44,8 @@ public class ModifyProfilePresenter implements Presenter {
   public void onCreate(@Nullable Bundle savedInstanceState) {
     Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
 
-    mUser = FirebaseAuth.getInstance().getCurrentUser();
+    mAuth = FirebaseAuth.getInstance();
+    mUser = mAuth.getCurrentUser();
     if (mUser == null) {
       Log.e(TAG, "onCreate: user is NULL.");
       return;
@@ -136,7 +138,8 @@ public class ModifyProfilePresenter implements Presenter {
   }
 
   public void onSignOutButtonClicked() {
-    Log.d(TAG, "onSignOutButtonClicked() called");
+    mAuth.signOut();
+    mView.startSignInActivity();
   }
 
   private byte[] resizePhoto() throws IOException {

@@ -7,7 +7,7 @@
   android:layout_height="match_parent"
   android:focusable="true"
   android:focusableInTouchMode="true"
-  tools:context=".ui.profile.modify.ModifyProfileActivity">
+  tools:context=".ui.main.profile.modify.ModifyProfileActivity">
 
   <android.support.design.widget.AppBarLayout
     android:id="@+id/modify_profile_app_bar_layout"

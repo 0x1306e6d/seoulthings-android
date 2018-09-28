@@ -24,11 +24,11 @@
     <activity android:name=".ui.signin.SignInActivity"/>
     <activity android:name=".ui.signup.SignUpActivity"/>
     <activity android:name=".ui.main.MainActivity"/>
-    <activity android:name=".ui.things.ThingsActivity"/>
-    <activity android:name=".ui.thing.ThingActivity"/>
+    <activity android:name=".ui.main.category.things.ThingsActivity"/>
+    <activity android:name=".ui.main.profile.modify.ModifyProfileActivity"/>
     <activity android:name=".ui.donation.DonationActivity"/>
     <activity android:name=".ui.search.SearchActivity"/>
-    <activity android:name=".ui.profile.modify.ModifyProfileActivity"/>
+    <activity android:name=".ui.thing.ThingActivity"/>
 
     <!-- Google Maps Platform meta-data 요소 -->
     <meta-data

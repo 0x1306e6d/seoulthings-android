@@ -7,10 +7,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.Presenter;
-import migong.seoulthings.ui.category.CategoryFragment;
-import migong.seoulthings.ui.donations.DonationsFragment;
-import migong.seoulthings.ui.notification.NotificationFragment;
-import migong.seoulthings.ui.profile.ProfileFragment;
+import migong.seoulthings.ui.main.category.CategoryFragment;
+import migong.seoulthings.ui.main.donations.DonationsFragment;
+import migong.seoulthings.ui.main.notification.NotificationFragment;
+import migong.seoulthings.ui.main.profile.ProfileFragment;
 
 public class MainPresenter implements Presenter {
 

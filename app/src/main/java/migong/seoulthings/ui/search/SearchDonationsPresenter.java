@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import migong.seoulthings.data.Donation;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 
 public class SearchDonationsPresenter extends SearchPresenter {
 
@@ -92,9 +93,10 @@ public class SearchDonationsPresenter extends SearchPresenter {
 
         if (StringUtils.contains(donation.getTitle(), query) ||
             StringUtils.contains(donation.getContents(), query) ||
-            StringUtils.contains(donation.getLocation(), query)) {
+            StringUtils.contains(donation.getDong(), query)) {
           final SearchResult result = new SearchResult(SearchView.SCOPE_DONATIONS, document.getId(),
-              donation.getTitle(), donation.getContents(), donation.getUpdatedAt());
+              donation.getTitle(), donation.getContents(),
+              new DateTime(donation.getUpdatedAt().toDate().getTime()));
           searchResults.add(result);
         }
       }

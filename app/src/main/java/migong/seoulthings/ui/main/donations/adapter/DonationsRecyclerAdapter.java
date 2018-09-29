@@ -41,7 +41,7 @@ public class DonationsRecyclerAdapter extends Adapter<DonationsRecyclerViewHolde
   @Override
   public DonationsRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     final View view = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.donation_listitem, parent, false);
+        .inflate(R.layout.donation_griditem, parent, false);
     return new DonationsRecyclerViewHolder(view, mOnClickListener);
   }
 

@@ -1,26 +1,32 @@
 package migong.seoulthings.data;
 
-import org.joda.time.DateTime;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.Exclude;
+import java.util.Arrays;
 
 public class Donation {
 
+  @Exclude
+  private String mFirebaseId;
   private String mTitle;
   private String mContents;
-  private String mLocation;
-  private DateTime mCreatedAt;
-  private DateTime mUpdatedAt;
+  private String mDong;
+  private double mLatitude;
+  private double mLongitude;
+  private String[] mImageUrls;
+  private Timestamp mCreatedAt;
+  private Timestamp mUpdatedAt;
 
   public Donation() {
     // For FireStore deserialization.
   }
 
-  public Donation(String title, String contents, String location, DateTime createdAt,
-      DateTime updatedAt) {
-    this.mTitle = title;
-    this.mContents = contents;
-    this.mLocation = location;
-    this.mCreatedAt = createdAt;
-    this.mUpdatedAt = updatedAt;
+  public String getFirebaseId() {
+    return mFirebaseId;
+  }
+
+  public void setFirebaseId(String firebaseId) {
+    mFirebaseId = firebaseId;
   }
 
   public String getTitle() {
@@ -39,20 +45,44 @@ public class Donation {
     mContents = contents;
   }
 
-  public String getLocation() {
-    return mLocation;
+  public String getDong() {
+    return mDong;
   }
 
-  public void setLocation(String location) {
-    mLocation = location;
+  public void setDong(String dong) {
+    mDong = dong;
   }
 
-  public DateTime getCreatedAt() {
+  public double getLatitude() {
+    return mLatitude;
+  }
+
+  public void setLatitude(double latitude) {
+    mLatitude = latitude;
+  }
+
+  public double getLongitude() {
+    return mLongitude;
+  }
+
+  public void setLongitude(double longitude) {
+    mLongitude = longitude;
+  }
+
+  public Timestamp getCreatedAt() {
     return mCreatedAt;
   }
 
-  public DateTime getUpdatedAt() {
+  public void setCreatedAt(Timestamp createdAt) {
+    mCreatedAt = createdAt;
+  }
+
+  public Timestamp getUpdatedAt() {
     return mUpdatedAt;
+  }
+
+  public void setUpdatedAt(Timestamp updatedAt) {
+    mUpdatedAt = updatedAt;
   }
 
   @Override
@@ -60,7 +90,10 @@ public class Donation {
     final StringBuilder sb = new StringBuilder("Donation{");
     sb.append("title='").append(mTitle).append('\'');
     sb.append(", contents='").append(mContents).append('\'');
-    sb.append(", location='").append(mLocation).append('\'');
+    sb.append(", dong='").append(mDong).append('\'');
+    sb.append(", latitude=").append(mLatitude);
+    sb.append(", longitude=").append(mLongitude);
+    sb.append(", imageUrls=").append(Arrays.toString(mImageUrls));
     sb.append(", createdAt=").append(mCreatedAt);
     sb.append(", updatedAt=").append(mUpdatedAt);
     sb.append('}');

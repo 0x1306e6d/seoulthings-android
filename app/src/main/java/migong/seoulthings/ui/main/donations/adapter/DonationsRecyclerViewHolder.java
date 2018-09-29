@@ -30,8 +30,8 @@ public class DonationsRecyclerViewHolder extends ViewHolder {
   public DonationsRecyclerViewHolder(@NonNull View itemView,
       @NonNull OnClickListener onClickListener) {
     super(itemView);
-    mTitleView = itemView.findViewById(R.id.donation_listitem_title);
-    mLocationView = itemView.findViewById(R.id.donation_listitem_location);
+    mTitleView = itemView.findViewById(R.id.donation_griditem_title);
+    mLocationView = itemView.findViewById(R.id.donation_griditem_location);
     mOnClickListener = onClickListener;
 
     itemView.setOnClickListener(v -> {
@@ -50,6 +50,6 @@ public class DonationsRecyclerViewHolder extends ViewHolder {
 
     mDonationId = snapshot.getId();
     mTitleView.setText(donation.getTitle());
-    mLocationView.setText(donation.getLocation());
+    mLocationView.setText(donation.getDong());
   }
 }

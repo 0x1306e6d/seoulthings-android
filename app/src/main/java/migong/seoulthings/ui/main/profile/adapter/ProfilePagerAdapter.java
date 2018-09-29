@@ -40,9 +40,9 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
       case ProfileView.MY_THINGS_POSITION:
         return "대여 정보";
       case ProfileView.MY_DONATIONS_POSITION:
-        return "내 글보기";
+        return "나눔장터";
       case ProfileView.MY_REVIEWS_POSITION:
-        return "내 댓글보기";
+        return "한 줄 후기";
     }
     return super.getPageTitle(position);
   }

@@ -39,9 +39,11 @@
     android:textColor="@color/colorOnSurfaceHighEmphasis"
     android:textSize="16sp"
     android:visibility="gone"
+    app:layout_constraintBottom_toTopOf="@id/review_listitem_ratingbar"
     app:layout_constraintEnd_toStartOf="@id/review_listitem_updated_at"
     app:layout_constraintStart_toEndOf="@id/review_listitem_profile_photo"
-    app:layout_constraintTop_toTopOf="parent"/>
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_chainStyle="packed"/>
 
   <TextView
     android:id="@+id/review_listitem_updated_at"
@@ -51,15 +53,17 @@
     android:textColor="@color/colorOnSurfaceMediumEmphasis"
     android:textSize="12sp"
     android:visibility="gone"
+    app:layout_constraintBottom_toTopOf="@id/review_listitem_ratingbar"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent"/>
+    app:layout_constraintStart_toEndOf="@id/review_listitem_title"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_chainStyle="packed"/>
 
   <RatingBar
     android:id="@+id/review_listitem_ratingbar"
     style="@style/Widget.AppCompat.RatingBar.Small"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/spacing_unit_narrow"
     android:layout_marginStart="@dimen/spacing_unit_normal"
     android:layout_marginEnd="@dimen/spacing_unit_normal"
     android:isIndicator="true"
@@ -68,13 +72,13 @@
     android:visibility="gone"
     app:layout_constraintBottom_toTopOf="@id/review_listitem_contents"
     app:layout_constraintStart_toEndOf="@id/review_listitem_profile_photo"
-    app:layout_constraintTop_toBottomOf="@id/review_listitem_title"/>
+    app:layout_constraintTop_toBottomOf="@id/review_listitem_title"
+    app:layout_constraintVertical_chainStyle="packed"/>
 
   <TextView
     android:id="@+id/review_listitem_contents"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/spacing_unit_narrow"
     android:paddingStart="@dimen/spacing_unit_normal"
     android:paddingEnd="@dimen/spacing_unit_normal"
     android:text="@string/msg_loading"
@@ -84,7 +88,8 @@
     app:layout_constraintBottom_toTopOf="@id/review_listitem_modify_button"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toEndOf="@id/review_listitem_profile_photo"
-    app:layout_constraintTop_toBottomOf="@id/review_listitem_ratingbar"/>
+    app:layout_constraintTop_toBottomOf="@id/review_listitem_ratingbar"
+    app:layout_constraintVertical_chainStyle="packed"/>
 
   <Button
     android:id="@+id/review_listitem_modify_button"

@@ -46,8 +46,8 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
 
   private String mThingId;
   private GoogleMap mGoogleMap;
-  private CompositeDisposable mCompositeDisposable;
   private ThingPresenter mPresenter;
+  private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +73,6 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
     setupInteraction();
     setupDetailLayout();
     setupReviewRecycler();
-
-    mCompositeDisposable = new CompositeDisposable();
 
     mPresenter = new ThingPresenter(this, mThingId);
     mPresenter.onCreate(savedInstanceState);

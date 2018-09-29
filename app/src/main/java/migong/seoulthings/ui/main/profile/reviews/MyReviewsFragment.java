@@ -29,7 +29,7 @@ public class MyReviewsFragment extends Fragment implements MyReviewsView {
   private RecyclerView mReviewRecyclerView;
   private MyReviewRecyclerAdapter mReviewRecyclerAdapter;
 
-  private CompositeDisposable mCompositeDisposable;
+  private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
   private MyReviewsPresenter mPresenter;
 
   @Nullable
@@ -49,8 +49,6 @@ public class MyReviewsFragment extends Fragment implements MyReviewsView {
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    mCompositeDisposable = new CompositeDisposable();
 
     mPresenter = new MyReviewsPresenter(this);
     mPresenter.onCreate(savedInstanceState);

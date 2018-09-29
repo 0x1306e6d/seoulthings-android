@@ -2,11 +2,16 @@ package migong.seoulthings.ui.donate;
 
 import android.Manifest.permission;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore.Images.Media;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,14 +28,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.donate.adapter.DonateImagePagerAdapter;
 
 public class DonateActivity extends AppCompatActivity implements DonateView {
 
+  private static final int REQUEST_PICK_PHOTO = 0x00000001;
+
   private static final int PERMISSION_FOR_COARSE_LOCATION = 0x00000001;
   private static final int PERMISSION_FOR_FINE_LOCATION = 0x00000010;
+
   private static final String TAG = DonateActivity.class.getSimpleName();
 
   private Button mSubmitButton;
+  private ViewPager mImagePager;
+  private DonateImagePagerAdapter mImagePagerAdapter;
   private ContentLoadingProgressBar mAddressLoadingProgressBar;
   private Button mAddressButton;
   private FrameLayout mGoogleMapContainer;
@@ -49,6 +60,7 @@ public class DonateActivity extends AppCompatActivity implements DonateView {
     setContentView(R.layout.donate_activity);
 
     setupAppBar();
+    setupImagePager();
     setupForm();
 
     mPresenter = new DonatePresenter(this);
@@ -74,6 +86,20 @@ public class DonateActivity extends AppCompatActivity implements DonateView {
   }
 
   @Override
+  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    switch (requestCode) {
+      case REQUEST_PICK_PHOTO:
+        if (resultCode == RESULT_OK) {
+          mPresenter.onRequestPickPhotoSuccess(data);
+        }
+        break;
+      default:
+        super.onActivityResult(requestCode, resultCode, data);
+        break;
+    }
+  }
+
+  @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
       @NonNull int[] grantResults) {
     switch (requestCode) {
@@ -91,6 +117,19 @@ public class DonateActivity extends AppCompatActivity implements DonateView {
   @Override
   public Context getContext() {
     return this;
+  }
+
+  @Override
+  public void startPickPhotoIntent() {
+    Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK, Media.EXTERNAL_CONTENT_URI);
+    if (pickPhotoIntent.resolveActivity(getPackageManager()) != null) {
+      startActivityForResult(pickPhotoIntent, REQUEST_PICK_PHOTO);
+    }
+  }
+
+  @Override
+  public void addImage(@NonNull Uri imageUri) {
+    mImagePagerAdapter.addImage(imageUri);
   }
 
   @Override
@@ -139,6 +178,13 @@ public class DonateActivity extends AppCompatActivity implements DonateView {
     backButton.setOnClickListener(v -> onBackPressed());
 
     mSubmitButton = findViewById(R.id.donate_submit_button);
+  }
+
+  private void setupImagePager() {
+    mImagePager = findViewById(R.id.donate_image_pager);
+    mImagePagerAdapter = new DonateImagePagerAdapter(this, mImagePager,
+        () -> mPresenter.onAddPhotoButtonClicked());
+    mImagePager.setAdapter(mImagePagerAdapter);
   }
 
   private void setupForm() {

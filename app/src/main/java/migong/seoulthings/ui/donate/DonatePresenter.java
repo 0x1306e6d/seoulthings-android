@@ -1,7 +1,9 @@
 package migong.seoulthings.ui.donate;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,6 +46,20 @@ public class DonatePresenter implements Presenter {
   @Override
   public void onDestroy() {
     Log.d(TAG, "onDestroy() called");
+  }
+
+  public void onAddPhotoButtonClicked() {
+    mView.startPickPhotoIntent();
+  }
+
+  public void onRequestPickPhotoSuccess(Intent data) {
+    Uri photoUri = data.getData();
+    if (photoUri == null) {
+      Log.e(TAG, "onRequestPickPhotoSuccess: photoUri is NULL.");
+      return;
+    }
+
+    mView.addImage(photoUri);
   }
 
   public void onAddressButtonClicked() {

@@ -50,4 +50,5 @@
   <string name="msg_things_are_empty">대여할 수 있는 물건들이 없습니다.</string>
   <string name="msg_make_review_suggestion">간단한 한 줄 후기를 남겨주세요.</string>
   <string name="msg_set_address">위치 설정하기</string>
+  <string name="msg_complete_donation">나눔 완료</string>
 </resources>

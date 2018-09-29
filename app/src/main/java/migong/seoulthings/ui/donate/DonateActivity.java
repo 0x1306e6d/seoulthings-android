@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore.Images.Media;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
@@ -27,8 +28,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import java.util.List;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.donate.adapter.DonateImagePagerAdapter;
+import org.apache.commons.lang3.StringUtils;
 
 public class DonateActivity extends AppCompatActivity implements DonateView {
 
@@ -40,6 +43,7 @@ public class DonateActivity extends AppCompatActivity implements DonateView {
   private static final String TAG = DonateActivity.class.getSimpleName();
 
   private Button mSubmitButton;
+  private ContentLoadingProgressBar mSubmitProgressBar;
   private ViewPager mImagePager;
   private DonateImagePagerAdapter mImagePagerAdapter;
   private ContentLoadingProgressBar mAddressLoadingProgressBar;
@@ -120,6 +124,27 @@ public class DonateActivity extends AppCompatActivity implements DonateView {
   }
 
   @Override
+  public String getDonationTitle() {
+    if (mTitleEditText == null || mTitleEditText.getText() == null) {
+      return StringUtils.EMPTY;
+    }
+    return mTitleEditText.getText().toString();
+  }
+
+  @Override
+  public String getDonationContents() {
+    if (mContentsEditText == null || mContentsEditText.getText() == null) {
+      return StringUtils.EMPTY;
+    }
+    return mContentsEditText.getText().toString();
+  }
+
+  @Override
+  public List<Uri> getDonationImages() {
+    return mImagePagerAdapter.getImages();
+  }
+
+  @Override
   public void startPickPhotoIntent() {
     Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK, Media.EXTERNAL_CONTENT_URI);
     if (pickPhotoIntent.resolveActivity(getPackageManager()) != null) {
@@ -173,11 +198,32 @@ public class DonateActivity extends AppCompatActivity implements DonateView {
     mGoogleMapMarker = mGoogleMap.addMarker(new MarkerOptions().position(latLng));
   }
 
+  @Override
+  public void showSnackBar(int messageResId) {
+    Snackbar.make(mSubmitButton, messageResId, Snackbar.LENGTH_SHORT)
+        .show();
+  }
+
+  @Override
+  public void startSubmit() {
+    mSubmitButton.setVisibility(View.INVISIBLE);
+    mSubmitProgressBar.show();
+  }
+
+  @Override
+  public void finishSubmit() {
+    mSubmitButton.setVisibility(View.VISIBLE);
+    mSubmitProgressBar.hide();
+  }
+
   private void setupAppBar() {
     ImageButton backButton = findViewById(R.id.donate_back_button);
     backButton.setOnClickListener(v -> onBackPressed());
 
     mSubmitButton = findViewById(R.id.donate_submit_button);
+    mSubmitButton.setOnClickListener(v -> mPresenter.onSubmitButtonClicked());
+    mSubmitProgressBar = findViewById(R.id.donate_submit_progressbar);
+    mSubmitProgressBar.hide();
   }
 
   private void setupImagePager() {

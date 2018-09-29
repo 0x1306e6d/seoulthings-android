@@ -1,8 +1,9 @@
 package migong.seoulthings.data;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.Exclude;
-import java.util.Arrays;
+import java.util.List;
 
 public class Donation {
 
@@ -13,12 +14,23 @@ public class Donation {
   private String mDong;
   private double mLatitude;
   private double mLongitude;
-  private String[] mImageUrls;
+  private String mThumbnailUrl;
+  private List<String> mImageUrls;
   private Timestamp mCreatedAt;
   private Timestamp mUpdatedAt;
 
   public Donation() {
     // For FireStore deserialization.
+  }
+
+  public Donation(String title, String contents, String thoroughfare, LatLng latLng) {
+    mTitle = title;
+    mContents = contents;
+    mDong = thoroughfare;
+    mLatitude = latLng.latitude;
+    mLongitude = latLng.longitude;
+    mCreatedAt = Timestamp.now();
+    mUpdatedAt = Timestamp.now();
   }
 
   public String getFirebaseId() {
@@ -69,6 +81,22 @@ public class Donation {
     mLongitude = longitude;
   }
 
+  public String getThumbnailUrl() {
+    return mThumbnailUrl;
+  }
+
+  public void setThumbnailUrl(String thumbnailUrl) {
+    mThumbnailUrl = mThumbnailUrl;
+  }
+
+  public List<String> getImageUrls() {
+    return mImageUrls;
+  }
+
+  public void setImageUrls(List<String> imageUrls) {
+    mImageUrls = mImageUrls;
+  }
+
   public Timestamp getCreatedAt() {
     return mCreatedAt;
   }
@@ -93,7 +121,7 @@ public class Donation {
     sb.append(", dong='").append(mDong).append('\'');
     sb.append(", latitude=").append(mLatitude);
     sb.append(", longitude=").append(mLongitude);
-    sb.append(", imageUrls=").append(Arrays.toString(mImageUrls));
+    sb.append(", imageUrls=").append(mImageUrls);
     sb.append(", createdAt=").append(mCreatedAt);
     sb.append(", updatedAt=").append(mUpdatedAt);
     sb.append('}');

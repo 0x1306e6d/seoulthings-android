@@ -61,6 +61,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+      <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/donate_submit_progressbar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/donate_submit_button"
+        app:layout_constraintEnd_toEndOf="@id/donate_submit_button"
+        app:layout_constraintStart_toStartOf="@id/donate_submit_button"
+        app:layout_constraintTop_toTopOf="@id/donate_submit_button"/>
     </android.support.constraint.ConstraintLayout>
   </android.support.design.widget.AppBarLayout>
 

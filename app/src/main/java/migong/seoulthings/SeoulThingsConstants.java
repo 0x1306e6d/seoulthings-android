@@ -9,6 +9,7 @@ public final class SeoulThingsConstants {
 
   public static final String SEOULTHINGS_SERVER_BASE_URL = "https://seoulthings.herokuapp.com";
 
+  public static final int THUMBNAIL_SIZE = 256;
   public static final int PROFILE_PHOTO_SIZE = 512;
 
   private SeoulThingsConstants() {

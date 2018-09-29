@@ -2,9 +2,17 @@ package migong.seoulthings.ui.search;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import migong.seoulthings.data.Donation;
+import migong.seoulthings.data.Thing;
 import org.joda.time.DateTime;
 
 public final class SearchResult {
+
+  @Nullable
+  private Thing mThing;
+
+  @Nullable
+  private Donation mDonation;
 
   @NonNull
   private final String mScope;
@@ -21,13 +29,34 @@ public final class SearchResult {
   @Nullable
   private final DateTime mUpdatedAt;
 
-  public SearchResult(@NonNull String scope, @NonNull String id, @NonNull String title,
-      @NonNull String contents, @Nullable DateTime updatedAt) {
-    this.mScope = scope;
-    this.mId = id;
-    this.mTitle = title;
-    this.mContents = contents;
-    this.mUpdatedAt = updatedAt;
+  public SearchResult(@NonNull Thing thing, @NonNull String scope, @NonNull String id,
+      @NonNull String title, @NonNull String contents, @Nullable DateTime updatedAt) {
+    mThing = thing;
+    mScope = scope;
+    mId = id;
+    mTitle = title;
+    mContents = contents;
+    mUpdatedAt = updatedAt;
+  }
+
+  public SearchResult(@NonNull Donation donation, @NonNull String scope, @NonNull String id,
+      @NonNull String title, @NonNull String contents, @Nullable DateTime updatedAt) {
+    mDonation = donation;
+    mScope = scope;
+    mId = id;
+    mTitle = title;
+    mContents = contents;
+    mUpdatedAt = updatedAt;
+  }
+
+  @Nullable
+  public Thing getThing() {
+    return mThing;
+  }
+
+  @Nullable
+  public Donation getDonation() {
+    return mDonation;
   }
 
   @NonNull

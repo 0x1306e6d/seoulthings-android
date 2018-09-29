@@ -41,6 +41,24 @@ public final class Category {
     return StringUtils.EMPTY;
   }
 
+  public static int getIconRedId(String category) {
+    switch (category) {
+      case BICYCLE:
+        return R.drawable.ic_bicycle_color_36;
+      case MEDICAL_DEVICE:
+        return R.drawable.ic_medical_device_color_36;
+      case POWER_BANK:
+        return R.drawable.ic_power_bank_color_36;
+      case SUIT:
+        return R.drawable.ic_suit_color_36;
+      case TOOL:
+        return R.drawable.ic_tool_color_36;
+      case TOY:
+        return R.drawable.ic_toy_color_36;
+    }
+    throw new IllegalStateException();
+  }
+
   private Category() {
     // nothing
   }

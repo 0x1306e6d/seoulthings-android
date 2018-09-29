@@ -94,8 +94,8 @@ public class SearchDonationsPresenter extends SearchPresenter {
         if (StringUtils.contains(donation.getTitle(), query) ||
             StringUtils.contains(donation.getContents(), query) ||
             StringUtils.contains(donation.getDong(), query)) {
-          final SearchResult result = new SearchResult(SearchView.SCOPE_DONATIONS, document.getId(),
-              donation.getTitle(), donation.getContents(),
+          final SearchResult result = new SearchResult(donation, SearchView.SCOPE_DONATIONS,
+              document.getId(), donation.getTitle(), donation.getContents(),
               new DateTime(donation.getUpdatedAt().toDate().getTime()));
           searchResults.add(result);
         }

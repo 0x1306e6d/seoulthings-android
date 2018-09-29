@@ -9,7 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import migong.seoulthings.R;
 import migong.seoulthings.data.Category;
 import migong.seoulthings.ui.main.category.things.ThingsActivity;
@@ -20,12 +20,12 @@ import migong.seoulthings.ui.search.SearchView;
 public class CategoryFragment extends Fragment implements CategoryView {
 
   private AppBarLayout mAppBarLayout;
-  private Button mBicycleCategoryButton;
-  private Button mToyCategoryButton;
-  private Button mToolCategoryButton;
-  private Button mMedicalDeviceCategoryButton;
-  private Button mPowerBankCategoryButton;
-  private Button mSuitCategoryButton;
+  private ImageButton mBicycleCategoryButton;
+  private ImageButton mToyCategoryButton;
+  private ImageButton mToolCategoryButton;
+  private ImageButton mMedicalDeviceCategoryButton;
+  private ImageButton mPowerBankCategoryButton;
+  private ImageButton mSuitCategoryButton;
 
   private CategoryPresenter mPresenter;
 

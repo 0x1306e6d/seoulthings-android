@@ -94,7 +94,7 @@ public class SearchThingsPresenter extends SearchPresenter {
                   response -> {
                     List<SearchResult> searchResults = new ArrayList<>();
                     for (Thing thing : response.getThings()) {
-                      final SearchResult result = new SearchResult(SearchView.SCOPE_THINGS,
+                      final SearchResult result = new SearchResult(thing, SearchView.SCOPE_THINGS,
                           thing.getId(), thing.getLocation().getName(), thing.getContents(), null);
                       searchResults.add(result);
                     }
@@ -120,7 +120,7 @@ public class SearchThingsPresenter extends SearchPresenter {
                   response -> {
                     List<SearchResult> searchResults = new ArrayList<>();
                     for (Thing thing : response.getThings()) {
-                      final SearchResult result = new SearchResult(SearchView.SCOPE_THINGS,
+                      final SearchResult result = new SearchResult(thing, SearchView.SCOPE_THINGS,
                           thing.getId(), thing.getLocation().getName(), thing.getContents(), null);
                       searchResults.add(result);
                     }

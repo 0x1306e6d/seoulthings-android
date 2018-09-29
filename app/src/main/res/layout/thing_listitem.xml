@@ -16,21 +16,7 @@
     android:layout_marginEnd="@dimen/spacing_unit_normal"
     android:src="@drawable/ic_mockup_black_24"
     app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toStartOf="@id/thing_listitem_divider"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"/>
-
-  <View
-    android:id="@+id/thing_listitem_divider"
-    android:layout_width="1dp"
-    android:layout_height="0dp"
-    android:layout_marginTop="@dimen/spacing_unit_narrow"
-    android:layout_marginBottom="@dimen/spacing_unit_narrow"
-    android:layout_marginStart="@dimen/spacing_unit_narrow"
-    android:layout_marginEnd="@dimen/spacing_unit_narrow"
-    android:background="@color/colorStroke"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toEndOf="@id/thing_listitem_icon"
     app:layout_constraintTop_toTopOf="parent"/>
 
   <TextView
@@ -47,7 +33,7 @@
     android:textSize="16sp"
     app:layout_constraintBottom_toTopOf="@id/thing_listitem_contents"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@id/thing_listitem_divider"
+    app:layout_constraintStart_toEndOf="@id/thing_listitem_icon"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintVertical_chainStyle="packed"
     tools:text="@string/msg_loading"/>
@@ -65,7 +51,7 @@
     android:textSize="12sp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@id/thing_listitem_divider"
+    app:layout_constraintStart_toEndOf="@id/thing_listitem_icon"
     app:layout_constraintTop_toBottomOf="@id/thing_listitem_location"
     app:layout_constraintVertical_chainStyle="packed"
     tools:text="@string/msg_loading"/>

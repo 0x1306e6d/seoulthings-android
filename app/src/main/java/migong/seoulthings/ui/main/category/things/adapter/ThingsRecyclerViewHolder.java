@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import migong.seoulthings.R;
+import migong.seoulthings.data.Category;
 import migong.seoulthings.data.Thing;
 
 public class ThingsRecyclerViewHolder extends RecyclerView.ViewHolder {
@@ -39,12 +40,15 @@ public class ThingsRecyclerViewHolder extends RecyclerView.ViewHolder {
 
   public void bind(@NonNull Thing thing) {
     mThingId = thing.getId();
+    mIconImageView.setVisibility(View.VISIBLE);
+    mIconImageView.setImageResource(Category.getIconRedId(thing.getCategory()));
     mLocationTextView.setText(thing.getLocation().getName());
     mContentsTextView.setText(thing.getContents());
   }
 
   public void clear() {
     mThingId = null;
+    mIconImageView.setVisibility(View.INVISIBLE);
     mLocationTextView.setText(R.string.msg_loading);
     mContentsTextView.setText(R.string.msg_loading);
   }

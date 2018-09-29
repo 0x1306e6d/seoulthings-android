@@ -21,6 +21,10 @@
   <string name="power_bank">보조배터리</string>
   <string name="suit">면접 정장</string>
 
+  <string name="donate">나눔하기</string>
+  <string name="title">제목</string>
+  <string name="contents">내용</string>
+
   <string name="thing_contents">보유중인 물품</string>
   <string name="thing_location">운영 정보</string>
   <string name="thing_reviews">한 줄 후기</string>
@@ -45,4 +49,5 @@
   <string name="msg_search_result_is_empty">검색 결과가 없습니다.</string>
   <string name="msg_things_are_empty">대여할 수 있는 물건들이 없습니다.</string>
   <string name="msg_make_review_suggestion">간단한 한 줄 후기를 남겨주세요.</string>
+  <string name="msg_set_address">위치 설정하기</string>
 </resources>

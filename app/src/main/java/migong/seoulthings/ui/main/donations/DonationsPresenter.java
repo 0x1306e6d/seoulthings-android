@@ -53,14 +53,14 @@ public class DonationsPresenter implements Presenter {
   }
 
   public void onSearchButtonClicked() {
-    Log.d(TAG, "onSearchButtonClicked() called");
-
     mView.startSearchActivity();
   }
 
-  public void onRecyclerViewHolderClicked(@NonNull String donationId) {
-    Log.d(TAG, "onRecyclerViewHolderClicked() called with: donationId = [" + donationId + "]");
+  public void onFABClicked() {
+    mView.startDonateActivity();
+  }
 
+  public void onRecyclerViewHolderClicked(@NonNull String donationId) {
     mView.startDonationActivity(donationId);
   }
 }

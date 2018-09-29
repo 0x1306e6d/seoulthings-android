@@ -9,6 +9,8 @@ public interface DonationsView {
 
   void startSearchActivity();
 
+  void startDonateActivity();
+
   void startDonationActivity(@NonNull String donationId);
 
   void setQuery(Query query);

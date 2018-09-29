@@ -115,7 +115,7 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
 
     LatLng location = new LatLng(latitude, longitude);
     mGoogleMap.addMarker(new MarkerOptions().position(location).title(title));
-    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 13f));
+    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 13.0f));
   }
 
   @Override
@@ -215,10 +215,9 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
 
     mGoogleMapFragment = (SupportMapFragment) getSupportFragmentManager()
         .findFragmentById(R.id.thing_map);
-    if (mGoogleMapFragment == null) {
-      return;
+    if (mGoogleMapFragment != null) {
+      mGoogleMapFragment.getMapAsync(googleMap -> mGoogleMap = googleMap);
     }
-    mGoogleMapFragment.getMapAsync(googleMap -> mGoogleMap = googleMap);
 
     mAddressText = findViewById(R.id.thing_address);
     mContentsText = findViewById(R.id.thing_contents);

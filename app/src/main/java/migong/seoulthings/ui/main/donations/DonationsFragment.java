@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import com.google.firebase.firestore.Query;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.donate.DonateActivity;
 import migong.seoulthings.ui.donation.DonationActivity;
 import migong.seoulthings.ui.donation.DonationView;
 import migong.seoulthings.ui.main.donations.adapter.DonationsRecyclerAdapter;
@@ -39,6 +41,7 @@ public class DonationsFragment extends Fragment implements DonationsView {
     super.onViewCreated(view, savedInstanceState);
 
     setupAppBar(view);
+    setupFAB(view);
     setupRecycler(view);
   }
 
@@ -80,6 +83,12 @@ public class DonationsFragment extends Fragment implements DonationsView {
   }
 
   @Override
+  public void startDonateActivity() {
+    Intent intent = new Intent(getContext(), DonateActivity.class);
+    startActivity(intent);
+  }
+
+  @Override
   public void startDonationActivity(@NonNull String donationId) {
     Intent intent = new Intent(getContext(), DonationActivity.class);
 
@@ -116,6 +125,11 @@ public class DonationsFragment extends Fragment implements DonationsView {
   private void setupAppBar(@NonNull View view) {
     ImageButton searchButton = view.findViewById(R.id.donations_search_button);
     searchButton.setOnClickListener(v -> mPresenter.onSearchButtonClicked());
+  }
+
+  private void setupFAB(@NonNull View view) {
+    FloatingActionButton fab = view.findViewById(R.id.donations_fab);
+    fab.setOnClickListener(v -> mPresenter.onFABClicked());
   }
 
   private void setupRecycler(@NonNull View view) {

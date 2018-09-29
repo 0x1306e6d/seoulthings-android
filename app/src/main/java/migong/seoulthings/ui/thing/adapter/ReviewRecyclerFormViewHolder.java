@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 import com.google.firebase.auth.FirebaseUser;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import migong.seoulthings.R;
 import migong.seoulthings.data.Review;
@@ -32,7 +33,11 @@ public class ReviewRecyclerFormViewHolder extends ReviewRecyclerViewHolder {
       Picasso.get()
           .load(mUser.getPhotoUrl())
           .fit()
-          .placeholder(R.drawable.ic_person_black_48)
+          .transform(new RoundedTransformationBuilder()
+              .borderColor(R.color.colorStroke)
+              .borderWidthDp(0.1f)
+              .oval(true)
+              .build())
           .into(mProfilePhotoImage);
     }
 

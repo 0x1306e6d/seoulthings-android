@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -92,13 +93,13 @@ public class ModifyProfileActivity extends AppCompatActivity implements ModifyPr
   public void changePhoto(Uri photoUri) {
     Picasso.get()
         .load(photoUri)
+        .centerCrop(Gravity.TOP | Gravity.CENTER_HORIZONTAL)
         .fit()
         .transform(new RoundedTransformationBuilder()
             .borderColor(R.color.colorStroke)
-            .borderWidthDp(1.0f)
+            .borderWidthDp(0.1f)
             .oval(true)
             .build())
-        .placeholder(R.drawable.ic_person_black_48)
         .into(mPhotoImage);
   }
 

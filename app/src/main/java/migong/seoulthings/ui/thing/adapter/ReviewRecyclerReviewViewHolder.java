@@ -99,7 +99,7 @@ public class ReviewRecyclerReviewViewHolder extends ReviewRecyclerViewHolder {
                         .fit()
                         .transform(new RoundedTransformationBuilder()
                             .borderColor(R.color.colorStroke)
-                            .borderWidthDp(1.0f)
+                            .borderWidthDp(0.1f)
                             .oval(true)
                             .build())
                         .into(mProfilePhotoImage);

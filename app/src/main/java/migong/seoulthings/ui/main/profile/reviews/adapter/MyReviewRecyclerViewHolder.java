@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
@@ -87,10 +88,11 @@ public class MyReviewRecyclerViewHolder extends RecyclerView.ViewHolder {
 
                   Picasso.get()
                       .load(mUser.getPhotoUrl())
+                      .centerCrop(Gravity.TOP | Gravity.CENTER_HORIZONTAL)
                       .fit()
                       .transform(new RoundedTransformationBuilder()
                           .borderColor(R.color.colorStroke)
-                          .borderWidthDp(1.0f)
+                          .borderWidthDp(0.1f)
                           .oval(true)
                           .build())
                       .into(mProfilePhotoImage);

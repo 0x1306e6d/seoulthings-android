@@ -65,8 +65,8 @@
       <android.support.v4.widget.ContentLoadingProgressBar
         android:id="@+id/donate_submit_progressbar"
         style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         app:layout_constraintBottom_toBottomOf="@id/donate_submit_button"
         app:layout_constraintEnd_toEndOf="@id/donate_submit_button"
         app:layout_constraintStart_toStartOf="@id/donate_submit_button"

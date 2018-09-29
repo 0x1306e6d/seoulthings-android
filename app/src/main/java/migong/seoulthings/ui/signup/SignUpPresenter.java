@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import migong.seoulthings.ui.Presenter;
 import migong.seoulthings.util.AuthenticationUtils;
 
@@ -47,8 +48,14 @@ public class SignUpPresenter implements Presenter {
   }
 
   public void onSignUpButtonClicked() {
+    final String displayName = mView.getDisplayName();
     final String email = mView.getEmail();
     final String password = mView.getPassword();
+
+    if (!AuthenticationUtils.isValidDisplayName(displayName)) {
+      mView.showValidDisplayNameInputRequest();
+      return;
+    }
 
     if (!AuthenticationUtils.isValidEmailAddress(email)) {
       mView.showValidEmailInputRequest();
@@ -60,20 +67,38 @@ public class SignUpPresenter implements Presenter {
       return;
     }
 
+    mView.startSignUp();
     mAuth.createUserWithEmailAndPassword(email, password)
-        .addOnCompleteListener(this::completeSignUp);
+        .addOnCompleteListener(task -> this.completeSignUp(task, displayName));
   }
 
   public void onSignInButtonClicked() {
     mView.startSignInActivity();
   }
 
-  private void completeSignUp(@NonNull Task<AuthResult> task) {
+  private void completeSignUp(@NonNull Task<AuthResult> task, String displayName) {
     if (task.isSuccessful()) {
       final FirebaseUser user = mAuth.getCurrentUser();
+      if (user == null) {
+        mView.showSignUpFailure();
+        return;
+      }
 
-      Log.d(TAG, "completeSignUp: success, user=" + user);
+      user.updateProfile(
+          new UserProfileChangeRequest.Builder()
+              .setDisplayName(displayName)
+              .build())
+          .addOnCompleteListener(t -> mView.finishSignUp())
+          .addOnFailureListener(error -> {
+            mView.showSignUpFailure();
+            Log.w(TAG, "updateProfile: failure", error);
+          })
+          .addOnSuccessListener(v -> {
+            Log.d(TAG, "completeSignUp: success, user=" + user);
+            mView.startSignInActivity();
+          });
     } else {
+      mView.finishSignUp();
       mView.showSignUpFailure();
       Log.w(TAG, "completeSignUp: failure", task.getException());
     }

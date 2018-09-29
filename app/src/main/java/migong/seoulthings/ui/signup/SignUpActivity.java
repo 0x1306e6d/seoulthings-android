@@ -3,18 +3,22 @@ package migong.seoulthings.ui.signup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputEditText;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.signin.SignInActivity;
 import org.apache.commons.lang3.StringUtils;
 
 public class SignUpActivity extends AppCompatActivity implements SignUpView {
 
-  private TextInputEditText mEmailEditText;
-  private TextInputEditText mPasswordEditText;
+  private EditText mDisplayNameEditText;
+  private EditText mEmailEditText;
+  private EditText mPasswordEditText;
   private Button mSignUpButton;
+  private ContentLoadingProgressBar mSignUpProgressBar;
   private Button mSignInButton;
 
   private SignUpPresenter mPresenter;
@@ -24,10 +28,13 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.signup_activity);
 
+    mDisplayNameEditText = findViewById(R.id.signup_display_name_edittext);
     mEmailEditText = findViewById(R.id.signup_email_edittext);
     mPasswordEditText = findViewById(R.id.signup_password_edittext);
     mSignUpButton = findViewById(R.id.signup_button);
     mSignUpButton.setOnClickListener(v -> mPresenter.onSignUpButtonClicked());
+    mSignUpProgressBar = findViewById(R.id.signup_progressbar);
+    mSignUpProgressBar.hide();
     mSignInButton = findViewById(R.id.signup_signin_button);
     mSignInButton.setOnClickListener(v -> mPresenter.onSignInButtonClicked());
 
@@ -54,6 +61,12 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView {
   }
 
   @Override
+  public String getDisplayName() {
+    return mDisplayNameEditText == null ? StringUtils.EMPTY
+        : mDisplayNameEditText.getText().toString();
+  }
+
+  @Override
   public String getEmail() {
     return mEmailEditText == null ? StringUtils.EMPTY : mEmailEditText.getText().toString();
   }
@@ -71,9 +84,28 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView {
   }
 
   @Override
+  public void startSignUp() {
+    mSignUpButton.setVisibility(View.INVISIBLE);
+    mSignUpProgressBar.show();
+  }
+
+  @Override
+  public void finishSignUp() {
+    mSignUpButton.setVisibility(View.VISIBLE);
+    mSignUpProgressBar.hide();
+  }
+
+  @Override
   public void showSignUpFailure() {
     Snackbar.make(mSignUpButton, R.string.failed_to_signup, Snackbar.LENGTH_SHORT)
         .show();
+  }
+
+  @Override
+  public void showValidDisplayNameInputRequest() {
+    mDisplayNameEditText.requestFocus();
+    Snackbar.make(mDisplayNameEditText, R.string.valid_display_name_input_request,
+        Snackbar.LENGTH_SHORT).show();
   }
 
   @Override

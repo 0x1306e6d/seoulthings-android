@@ -8,6 +8,8 @@
   <string name="signin">로그인</string>
   <string name="signup">회원가입</string>
   <string name="signout">로그아웃</string>
+  <string name="google">Google</string>
+  <string name="or">OR</string>
 
   <string name="category">카테고리</string>
   <string name="donation">나눔장터</string>
@@ -41,6 +43,7 @@
 
   <string name="failed_to_signin">로그인을 실패하였습니다.</string>
   <string name="failed_to_signup">회원가입을 실패하였습니다.</string>
+  <string name="valid_display_name_input_request">올바른 닉네임을 입력해주세요.</string>
   <string name="valid_email_input_request">올바른 이메일 주소를 입력해주세요.</string>
   <string name="valid_password_input_request">올바른 비밀번호를 입력해주세요.</string>
   <string name="msg_loading">불러오는 중…</string>

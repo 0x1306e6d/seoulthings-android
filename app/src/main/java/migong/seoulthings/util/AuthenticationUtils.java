@@ -7,6 +7,15 @@ import org.apache.commons.lang3.StringUtils;
 
 public class AuthenticationUtils {
 
+  public static boolean isValidDisplayName(@NonNull String displayName) {
+    if (StringUtils.isEmpty(displayName)) {
+      return false;
+    } else {
+      return displayName.length() >= SeoulThingsConstants.DISPLAY_NAME_MIN_LENGTH &&
+          displayName.length() <= SeoulThingsConstants.DISPLAY_NAME_MAX_LENGTH;
+    }
+  }
+
   public static boolean isValidEmailAddress(@NonNull String email) {
     if (StringUtils.isEmpty(email)) {
       return false;

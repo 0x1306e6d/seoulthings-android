@@ -14,6 +14,10 @@ public interface SignInView {
 
   void startGoogleSignInIntent();
 
+  void startSignIn();
+
+  void finishSignIn();
+
   void showSignInFailure();
 
   void showValidEmailInputRequest();

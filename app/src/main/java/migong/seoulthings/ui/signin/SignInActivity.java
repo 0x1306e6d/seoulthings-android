@@ -3,14 +3,11 @@ package migong.seoulthings.ui.signin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputEditText;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+import android.widget.EditText;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -24,15 +21,14 @@ import org.apache.commons.lang3.StringUtils;
 
 public class SignInActivity extends AppCompatActivity implements SignInView {
 
-  private TextInputEditText mEmailEditText;
-  private TextInputEditText mPasswordEditText;
+  private EditText mEmailEditText;
+  private EditText mPasswordEditText;
   private Button mSignInButton;
+  private ContentLoadingProgressBar mSignInProgressBar;
   private Button mSignUpButton;
   private SignInButton mGoogleSignInButton;
-  private LoginButton mFacebookSignInButton;
 
   private GoogleSignInClient mGoogleSignInClient;
-  private CallbackManager mCallbackManager;
   private SignInPresenter mPresenter;
 
   @Override
@@ -44,31 +40,13 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
     mPasswordEditText = findViewById(R.id.signin_password_edittext);
     mSignInButton = findViewById(R.id.signin_button);
     mSignInButton.setOnClickListener(v -> mPresenter.onSignInButtonClicked());
+    mSignInProgressBar = findViewById(R.id.signin_progressbar);
+    mSignInProgressBar.hide();
     mSignUpButton = findViewById(R.id.signin_signup_button);
     mSignUpButton.setOnClickListener(v -> mPresenter.onSignUpButtonClicked());
     mGoogleSignInButton = findViewById(R.id.signin_google_button);
-    mGoogleSignInButton.setSize(SignInButton.SIZE_ICON_ONLY);
+    mGoogleSignInButton.setSize(SignInButton.SIZE_STANDARD);
     mGoogleSignInButton.setOnClickListener(v -> mPresenter.onGoogleSignInButtonClicked());
-
-    mCallbackManager = CallbackManager.Factory.create();
-    mFacebookSignInButton = findViewById(R.id.signin_facebook_button);
-    mFacebookSignInButton.setReadPermissions("email", "public_profile");
-    mFacebookSignInButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-      @Override
-      public void onSuccess(LoginResult loginResult) {
-        mPresenter.onFacebookSignInSuccess(loginResult);
-      }
-
-      @Override
-      public void onCancel() {
-        mPresenter.onFacebookSignInCancel();
-      }
-
-      @Override
-      public void onError(FacebookException error) {
-        mPresenter.onFacebookSignInError(error);
-      }
-    });
 
     GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestIdToken(getString(R.string.default_web_client_id))
@@ -108,7 +86,7 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
         mPresenter.completeGoogleSignIn(task);
         break;
       default:
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
         break;
     }
   }
@@ -140,6 +118,18 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
   public void startGoogleSignInIntent() {
     Intent intent = mGoogleSignInClient.getSignInIntent();
     startActivityForResult(intent, RC_GOOGLE_SIGN_IN);
+  }
+
+  @Override
+  public void startSignIn() {
+    mSignInButton.setVisibility(View.INVISIBLE);
+    mSignInProgressBar.show();
+  }
+
+  @Override
+  public void finishSignIn() {
+    mSignInButton.setVisibility(View.VISIBLE);
+    mSignInProgressBar.hide();
   }
 
   @Override

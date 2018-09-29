@@ -105,7 +105,7 @@ public class DonationPresenter implements Presenter {
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                         user -> {
-                          mView.setAuthor(mUser.getDisplayName());
+                          mView.setAuthor(user.getDisplayName());
                           mView.setFABIcon(R.drawable.ic_chat_black_24);
                           mView.finishLoading();
                         },

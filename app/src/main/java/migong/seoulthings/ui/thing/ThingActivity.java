@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -38,6 +39,7 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   private TextView mTitleText;
   private ContentLoadingProgressBar mProgressBar;
   private ScrollView mDetailView;
+  private FrameLayout mGoogleMapContainer;
   private SupportMapFragment mGoogleMapFragment;
   private TextView mAddressText;
   private TextView mContentsText;
@@ -107,6 +109,7 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
 
   @Override
   public void setGoogleMap(String title, double latitude, double longitude) {
+    mGoogleMapContainer.setVisibility(View.VISIBLE);
     if (mGoogleMap == null) {
       return;
     }
@@ -114,6 +117,11 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
     LatLng location = new LatLng(latitude, longitude);
     mGoogleMap.addMarker(new MarkerOptions().position(location).title(title));
     mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 13.0f));
+  }
+
+  @Override
+  public void hideGoogleMap() {
+    mGoogleMapContainer.setVisibility(View.GONE);
   }
 
   @Override
@@ -211,6 +219,7 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
     mDetailView = findViewById(R.id.thing_detail);
     mDetailView.setVisibility(View.GONE);
 
+    mGoogleMapContainer = findViewById(R.id.thing_map_container);
     mGoogleMapFragment = (SupportMapFragment) getSupportFragmentManager()
         .findFragmentById(R.id.thing_map);
     if (mGoogleMapFragment != null) {

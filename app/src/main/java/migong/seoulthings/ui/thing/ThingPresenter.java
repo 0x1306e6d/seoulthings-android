@@ -94,6 +94,8 @@ public class ThingPresenter implements Presenter {
                       final double latitude = mThing.getLocation().getLatitude();
                       final double longitude = mThing.getLocation().getLongitude();
                       mView.setGoogleMap(mThing.getLocation().getName(), latitude, longitude);
+                    } else {
+                      mView.hideGoogleMap();
                     }
 
                     mView.setAddress(mThing.getLocation().getAddress());

@@ -5,5 +5,5 @@
     android:left="@dimen/spacing_unit_wide"
     android:right="@dimen/spacing_unit_wide"
     android:top="@dimen/spacing_unit_narrow"/>
-  <solid android:color="@color/colorMiddleground"/>
+  <solid android:color="#24242424"/>
 </shape>

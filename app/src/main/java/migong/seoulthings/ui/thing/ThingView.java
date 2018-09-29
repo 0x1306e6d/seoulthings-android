@@ -12,6 +12,8 @@ public interface ThingView {
 
   void setGoogleMap(String title, double latitude, double longitude);
 
+  void hideGoogleMap();
+
   void setAddress(String address);
 
   void setContents(String contents);

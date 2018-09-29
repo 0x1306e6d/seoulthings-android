@@ -52,7 +52,7 @@ public class MainPresenter implements Presenter {
       case R.id.bottom_navigation_category:
         mView.replaceFragment(new CategoryFragment());
         return true;
-      case R.id.bottom_navigation_donation:
+      case R.id.bottom_navigation_donations:
         mView.replaceFragment(new DonationsFragment());
         return true;
       case R.id.bottom_navigation_notification:

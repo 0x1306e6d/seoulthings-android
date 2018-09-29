@@ -15,7 +15,10 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import migong.seoulthings.SeoulThingsConstants;
@@ -50,6 +53,7 @@ public class ModifyProfilePresenter implements Presenter {
       Log.e(TAG, "onCreate: user is NULL.");
       return;
     }
+    mCurrentPhotoUri = mUser.getPhotoUrl();
 
     mStorage = FirebaseStorage.getInstance();
   }
@@ -59,6 +63,7 @@ public class ModifyProfilePresenter implements Presenter {
     Log.d(TAG, "onResume() called");
 
     mView.bindProfile(mUser);
+    mView.changePhoto(mCurrentPhotoUri);
   }
 
   @Override
@@ -89,48 +94,12 @@ public class ModifyProfilePresenter implements Presenter {
     }
     mView.startUpdateProfile();
 
-    if (mPhotoChanged) {
-      Log.d(TAG, "onCompleteButtonClicked: photo is changed.");
-
-      try {
-        uploadPhoto()
-            .continueWithTask(task -> {
-              if (!task.isSuccessful()) {
-                if (task.getException() == null) {
-                  throw new Exception("Failed to get download url from Firebase Storage.");
-                } else {
-                  throw task.getException();
-                }
-              }
-
-              final Uri photoUri = task.getResult();
-              final UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
-                  .setPhotoUri(photoUri)
-                  .setDisplayName(mView.getDisplayName())
-                  .build();
-              return mUser.updateProfile(request);
-            })
-            .addOnCompleteListener(task -> mView.finishUpdateProfile())
-            .addOnFailureListener(error -> {
-              Log.e(TAG, "Failed to update profile.", error);
-            })
-            .addOnSuccessListener(v -> mView.finish());
-      } catch (IOException e) {
-        Log.e(TAG, "Failed to upload photo.", e);
-      }
-    } else {
-      Log.d(TAG, "onCompleteButtonClicked: photo is not changed.");
-
-      final UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
-          .setDisplayName(mView.getDisplayName())
-          .build();
-      mUser.updateProfile(request)
-          .addOnCompleteListener(task -> mView.finishUpdateProfile())
-          .addOnFailureListener(error -> {
-            Log.e(TAG, "Failed to update profile.", error);
-          })
-          .addOnSuccessListener(v -> mView.finish());
-    }
+    mCompositeDisposable.add(
+        updateProfile()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(mView::finish, error -> Log.e(TAG, "Failed to update profile.", error))
+    );
   }
 
   public void onChangePhotoButtonClicked() {
@@ -140,6 +109,49 @@ public class ModifyProfilePresenter implements Presenter {
   public void onSignOutButtonClicked() {
     mAuth.signOut();
     mView.startSignInActivity();
+  }
+
+  private Completable updateProfile() {
+    return Completable.create(emitter -> {
+      if (mPhotoChanged) {
+        Log.d(TAG, "updateProfile: photo is changed.");
+
+        try {
+          uploadPhoto()
+              .continueWithTask(task -> {
+                if (!task.isSuccessful()) {
+                  if (task.getException() == null) {
+                    throw new Exception("Failed to get download url from Firebase Storage.");
+                  } else {
+                    throw task.getException();
+                  }
+                }
+
+                final Uri photoUri = task.getResult();
+                final UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                    .setPhotoUri(photoUri)
+                    .setDisplayName(mView.getDisplayName())
+                    .build();
+                return mUser.updateProfile(request);
+              })
+              .addOnCompleteListener(task -> mView.finishUpdateProfile())
+              .addOnFailureListener(emitter::onError)
+              .addOnSuccessListener(v -> emitter.onComplete());
+        } catch (IOException e) {
+          emitter.onError(e);
+        }
+      } else {
+        Log.d(TAG, "updateProfile: photo is not changed.");
+
+        final UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+            .setDisplayName(mView.getDisplayName())
+            .build();
+        mUser.updateProfile(request)
+            .addOnCompleteListener(task -> mView.finishUpdateProfile())
+            .addOnFailureListener(emitter::onError)
+            .addOnSuccessListener(v -> emitter.onComplete());
+      }
+    });
   }
 
   private byte[] resizePhoto() throws IOException {

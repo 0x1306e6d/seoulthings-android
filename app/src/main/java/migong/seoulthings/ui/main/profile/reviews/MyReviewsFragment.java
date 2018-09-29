@@ -113,6 +113,11 @@ public class MyReviewsFragment extends Fragment implements MyReviewsView {
   }
 
   @Override
+  public void clearSnapshots() {
+    mReviewRecyclerAdapter.clear();
+  }
+
+  @Override
   public void addSnapshot(int index, QueryDocumentSnapshot snapshot) {
     mReviewRecyclerAdapter.addSnapshot(index, snapshot);
   }

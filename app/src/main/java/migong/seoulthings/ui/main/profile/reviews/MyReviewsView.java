@@ -8,6 +8,8 @@ public interface MyReviewsView {
 
   void showReviewDialog(@NonNull Review review);
 
+  void clearSnapshots();
+
   void addSnapshot(int index, QueryDocumentSnapshot snapshot);
 
   void modifySnapshot(int oldIndex, int newIndex, QueryDocumentSnapshot snapshot);

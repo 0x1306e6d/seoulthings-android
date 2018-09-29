@@ -52,6 +52,11 @@ public class MyDonationRecyclerAdapter extends RecyclerView.Adapter<MyDonationRe
     return mSnapshots.size();
   }
 
+  public void clear() {
+    mSnapshots.clear();
+    notifyDataSetChanged();
+  }
+
   public void addSnapshot(int index, QueryDocumentSnapshot snapshot) {
     mSnapshots.add(index, snapshot);
     notifyItemInserted(index);

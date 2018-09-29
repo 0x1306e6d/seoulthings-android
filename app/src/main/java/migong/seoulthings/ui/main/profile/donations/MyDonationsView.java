@@ -7,6 +7,8 @@ public interface MyDonationsView {
 
   void startDonationActivity(@NonNull String donationId);
 
+  void clearSnapshots();
+
   void addSnapshot(int index, QueryDocumentSnapshot snapshot);
 
   void modifySnapshot(int oldIndex, int newIndex, QueryDocumentSnapshot snapshot);

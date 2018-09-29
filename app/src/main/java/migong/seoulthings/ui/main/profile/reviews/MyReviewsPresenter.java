@@ -119,6 +119,8 @@ public class MyReviewsPresenter implements Presenter {
       mRegistration.remove();
       mRegistration = null;
     }
+
+    mView.clearSnapshots();
   }
 
   private void onDocumentAdded(DocumentChange change) {

@@ -78,6 +78,11 @@ public class MyReviewRecyclerAdapter extends RecyclerView.Adapter<MyReviewRecycl
     return mSnapshots.size();
   }
 
+  public void clear() {
+    mSnapshots.clear();
+    notifyDataSetChanged();
+  }
+
   public void addSnapshot(int index, QueryDocumentSnapshot snapshot) {
     mSnapshots.add(index, snapshot);
     notifyItemInserted(index);

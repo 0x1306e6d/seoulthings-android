@@ -77,6 +77,11 @@ public class MyDonationsFragment extends Fragment implements MyDonationsView {
   }
 
   @Override
+  public void clearSnapshots() {
+    mDonationRecyclerAdapter.clear();
+  }
+
+  @Override
   public void addSnapshot(int index, QueryDocumentSnapshot snapshot) {
     mDonationRecyclerAdapter.addSnapshot(index, snapshot);
   }

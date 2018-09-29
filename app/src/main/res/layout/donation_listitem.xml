@@ -17,16 +17,16 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"/>
 
-  <ImageView
+  <com.makeramen.roundedimageview.RoundedImageView
     android:id="@+id/donation_listitem_thumbnail"
     android:layout_width="48dp"
     android:layout_height="48dp"
     android:layout_margin="@dimen/spacing_unit_normal"
-    android:src="@drawable/ic_mockup_black_48"
     android:visibility="gone"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"/>
+    app:layout_constraintTop_toTopOf="parent"
+    app:riv_oval="true"/>
 
   <ImageButton
     android:id="@+id/donation_listitem_detail_button"

@@ -12,7 +12,7 @@
   <color name="colorSurface">#FFFFFF</color>
   <color name="colorError">#951F34</color>
   <color name="colorStroke">#242424</color>
-  <color name="colorMiddleground">#24242424</color>
+  <color name="colorMiddleground">#CC242424</color>
 
   <!-- Colors for typography and iconography -->
   <color name="colorOnPrimary">#FFFFFF</color>

@@ -9,6 +9,7 @@ public class Donation {
 
   @Exclude
   private String mFirebaseId;
+  private String mAuthorId;
   private String mTitle;
   private String mContents;
   private String mDong;
@@ -23,7 +24,9 @@ public class Donation {
     // For FireStore deserialization.
   }
 
-  public Donation(String title, String contents, String thoroughfare, LatLng latLng) {
+  public Donation(String authorId, String title, String contents, String thoroughfare,
+      LatLng latLng) {
+    mAuthorId = authorId;
     mTitle = title;
     mContents = contents;
     mDong = thoroughfare;
@@ -39,6 +42,14 @@ public class Donation {
 
   public void setFirebaseId(String firebaseId) {
     mFirebaseId = firebaseId;
+  }
+
+  public String getAuthorId() {
+    return mAuthorId;
+  }
+
+  public void setAuthorId(String authorId) {
+    mAuthorId = authorId;
   }
 
   public String getTitle() {
@@ -86,7 +97,7 @@ public class Donation {
   }
 
   public void setThumbnailUrl(String thumbnailUrl) {
-    mThumbnailUrl = mThumbnailUrl;
+    mThumbnailUrl = thumbnailUrl;
   }
 
   public List<String> getImageUrls() {
@@ -116,11 +127,13 @@ public class Donation {
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder("Donation{");
-    sb.append("title='").append(mTitle).append('\'');
+    sb.append("authorId='").append(mAuthorId).append('\'');
+    sb.append(", title='").append(mTitle).append('\'');
     sb.append(", contents='").append(mContents).append('\'');
     sb.append(", dong='").append(mDong).append('\'');
     sb.append(", latitude=").append(mLatitude);
     sb.append(", longitude=").append(mLongitude);
+    sb.append(", thumbnailUrl='").append(mThumbnailUrl).append('\'');
     sb.append(", imageUrls=").append(mImageUrls);
     sb.append(", createdAt=").append(mCreatedAt);
     sb.append(", updatedAt=").append(mUpdatedAt);

@@ -9,7 +9,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.Query.Direction;
@@ -38,9 +37,6 @@ public class MyReviewsPresenter implements Presenter {
 
     mUser = FirebaseAuth.getInstance().getCurrentUser();
     mFirestore = FirebaseFirestore.getInstance();
-    mFirestore.setFirestoreSettings(new FirebaseFirestoreSettings.Builder()
-        .setTimestampsInSnapshotsEnabled(true)
-        .build());
     mQuery = mFirestore.collection("reviews")
         .whereEqualTo("authorId", mUser.getUid())
         .orderBy("updatedAt", Direction.DESCENDING);

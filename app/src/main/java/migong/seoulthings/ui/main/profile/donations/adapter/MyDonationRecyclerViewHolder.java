@@ -1,17 +1,21 @@
 package migong.seoulthings.ui.main.profile.donations.adapter;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import migong.seoulthings.R;
 import migong.seoulthings.data.Donation;
+import org.apache.commons.lang3.StringUtils;
 
 public class MyDonationRecyclerViewHolder extends RecyclerView.ViewHolder {
 
@@ -25,7 +29,7 @@ public class MyDonationRecyclerViewHolder extends RecyclerView.ViewHolder {
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
 
   private ContentLoadingProgressBar mLoadingProgressBar;
-  private ImageView mThumbnailImage;
+  private RoundedImageView mThumbnailImage;
   private ImageButton mDetailButton;
   private LinearLayout mDongLayout;
   private TextView mDongText;
@@ -54,6 +58,21 @@ public class MyDonationRecyclerViewHolder extends RecyclerView.ViewHolder {
     mDongText.setText(donation.getDong());
     mTitleText.setText(donation.getTitle());
     mUpdatedAtText.setText(DATE_FORMAT.format(donation.getUpdatedAt().toDate()));
+
+    if (StringUtils.isNotEmpty(donation.getThumbnailUrl())) {
+      Picasso.get()
+          .load(Uri.parse(donation.getThumbnailUrl()))
+          .centerCrop()
+          .fit()
+          .transform(new RoundedTransformationBuilder()
+              .borderColor(R.color.colorStroke)
+              .borderWidthDp(0.1f)
+              .oval(true)
+              .build())
+          .into(mThumbnailImage);
+    } else {
+      mThumbnailImage.setVisibility(View.GONE);
+    }
 
     itemView.setOnClickListener(v -> mClickListener.onClick(donation.getFirebaseId()));
     mDetailButton.setOnClickListener(v -> mClickListener.onClick(donation.getFirebaseId()));

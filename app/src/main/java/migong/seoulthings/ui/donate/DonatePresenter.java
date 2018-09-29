@@ -96,6 +96,11 @@ public class DonatePresenter implements Presenter {
     }
     if (StringUtils.isEmpty(mView.getDonationContents())) {
       mView.showSnackBar(R.string.msg_invalid_contents);
+      return;
+    }
+    if (mView.getDonationImages().size() == 0) {
+      mView.showSnackBar(R.string.msg_invalid_images);
+      return;
     }
     mView.startSubmit();
 
@@ -166,8 +171,8 @@ public class DonatePresenter implements Presenter {
 
   private Completable createDonation() {
     return Completable.create(emitter -> {
-      final Donation donation = new Donation(mView.getDonationTitle(), mView.getDonationContents(),
-          mLastThoroughfare, mLastLatLng);
+      final Donation donation = new Donation(mUser.getUid(), mView.getDonationTitle(),
+          mView.getDonationContents(), mLastThoroughfare, mLastLatLng);
       mFirestore.collection("donations")
           .add(donation)
           .continueWithTask(task -> {

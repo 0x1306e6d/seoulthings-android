@@ -21,15 +21,16 @@
   <string name="power_bank">보조배터리</string>
   <string name="suit">면접 정장</string>
 
-  <string name="donate">나눔하기</string>
-  <string name="title">제목</string>
-  <string name="contents">내용</string>
-
   <string name="thing_contents">보유중인 물품</string>
   <string name="thing_location">운영 정보</string>
   <string name="thing_reviews">한 줄 후기</string>
   <string name="review">한 줄 후기</string>
   <string name="complete_review">작성완료</string>
+
+  <string name="donate">나눔하기</string>
+  <string name="title">제목</string>
+  <string name="contents">내용</string>
+  <string name="donation_detail">나눔 상세보기</string>
 
   <string name="modify_profile">프로필 수정</string>
   <string name="change_profile_photo">프로필 사진 바꾸기</string>

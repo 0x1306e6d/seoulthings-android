@@ -105,7 +105,7 @@ public class Donation {
   }
 
   public void setImageUrls(List<String> imageUrls) {
-    mImageUrls = mImageUrls;
+    mImageUrls = imageUrls;
   }
 
   public Timestamp getCreatedAt() {

@@ -76,8 +76,6 @@ public class DonateImagePagerAdapter extends PagerAdapter {
     mImages.clear();
     mImages.addAll(images);
     notifyDataSetChanged();
-
-    mViewPager.setCurrentItem(mImages.size());
   }
 
   public void addImage(@NonNull Uri imageUri) {

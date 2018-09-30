@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.common.collect.Lists;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -72,7 +73,6 @@ public class DonationPresenter implements Presenter {
   @Override
   public void onResume() {
     Log.d(TAG, "onResume() called");
-
     mReference.get()
         .addOnFailureListener(error -> Log.e(TAG, "Failed to get snapshot.", error))
         .addOnSuccessListener(snapshot -> {
@@ -87,11 +87,7 @@ public class DonationPresenter implements Presenter {
           mView.setTitle(donation.getTitle());
           mView.setContents(donation.getContents());
           if (donation.getImageUrls() != null) {
-            for (String imageUrl : donation.getImageUrls()) {
-              if (StringUtils.isNotEmpty(imageUrl)) {
-                mView.addImage(Uri.parse(imageUrl));
-              }
-            }
+            mView.setImages(Lists.transform(donation.getImageUrls(), Uri::parse));
           }
           if (donation.getUpdatedAt() != null) {
             mView.setUpdatedAt(DATE_FORMAT.format(donation.getUpdatedAt().toDate()));
@@ -146,7 +142,7 @@ public class DonationPresenter implements Presenter {
 
   public void onFABClicked() {
     if (mMyDonation) {
-
+      mView.startDonateActivity(mDonationId);
     } else {
       if (StringUtils.isNotEmpty(mAuthorId)) {
         mView.startChatActivity(mAuthorId);

@@ -63,11 +63,19 @@ public class DonateActivity extends AppCompatActivity implements DonateView {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.donate_activity);
 
+    String donationId = null;
+    Intent intent = getIntent();
+    if (intent != null) {
+      final Bundle args = intent.getExtras();
+      if (args != null) {
+        donationId = args.getString(DonateView.KEY_DONATION_ID);
+      }
+    }
     setupAppBar();
     setupImagePager();
     setupForm();
 
-    mPresenter = new DonatePresenter(this);
+    mPresenter = new DonatePresenter(this, donationId);
     mPresenter.onCreate(savedInstanceState);
   }
 
@@ -132,6 +140,11 @@ public class DonateActivity extends AppCompatActivity implements DonateView {
   }
 
   @Override
+  public void setDonationTitle(String donationTitle) {
+    mTitleEditText.setText(donationTitle);
+  }
+
+  @Override
   public String getDonationContents() {
     if (mContentsEditText == null || mContentsEditText.getText() == null) {
       return StringUtils.EMPTY;
@@ -140,8 +153,18 @@ public class DonateActivity extends AppCompatActivity implements DonateView {
   }
 
   @Override
+  public void setDonationContents(String donationContents) {
+    mContentsEditText.setText(donationContents);
+  }
+
+  @Override
   public List<Uri> getDonationImages() {
     return mImagePagerAdapter.getImages();
+  }
+
+  @Override
+  public void setDonationImages(List<Uri> images) {
+    mImagePagerAdapter.setImages(images);
   }
 
   @Override

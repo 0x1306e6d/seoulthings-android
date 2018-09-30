@@ -7,19 +7,21 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore.Images.Media;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.common.collect.Lists;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -28,6 +30,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import migong.seoulthings.R;
 import migong.seoulthings.SeoulThingsConstants;
 import migong.seoulthings.data.Donation;
@@ -39,18 +44,25 @@ public class DonatePresenter implements Presenter {
   private static final String TAG = DonatePresenter.class.getSimpleName();
 
   private boolean mShowGoogleMap;
+  @Nullable
+  private String mDonationId;
   private LatLng mLastLatLng;
   private String mLastThoroughfare;
   private FirebaseUser mUser;
   private FirebaseFirestore mFirestore;
+  @Nullable
+  private DocumentReference mReference;
   private FirebaseStorage mStorage;
   @NonNull
   private final CompositeDisposable mCompositeDisposable;
   @NonNull
   private final DonateView mView;
+  @NonNull
+  private final Executor executor = Executors.newSingleThreadExecutor();
 
-  public DonatePresenter(@NonNull DonateView view) {
+  public DonatePresenter(@NonNull DonateView view, @Nullable String donationId) {
     mView = view;
+    mDonationId = donationId;
     mCompositeDisposable = new CompositeDisposable();
   }
 
@@ -61,6 +73,27 @@ public class DonatePresenter implements Presenter {
     mUser = FirebaseAuth.getInstance().getCurrentUser();
     mFirestore = FirebaseFirestore.getInstance();
     mStorage = FirebaseStorage.getInstance();
+
+    if (StringUtils.isNotEmpty(mDonationId)) {
+      mReference = mFirestore.collection("donations").document(mDonationId);
+      mReference.get()
+          .addOnFailureListener(error -> Log.e(TAG, "Failed to get snapshot.", error))
+          .addOnSuccessListener(snapshot -> {
+            final Donation donation = snapshot.toObject(Donation.class);
+            if (donation == null) {
+              Log.e(TAG, "onResume: donation is NULL.");
+              return;
+            }
+            Log.d(TAG, "onResume: donation is " + donation);
+
+            mView.setDonationTitle(donation.getTitle());
+            mView.setDonationContents(donation.getContents());
+            if (donation.getImageUrls() != null) {
+              mView.setDonationImages(Lists.transform(donation.getImageUrls(), Uri::parse));
+            }
+            onGoogleMapClicked(new LatLng(donation.getLatitude(), donation.getLongitude()));
+          });
+    }
   }
 
   @Override
@@ -104,20 +137,37 @@ public class DonatePresenter implements Presenter {
     }
     mView.startSubmit();
 
-    mCompositeDisposable.add(
-        createDonation()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe(
-                mView::finish,
-                error -> {
-                  Log.e(TAG, "Failed to create donation.", error);
+    if (StringUtils.isEmpty(mDonationId)) {
+      mCompositeDisposable.add(
+          createDonation()
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribeOn(Schedulers.io())
+              .subscribe(
+                  mView::finish,
+                  error -> {
+                    Log.e(TAG, "Failed to create donation.", error);
 
-                  mView.finishSubmit();
-                  mView.showSnackBar(R.string.msg_upload_donation_fail);
-                }
-            )
-    );
+                    mView.finishSubmit();
+                    mView.showSnackBar(R.string.msg_upload_donation_fail);
+                  }
+              )
+      );
+    } else {
+      mCompositeDisposable.add(
+          updateDonation()
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribeOn(Schedulers.io())
+              .subscribe(
+                  mView::finish,
+                  error -> {
+                    Log.e(TAG, "Failed to update donation.", error);
+
+                    mView.finishSubmit();
+                    mView.showSnackBar(R.string.msg_upload_donation_fail);
+                  }
+              )
+      );
+    }
   }
 
   public void onAddPhotoButtonClicked() {
@@ -193,13 +243,62 @@ public class DonatePresenter implements Presenter {
     });
   }
 
+  private Completable updateDonation() {
+    return Completable.create(emitter -> {
+      if (StringUtils.isEmpty(mDonationId) || mReference == null) {
+        emitter.onComplete();
+        return;
+      }
+
+      mReference
+          .update(
+              "title", mView.getDonationTitle(),
+              "contents", mView.getDonationContents(),
+              "dong", mLastThoroughfare,
+              "thumbnailUrl", null,
+              "imageUrls", null,
+              "latitude", mLastLatLng.latitude,
+              "longitude", mLastLatLng.longitude,
+              "updatedAt", Timestamp.now()
+          )
+          .continueWithTask(task -> {
+            if (!task.isSuccessful()) {
+              if (task.getException() == null) {
+                throw new Exception("Failed to add a donation to Firestore.");
+              } else {
+                throw task.getException();
+              }
+            }
+
+            return Tasks.whenAll(
+                uploadThumbnail(mReference, mDonationId),
+                uploadImages(mReference, mDonationId)
+            );
+          })
+          .addOnSuccessListener(v -> emitter.onComplete())
+          .addOnFailureListener(emitter::onError);
+    });
+  }
+
   private Task<Void> uploadThumbnail(DocumentReference reference, String id) throws IOException {
     final StorageReference storageRef = mStorage.getReference();
     final StorageReference donationsRef = storageRef.child("donations");
     final StorageReference donationRef = donationsRef.child(id);
     final StorageReference thumbnailRef = donationRef.child("thumbnail");
-    return thumbnailRef
-        .putBytes(makeThumbnail(mView.getDonationImages().get(0)))
+
+    final Uri thumbnail = mView.getDonationImages().get(0);
+    return Tasks.call(executor, transformThumbnailImage(thumbnail))
+        .continueWithTask(task -> {
+          if (!task.isSuccessful()) {
+            if (task.getException() == null) {
+              throw new Exception("Failed to make thumbnail.");
+            } else {
+              throw task.getException();
+            }
+          }
+
+          return thumbnailRef.putBytes(task.getResult());
+        })
         .continueWithTask(task -> {
           if (!task.isSuccessful()) {
             if (task.getException() == null) {
@@ -222,16 +321,6 @@ public class DonatePresenter implements Presenter {
 
           return reference.update("thumbnailUrl", task.getResult().toString());
         });
-  }
-
-  private byte[] makeThumbnail(Uri uri) throws IOException {
-    try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-      final Bitmap bitmap = Media.getBitmap(mView.getContext().getContentResolver(), uri);
-      final Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,
-          SeoulThingsConstants.THUMBNAIL_SIZE, SeoulThingsConstants.THUMBNAIL_SIZE, true);
-      scaledBitmap.compress(CompressFormat.JPEG, 100, outputStream);
-      return outputStream.toByteArray();
-    }
   }
 
   private Task<Void> uploadImages(DocumentReference reference, String id) {
@@ -259,8 +348,18 @@ public class DonatePresenter implements Presenter {
     final StorageReference donationsRef = storageRef.child("donations");
     final StorageReference donationRef = donationsRef.child(id);
     final StorageReference imageRef = donationRef.child(String.valueOf(index));
-    return imageRef
-        .putFile(imageUri)
+    return Tasks.call(executor, transformImage(imageUri))
+        .continueWithTask(task -> {
+          if (!task.isSuccessful()) {
+            if (task.getException() == null) {
+              throw new Exception("Failed to transformImage image.");
+            } else {
+              throw task.getException();
+            }
+          }
+
+          return imageRef.putBytes(task.getResult());
+        })
         .continueWithTask(task -> {
           if (!task.isSuccessful()) {
             if (task.getException() == null) {
@@ -273,4 +372,28 @@ public class DonatePresenter implements Presenter {
           return imageRef.getDownloadUrl();
         });
   }
+
+  private Callable<byte[]> transformThumbnailImage(Uri uri) {
+    return () -> {
+      try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+        final Bitmap bitmap = Picasso.get()
+            .load(uri)
+            .resize(SeoulThingsConstants.THUMBNAIL_SIZE, SeoulThingsConstants.THUMBNAIL_SIZE)
+            .get();
+        bitmap.compress(CompressFormat.JPEG, 100, outputStream);
+        return outputStream.toByteArray();
+      }
+    };
+  }
+
+  private Callable<byte[]> transformImage(Uri uri) {
+    return () -> {
+      try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+        final Bitmap bitmap = Picasso.get().load(uri).get();
+        bitmap.compress(CompressFormat.JPEG, 100, outputStream);
+        return outputStream.toByteArray();
+      }
+    };
+  }
+
 }

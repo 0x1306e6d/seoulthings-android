@@ -56,7 +56,6 @@ public class DonateImagePagerAdapter extends PagerAdapter {
 
   @Override
   public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-    mViewPager.removeViewAt(position);
   }
 
   @Override
@@ -71,6 +70,14 @@ public class DonateImagePagerAdapter extends PagerAdapter {
 
   public List<Uri> getImages() {
     return mImages;
+  }
+
+  public void setImages(@NonNull List<Uri> images) {
+    mImages.clear();
+    mImages.addAll(images);
+    notifyDataSetChanged();
+
+    mViewPager.setCurrentItem(mImages.size());
   }
 
   public void addImage(@NonNull Uri imageUri) {

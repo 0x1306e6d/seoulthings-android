@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import com.google.android.gms.maps.model.LatLng;
+import java.util.List;
 
 public interface DonationView {
 
@@ -11,7 +12,11 @@ public interface DonationView {
 
   void startChatActivity(@NonNull String chatterId);
 
+  void startDonateActivity(String donationId);
+
   void finishLoading();
+
+  void setImages(List<Uri> images);
 
   void addImage(Uri uri);
 

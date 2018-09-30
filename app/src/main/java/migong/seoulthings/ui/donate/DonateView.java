@@ -9,15 +9,23 @@ import java.util.List;
 
 public interface DonateView {
 
+  String KEY_DONATION_ID = "KEY_DONATION_ID";
+
   Context getContext();
 
   void finish();
 
   String getDonationTitle();
 
+  void setDonationTitle(String donationTitle);
+
   String getDonationContents();
 
+  void setDonationContents(String donationContents);
+
   List<Uri> getDonationImages();
+
+  void setDonationImages(List<Uri> images);
 
   void startPickPhotoIntent();
 

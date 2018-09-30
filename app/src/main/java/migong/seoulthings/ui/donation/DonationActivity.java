@@ -23,9 +23,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import java.util.List;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.chat.ChatActivity;
 import migong.seoulthings.ui.chat.ChatView;
+import migong.seoulthings.ui.donate.DonateActivity;
+import migong.seoulthings.ui.donate.DonateView;
 import migong.seoulthings.ui.donation.adapter.DonationImagePagerAdapter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -176,9 +179,25 @@ public class DonationActivity extends AppCompatActivity implements DonationView 
   }
 
   @Override
+  public void startDonateActivity(String donationId) {
+    Intent intent = new Intent(this, DonateActivity.class);
+
+    Bundle args = new Bundle();
+    args.putString(DonateView.KEY_DONATION_ID, donationId);
+    intent.putExtras(args);
+
+    startActivity(intent);
+  }
+
+  @Override
   public void finishLoading() {
     mDetailView.setVisibility(View.VISIBLE);
     mLoadingProgressBar.hide();
+  }
+
+  @Override
+  public void setImages(List<Uri> images) {
+    mImagePagerAdapter.setImages(images);
   }
 
   @Override

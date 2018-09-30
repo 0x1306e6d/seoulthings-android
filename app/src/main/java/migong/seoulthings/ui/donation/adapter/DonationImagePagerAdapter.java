@@ -39,7 +39,6 @@ public class DonationImagePagerAdapter extends PagerAdapter {
 
   @Override
   public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-    mViewPager.removeViewAt(position);
   }
 
   @Override
@@ -50,6 +49,12 @@ public class DonationImagePagerAdapter extends PagerAdapter {
   @Override
   public boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
     return view.equals(o);
+  }
+
+  public void setImages(List<Uri> images) {
+    mImages.clear();
+    mImages.addAll(images);
+    notifyDataSetChanged();
   }
 
   public void addImage(@NonNull Uri imageUri) {

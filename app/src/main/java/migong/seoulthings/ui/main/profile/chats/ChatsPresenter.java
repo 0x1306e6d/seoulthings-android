@@ -58,8 +58,8 @@ public class ChatsPresenter implements Presenter {
     Log.d(TAG, "onDestroy() called");
   }
 
-  public void onChatClicked(@NonNull String chatId) {
-
+  public void onChatClicked(@NonNull String chatId, @NonNull String chatterId) {
+    mView.startChatActivity(chatId, chatterId);
   }
 
   private void startListening() {

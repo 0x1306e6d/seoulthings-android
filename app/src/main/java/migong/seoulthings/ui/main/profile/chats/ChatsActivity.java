@@ -1,6 +1,8 @@
 package migong.seoulthings.ui.main.profile.chats;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +12,8 @@ import android.widget.LinearLayout;
 import com.google.firebase.firestore.DocumentSnapshot;
 import io.reactivex.disposables.CompositeDisposable;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.chat.ChatActivity;
+import migong.seoulthings.ui.chat.ChatView;
 import migong.seoulthings.ui.main.profile.chats.adapter.ChatRecyclerAdapter;
 
 public class ChatsActivity extends AppCompatActivity implements ChatsView {
@@ -28,8 +32,6 @@ public class ChatsActivity extends AppCompatActivity implements ChatsView {
     setupAppBar();
     setupChatRecycler();
 
-//    KxZU12E6XjNlBa3P8DXrN7qISxl2
-//    hjZ3NOaTiEUu7xP4g88xAXftUXI3
     mPresenter = new ChatsPresenter(this);
     mPresenter.onCreate(savedInstanceState);
   }
@@ -50,6 +52,18 @@ public class ChatsActivity extends AppCompatActivity implements ChatsView {
   protected void onDestroy() {
     super.onDestroy();
     mPresenter.onDestroy();
+  }
+
+  @Override
+  public void startChatActivity(@NonNull String chatId, @NonNull String chatterId) {
+    Intent intent = new Intent(this, ChatActivity.class);
+
+    Bundle args = new Bundle();
+    args.putString(ChatView.KEY_CHAT_ID, chatId);
+    args.putString(ChatView.KEY_CHATTER_ID, chatterId);
+    intent.putExtras(args);
+
+    startActivity(intent);
   }
 
   @Override
@@ -84,7 +98,7 @@ public class ChatsActivity extends AppCompatActivity implements ChatsView {
     mChatRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
 
     mChatRecyclerAdapter = new ChatRecyclerAdapter(mCompositeDisposable,
-        chatId -> mPresenter.onChatClicked(chatId));
+        (chatId, chatterId) -> mPresenter.onChatClicked(chatId, chatterId));
     mChatRecyclerView.setAdapter(mChatRecyclerAdapter);
   }
 }

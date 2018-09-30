@@ -64,7 +64,6 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerViewHo
       chat.setFirebaseId(snapshot.getId());
 
       holder.bind(chat);
-      holder.startListening();
     } else {
       holder.clear();
     }

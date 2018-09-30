@@ -1,15 +1,29 @@
 package migong.seoulthings.data;
 
+import com.google.common.collect.Lists;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.Exclude;
 import java.util.List;
 
 public class Chat {
 
+  @Exclude
   private String mFirebaseId;
   private String mLastMessage;
   private List<String> mChatters;
   private Timestamp mCreateAt;
   private Timestamp mUpdatedAt;
+
+  public Chat() {
+    // For FireStore deserialization.
+  }
+
+  public Chat(String sender, String receiver, String lastMessage) {
+    mChatters = Lists.newArrayList(sender, receiver);
+    mLastMessage = lastMessage;
+    mCreateAt = Timestamp.now();
+    mUpdatedAt = Timestamp.now();
+  }
 
   public String getFirebaseId() {
     return mFirebaseId;

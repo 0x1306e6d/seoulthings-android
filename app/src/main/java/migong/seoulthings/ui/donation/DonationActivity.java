@@ -24,6 +24,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import migong.seoulthings.R;
+import migong.seoulthings.ui.chat.ChatActivity;
+import migong.seoulthings.ui.chat.ChatView;
 import migong.seoulthings.ui.donation.adapter.DonationImagePagerAdapter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -160,6 +162,17 @@ public class DonationActivity extends AppCompatActivity implements DonationView 
     }
 
     mGoogleMap.setMyLocationEnabled(true);
+  }
+
+  @Override
+  public void startChatActivity(@NonNull String chatterId) {
+    Intent intent = new Intent(this, ChatActivity.class);
+
+    Bundle args = new Bundle();
+    args.putString(ChatView.KEY_CHATTER_ID, chatterId);
+    intent.putExtras(args);
+
+    startActivity(intent);
   }
 
   @Override

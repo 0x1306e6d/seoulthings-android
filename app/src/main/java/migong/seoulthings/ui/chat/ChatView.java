@@ -1,11 +1,15 @@
-package migong.seoulthings.ui.main.profile.chats;
+package migong.seoulthings.ui.chat;
 
-import android.support.annotation.NonNull;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-public interface ChatsView {
+public interface ChatView {
 
-  void startChatActivity(@NonNull String chatId, @NonNull String chatterId);
+  String KEY_CHAT_ID = "CHAT_ID";
+  String KEY_CHATTER_ID = "CHATTER_ID";
+
+  void setAppBarTitle(String appBarTitle);
+
+  String getMessage();
 
   void clearSnapshots();
 
@@ -14,4 +18,8 @@ public interface ChatsView {
   void modifySnapshot(int oldIndex, int newIndex, DocumentSnapshot snapshot);
 
   void removeSnapshot(int index);
+
+  void startSending();
+
+  void finishSending();
 }

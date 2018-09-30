@@ -31,11 +31,14 @@ public class DonationPresenter implements Presenter {
   @SuppressLint("SimpleDateFormat")
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
 
+  private boolean mMyDonation;
   private boolean mShowGoogleMap;
   private FirebaseAPI mFirebaseAPI;
   private FirebaseUser mUser;
   private FirebaseFirestore mFirestore;
   private DocumentReference mReference;
+  @Nullable
+  private String mAuthorId;
   @NonNull
   private final String mDonationId;
   @NonNull
@@ -80,6 +83,7 @@ public class DonationPresenter implements Presenter {
           }
           Log.d(TAG, "onResume: donation is " + donation);
 
+          mAuthorId = donation.getAuthorId();
           mView.setTitle(donation.getTitle());
           mView.setContents(donation.getContents());
           if (donation.getImageUrls() != null) {
@@ -95,6 +99,7 @@ public class DonationPresenter implements Presenter {
           mView.setThoroughfare(donation.getDong());
           mView.setGoogleMapLocation(new LatLng(donation.getLatitude(), donation.getLongitude()));
           if (StringUtils.equals(mUser.getUid(), donation.getAuthorId())) {
+            mMyDonation = true;
             mView.setAuthor(mUser.getDisplayName());
             mView.setFABIcon(R.drawable.ic_edit_black_24);
             mView.finishLoading();
@@ -105,6 +110,7 @@ public class DonationPresenter implements Presenter {
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                         user -> {
+                          mMyDonation = false;
                           mView.setAuthor(user.getDisplayName());
                           mView.setFABIcon(R.drawable.ic_chat_black_24);
                           mView.finishLoading();
@@ -139,6 +145,12 @@ public class DonationPresenter implements Presenter {
   }
 
   public void onFABClicked() {
+    if (mMyDonation) {
 
+    } else {
+      if (StringUtils.isNotEmpty(mAuthorId)) {
+        mView.startChatActivity(mAuthorId);
+      }
+    }
   }
 }

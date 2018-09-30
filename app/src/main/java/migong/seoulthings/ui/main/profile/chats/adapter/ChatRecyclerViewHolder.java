@@ -26,7 +26,7 @@ public class ChatRecyclerViewHolder extends RecyclerView.ViewHolder {
 
   public interface ClickListener {
 
-    void onClick(@NonNull String chatId);
+    void onClick(@NonNull String chatId, @NonNull String chatterId);
 
   }
 
@@ -40,6 +40,7 @@ public class ChatRecyclerViewHolder extends RecyclerView.ViewHolder {
   private TextView mUpdatedAtText;
   private TextView mMessageText;
 
+  private String mChatterId;
   private final FirebaseUser mUser;
   @NonNull
   private final FirebaseAPI mFirebaseAPI;
@@ -71,18 +72,17 @@ public class ChatRecyclerViewHolder extends RecyclerView.ViewHolder {
       return;
     }
 
-    String chatter;
     if (StringUtils.equals(mUser.getUid(), chat.getChatters().get(0))) {
-      chatter = chat.getChatters().get(1);
+      mChatterId = chat.getChatters().get(1);
     } else if (StringUtils.equals(mUser.getUid(), chat.getChatters().get(1))) {
-      chatter = chat.getChatters().get(0);
+      mChatterId = chat.getChatters().get(0);
     } else {
       Log.e(TAG, "bind: invalid. chat is " + chat + " with user " + mUser.getUid());
       return;
     }
 
     mComponentDisposable.add(
-        mFirebaseAPI.getFirebaseUser(chatter)
+        mFirebaseAPI.getFirebaseUser(mChatterId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(
@@ -107,23 +107,17 @@ public class ChatRecyclerViewHolder extends RecyclerView.ViewHolder {
                   mChatterText.setText(user.getDisplayName());
                   mUpdatedAtText.setText(DATE_FORMAT.format(chat.getUpdatedAt().toDate()));
                   mMessageText.setText(chat.getLastMessage());
-                  itemView.setOnClickListener(v -> mClickListener.onClick(chat.getFirebaseId()));
+                  itemView.setOnClickListener(
+                      v -> mClickListener.onClick(chat.getFirebaseId(), mChatterId)
+                  );
 
                   finishLoading();
                 },
                 error -> {
-                  Log.e(TAG, "Failed to get a Firebase user of id " + chatter, error);
+                  Log.e(TAG, "Failed to get a Firebase user of id " + mChatterId, error);
                 }
             )
     );
-  }
-
-  public void startListening() {
-
-  }
-
-  public void stopListening() {
-
   }
 
   public void clear() {

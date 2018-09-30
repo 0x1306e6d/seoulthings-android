@@ -27,6 +27,7 @@
     <activity android:name=".ui.signup.SignUpActivity"/>
     <activity android:name=".ui.main.MainActivity"/>
     <activity android:name=".ui.main.category.things.ThingsActivity"/>
+    <activity android:name=".ui.main.profile.chats.ChatsActivity"/>
     <activity android:name=".ui.main.profile.modify.ModifyProfileActivity"/>
     <activity android:name=".ui.donate.DonateActivity"/>
     <activity android:name=".ui.donation.DonationActivity"/>

@@ -14,5 +14,7 @@ public interface ProfileView {
 
   void setEmail(String email);
 
+  void startChatsActivity();
+
   void startModifyProfileActivity();
 }

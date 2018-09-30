@@ -45,7 +45,7 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
     mSignUpButton = findViewById(R.id.signin_signup_button);
     mSignUpButton.setOnClickListener(v -> mPresenter.onSignUpButtonClicked());
     mGoogleSignInButton = findViewById(R.id.signin_google_button);
-    mGoogleSignInButton.setSize(SignInButton.SIZE_STANDARD);
+    mGoogleSignInButton.setSize(SignInButton.SIZE_ICON_ONLY);
     mGoogleSignInButton.setOnClickListener(v -> mPresenter.onGoogleSignInButtonClicked());
 
     GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

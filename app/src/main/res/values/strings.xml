@@ -34,6 +34,7 @@
   <string name="contents">내용</string>
   <string name="donation_detail">나눔 상세보기</string>
 
+  <string name="chats">대화목록</string>
   <string name="modify_profile">프로필 수정</string>
   <string name="change_profile_photo">프로필 사진 바꾸기</string>
   <string name="profile_information">프로필 정보</string>
@@ -61,4 +62,5 @@
   <string name="msg_invalid_contents">내용을 입력해주세요.</string>
   <string name="msg_upload_donation_fail">알 수 없는 이유로 나눔을 실패하였습니다.</string>
   <string name="msg_invalid_images">이미지를 추가해주세요.</string>
+  <string name="msg_message">메시지를 입력해주세요.</string>
 </resources>

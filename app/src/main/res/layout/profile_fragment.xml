@@ -36,13 +36,13 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
       <ImageButton
-        android:id="@+id/profile_message_button"
+        android:id="@+id/profile_chat_button"
         style="@style/Widget.AppCompat.Toolbar.Button.Navigation"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:paddingStart="@dimen/spacing_unit_narrow"
         android:paddingEnd="@dimen/spacing_unit_narrow"
-        android:src="@drawable/ic_message_black_24"
+        android:src="@drawable/ic_chat_black_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

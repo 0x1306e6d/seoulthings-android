@@ -49,12 +49,10 @@ public class ProfilePresenter implements Presenter {
   }
 
   public void onMessageButtonClicked() {
-    Log.d(TAG, "onMessageButtonClicked() called");
+    mView.startChatsActivity();
   }
 
   public void onModifyButtonClicked() {
-    Log.d(TAG, "onModifyButtonClicked() called");
-
     mView.startModifyProfileActivity();
   }
 }

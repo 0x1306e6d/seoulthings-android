@@ -9,6 +9,8 @@ public interface DonationView {
 
   String KEY_DONATION_ID = "DONATION_ID";
 
+  void startChatActivity(@NonNull String chatterId);
+
   void finishLoading();
 
   void addImage(Uri uri);

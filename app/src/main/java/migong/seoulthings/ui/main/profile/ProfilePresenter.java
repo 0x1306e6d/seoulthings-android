@@ -48,10 +48,6 @@ public class ProfilePresenter implements Presenter {
     Log.d(TAG, "onDestroy() called");
   }
 
-  public void onMessageButtonClicked() {
-    mView.startChatsActivity();
-  }
-
   public void onModifyButtonClicked() {
     mView.startModifyProfileActivity();
   }

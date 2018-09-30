@@ -1,4 +1,4 @@
-package migong.seoulthings.ui.main.profile.chats.adapter;
+package migong.seoulthings.ui.main.chats.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

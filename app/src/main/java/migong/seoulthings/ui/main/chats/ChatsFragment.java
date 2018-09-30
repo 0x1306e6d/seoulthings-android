@@ -1,22 +1,25 @@
-package migong.seoulthings.ui.main.profile.chats;
+package migong.seoulthings.ui.main.chats;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ImageButton;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.google.firebase.firestore.DocumentSnapshot;
 import io.reactivex.disposables.CompositeDisposable;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.chat.ChatActivity;
 import migong.seoulthings.ui.chat.ChatView;
-import migong.seoulthings.ui.main.profile.chats.adapter.ChatRecyclerAdapter;
+import migong.seoulthings.ui.main.chats.adapter.ChatRecyclerAdapter;
 
-public class ChatsActivity extends AppCompatActivity implements ChatsView {
+public class ChatsFragment extends Fragment implements ChatsView {
 
   private RecyclerView mChatRecyclerView;
   private ChatRecyclerAdapter mChatRecyclerAdapter;
@@ -24,39 +27,49 @@ public class ChatsActivity extends AppCompatActivity implements ChatsView {
   private ChatsPresenter mPresenter;
   private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
+  @Nullable
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.chats_activity);
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+    return inflater.inflate(R.layout.chats_fragment, container, false);
+  }
 
-    setupAppBar();
-    setupChatRecycler();
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+
+    setupChatRecycler(view);
+  }
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
     mPresenter = new ChatsPresenter(this);
     mPresenter.onCreate(savedInstanceState);
   }
 
   @Override
-  protected void onResume() {
+  public void onResume() {
     super.onResume();
     mPresenter.onResume();
   }
 
   @Override
-  protected void onPause() {
+  public void onPause() {
     super.onPause();
     mPresenter.onPause();
   }
 
   @Override
-  protected void onDestroy() {
+  public void onDestroy() {
     super.onDestroy();
     mPresenter.onDestroy();
   }
 
   @Override
   public void startChatActivity(@NonNull String chatId, @NonNull String chatterId) {
-    Intent intent = new Intent(this, ChatActivity.class);
+    Intent intent = new Intent(getContext(), ChatActivity.class);
 
     Bundle args = new Bundle();
     args.putString(ChatView.KEY_CHAT_ID, chatId);
@@ -86,16 +99,12 @@ public class ChatsActivity extends AppCompatActivity implements ChatsView {
     mChatRecyclerAdapter.remove(index);
   }
 
-  private void setupAppBar() {
-    ImageButton backButton = findViewById(R.id.chats_back_button);
-    backButton.setOnClickListener(v -> onBackPressed());
-  }
-
-  private void setupChatRecycler() {
-    mChatRecyclerView = findViewById(R.id.chats_recycler);
+  private void setupChatRecycler(@NonNull View view) {
+    mChatRecyclerView = view.findViewById(R.id.chats_recycler);
     mChatRecyclerView.setHasFixedSize(true);
-    mChatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-    mChatRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
+    mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    mChatRecyclerView.addItemDecoration(
+        new DividerItemDecoration(mChatRecyclerView.getContext(), LinearLayout.VERTICAL));
 
     mChatRecyclerAdapter = new ChatRecyclerAdapter(mCompositeDisposable,
         (chatId, chatterId) -> mPresenter.onChatClicked(chatId, chatterId));

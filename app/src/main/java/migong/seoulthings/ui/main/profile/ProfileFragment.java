@@ -14,14 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import migong.seoulthings.R;
 import migong.seoulthings.ui.main.profile.adapter.ProfilePagerAdapter;
-import migong.seoulthings.ui.main.profile.chats.ChatsActivity;
 import migong.seoulthings.ui.main.profile.modify.ModifyProfileActivity;
 
 public class ProfileFragment extends Fragment implements ProfileView {
@@ -104,12 +102,6 @@ public class ProfileFragment extends Fragment implements ProfileView {
   }
 
   @Override
-  public void startChatsActivity() {
-    Intent intent = new Intent(getContext(), ChatsActivity.class);
-    startActivity(intent);
-  }
-
-  @Override
   public void startModifyProfileActivity() {
     Intent intent = new Intent(getContext(), ModifyProfileActivity.class);
     startActivity(intent);
@@ -117,9 +109,6 @@ public class ProfileFragment extends Fragment implements ProfileView {
 
   private void setupAppBar(@NonNull View view) {
     mTitleText = view.findViewById(R.id.profile_title);
-
-    ImageButton messageButton = view.findViewById(R.id.profile_chat_button);
-    messageButton.setOnClickListener(v -> mPresenter.onMessageButtonClicked());
   }
 
   private void setupProfile(@NonNull View view) {

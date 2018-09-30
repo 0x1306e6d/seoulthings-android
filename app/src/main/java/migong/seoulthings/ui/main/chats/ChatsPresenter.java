@@ -1,4 +1,4 @@
-package migong.seoulthings.ui.main.profile.chats;
+package migong.seoulthings.ui.main.chats;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

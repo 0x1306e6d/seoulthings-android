@@ -1,4 +1,4 @@
-package migong.seoulthings.ui.main.profile.chats.adapter;
+package migong.seoulthings.ui.main.chats.adapter;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;

@@ -101,7 +101,7 @@ public class DonationPresenter implements Presenter {
           if (StringUtils.equals(mUser.getUid(), donation.getAuthorId())) {
             mMyDonation = true;
             mView.setAuthor(mUser.getDisplayName());
-            mView.setFABIcon(R.drawable.ic_edit_black_24);
+            mView.setFABIcon(R.drawable.ic_edit_white_24);
             mView.finishLoading();
           } else {
             mCompositeDisposable.add(
@@ -112,7 +112,7 @@ public class DonationPresenter implements Presenter {
                         user -> {
                           mMyDonation = false;
                           mView.setAuthor(user.getDisplayName());
-                          mView.setFABIcon(R.drawable.ic_chat_black_24);
+                          mView.setFABIcon(R.drawable.ic_message_white_24);
                           mView.finishLoading();
                         },
                         error -> {

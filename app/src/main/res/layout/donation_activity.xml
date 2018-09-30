@@ -11,7 +11,7 @@
     android:id="@+id/donation_app_bar_layout"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/toolbar"
+    android:background="@drawable/bg_app_bar"
     app:elevation="0dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -211,7 +211,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_unit_normal"
         android:layout_marginEnd="@dimen/spacing_unit_normal"
-        android:src="@drawable/ic_chat_black_24"
+        android:src="@drawable/ic_message_white_24"
         app:layout_anchor="@id/donation_metadata_layout"
         app:layout_anchorGravity="top|right"/>
     </android.support.design.widget.CoordinatorLayout>

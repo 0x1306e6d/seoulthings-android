@@ -14,7 +14,6 @@
     android:layout_marginBottom="@dimen/spacing_unit_normal"
     android:layout_marginStart="@dimen/spacing_unit_normal"
     android:layout_marginEnd="@dimen/spacing_unit_normal"
-    android:src="@drawable/ic_mockup_black_24"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"/>

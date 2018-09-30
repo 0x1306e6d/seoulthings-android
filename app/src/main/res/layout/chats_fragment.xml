@@ -9,7 +9,7 @@
     android:id="@+id/chats_app_bar_layout"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/toolbar"
+    android:background="@drawable/bg_app_bar"
     app:elevation="0dp"
     app:layout_constraintBottom_toTopOf="@id/chats_recycler"
     app:layout_constraintEnd_toEndOf="parent"

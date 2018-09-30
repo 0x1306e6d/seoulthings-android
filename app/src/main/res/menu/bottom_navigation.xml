@@ -3,7 +3,7 @@
   <item
     android:id="@+id/bottom_navigation_category"
     android:icon="@drawable/ic_seoulthings_black_24"
-    android:title="@string/category"/>
+    android:title="@string/seoulthings"/>
   <item
     android:id="@+id/bottom_navigation_donations"
     android:icon="@drawable/ic_donations_black_24"

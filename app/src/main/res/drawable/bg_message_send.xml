@@ -5,5 +5,5 @@
     android:bottomRightRadius="0dp"
     android:topLeftRadius="@dimen/spacing_unit_normal"
     android:topRightRadius="@dimen/spacing_unit_normal"/>
-  <solid android:color="@color/colorPrimaryVariant"/>
+  <solid android:color="@color/colorPrimary"/>
 </shape>

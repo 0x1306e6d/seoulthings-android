@@ -1,5 +1,6 @@
 package migong.seoulthings.ui.thing;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,6 +34,7 @@ import migong.seoulthings.data.Review;
 import migong.seoulthings.data.Thing;
 import migong.seoulthings.ui.thing.adapter.ReviewRecyclerAdapter;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.LocalDate;
 
 public class ThingActivity extends AppCompatActivity implements ThingView {
 
@@ -193,6 +195,14 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   }
 
   @Override
+  public void showDatePickerDialog(@NonNull DatePickerDialog.OnDateSetListener dateSetListener) {
+    LocalDate date = LocalDate.now();
+    DatePickerDialog dialog = new DatePickerDialog(this, dateSetListener,
+        date.getYear(), date.getMonthOfYear(), date.getDayOfMonth());
+    dialog.show();
+  }
+
+  @Override
   public void showReviewDialog(@Nullable Review review) {
     final LayoutInflater inflater = getLayoutInflater();
     final View view = inflater.inflate(R.layout.review_dialog, null);
@@ -252,6 +262,9 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
     backButton.setOnClickListener(v -> onBackPressed());
 
     mTitleText = findViewById(R.id.thing_title);
+
+    ImageButton remindButton = findViewById(R.id.thing_remind_button);
+    remindButton.setOnClickListener(v -> mPresenter.onRemindButtonClicked());
   }
 
   private void setupInteraction() {

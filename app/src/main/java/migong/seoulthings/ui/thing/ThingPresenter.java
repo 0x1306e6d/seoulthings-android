@@ -7,6 +7,7 @@ import android.util.Log;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
@@ -18,9 +19,11 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import migong.seoulthings.SeoulThingsConstants;
 import migong.seoulthings.api.ThingAPI;
+import migong.seoulthings.data.Remind;
 import migong.seoulthings.data.Review;
 import migong.seoulthings.data.Thing;
 import migong.seoulthings.ui.Presenter;
+import org.joda.time.LocalDate;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -34,6 +37,7 @@ public class ThingPresenter implements Presenter {
   private Thing mThing;
   private FirebaseUser mUser;
   private FirebaseFirestore mFirestore;
+  private CollectionReference mRemindCollectionRef;
   private Query mQuery;
   private ListenerRegistration mRegistration;
   @NonNull
@@ -63,6 +67,7 @@ public class ThingPresenter implements Presenter {
 
     mUser = FirebaseAuth.getInstance().getCurrentUser();
     mFirestore = FirebaseFirestore.getInstance();
+    mRemindCollectionRef = mFirestore.collection("reminds");
     mQuery = mFirestore.collection("reviews")
         .whereEqualTo("thingId", mThingId)
         .orderBy("updatedAt", Direction.DESCENDING);
@@ -119,6 +124,20 @@ public class ThingPresenter implements Presenter {
   @Override
   public void onDestroy() {
     Log.d(TAG, "onDestroy() called");
+  }
+
+  public void onRemindButtonClicked() {
+    mView.showDatePickerDialog(((view, year, month, dayOfMonth) -> {
+      final LocalDate dueDate = new LocalDate(year, month, dayOfMonth);
+      if (LocalDate.now().isAfter(dueDate)) {
+        onRemindButtonClicked();
+        return;
+      }
+
+      final Timestamp due = new Timestamp(dueDate.toDate());
+      final Remind remind = new Remind(mUser.getUid(), mThingId, due);
+      mRemindCollectionRef.add(remind);
+    }));
   }
 
   public void onMakeReviewSuggestionClicked() {

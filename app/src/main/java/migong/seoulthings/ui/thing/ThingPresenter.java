@@ -88,7 +88,6 @@ public class ThingPresenter implements Presenter {
                     mView.finishLoading();
 
                     mView.setTitle(mThing.getLocation().getName());
-
                     if (mThing.getLocation().getLatitude() != null &&
                         mThing.getLocation().getLongitude() != null) {
                       final double latitude = mThing.getLocation().getLatitude();
@@ -98,8 +97,7 @@ public class ThingPresenter implements Presenter {
                       mView.hideGoogleMap();
                     }
 
-                    mView.setAddress(mThing.getLocation().getAddress());
-                    mView.setContents(mThing.getContents());
+                    mView.bindThing(mThing);
                   }
                 },
                 error -> {

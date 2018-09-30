@@ -26,6 +26,9 @@
   <string name="thing_contents">보유중인 물품</string>
   <string name="thing_location">운영 정보</string>
   <string name="thing_reviews">한 줄 후기</string>
+  <string name="contact">연락처</string>
+  <string name="web">홈페이지</string>
+  <string name="tip">주의사항</string>
   <string name="review">한 줄 후기</string>
   <string name="complete_review">작성완료</string>
 

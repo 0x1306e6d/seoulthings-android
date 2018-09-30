@@ -3,6 +3,7 @@ package migong.seoulthings.data;
 import android.support.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 import java.util.UUID;
+import javax.annotation.Nullable;
 
 public class Thing {
 
@@ -22,12 +23,16 @@ public class Thing {
   @SerializedName("location")
   private final Location mLocation;
 
+  @Nullable
+  private final String mTip;
+
   public Thing(@NonNull UUID id, @NonNull String category, @NonNull String contents,
-      @NonNull Location location) {
-    this.mId = id;
-    this.mCategory = category;
-    this.mContents = contents;
-    this.mLocation = location;
+      @NonNull Location location, @Nullable String tip) {
+    mId = id;
+    mCategory = category;
+    mContents = contents;
+    mLocation = location;
+    mTip = tip;
   }
 
   @NonNull
@@ -50,6 +55,11 @@ public class Thing {
     return mLocation;
   }
 
+  @Nullable
+  public String getTip() {
+    return mTip;
+  }
+
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder("Thing{");
@@ -57,6 +67,7 @@ public class Thing {
     sb.append(", category='").append(mCategory).append('\'');
     sb.append(", contents='").append(mContents).append('\'');
     sb.append(", location=").append(mLocation);
+    sb.append(", tip='").append(mTip).append('\'');
     sb.append('}');
     return sb.toString();
   }

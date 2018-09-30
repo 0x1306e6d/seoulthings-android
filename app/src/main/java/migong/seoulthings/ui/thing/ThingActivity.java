@@ -2,6 +2,7 @@ package migong.seoulthings.ui.thing;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AlertDialog;
@@ -29,6 +30,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import io.reactivex.disposables.CompositeDisposable;
 import migong.seoulthings.R;
 import migong.seoulthings.data.Review;
+import migong.seoulthings.data.Thing;
 import migong.seoulthings.ui.thing.adapter.ReviewRecyclerAdapter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -43,6 +45,13 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   private SupportMapFragment mGoogleMapFragment;
   private TextView mAddressText;
   private TextView mContentsText;
+  private TextView mLocationText;
+  private TextView mContactLabel;
+  private TextView mContactText;
+  private TextView mWebLabel;
+  private TextView mWebText;
+  private TextView mTipLabel;
+  private TextView mTipText;
   private RecyclerView mReviewRecyclerView;
   private ReviewRecyclerAdapter mReviewRecyclerAdapter;
 
@@ -122,6 +131,41 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   @Override
   public void hideGoogleMap() {
     mGoogleMapContainer.setVisibility(View.GONE);
+  }
+
+  @Override
+  public void bindThing(@NonNull Thing thing) {
+    final String location = thing.getLocation().getAddress() + " " + thing.getLocation().getName();
+    mAddressText.setText(thing.getLocation().getAddress());
+    mContentsText.setText(thing.getContents());
+    mLocationText.setText(location);
+
+    if (StringUtils.isNotEmpty(thing.getLocation().getContact())) {
+      mContactLabel.setVisibility(View.VISIBLE);
+      mContactText.setVisibility(View.VISIBLE);
+      mContactText.setText(thing.getLocation().getContact());
+    } else {
+      mContactLabel.setVisibility(View.GONE);
+      mContactText.setVisibility(View.GONE);
+    }
+
+    if (StringUtils.isNotEmpty(thing.getLocation().getWeb())) {
+      mWebLabel.setVisibility(View.VISIBLE);
+      mWebText.setVisibility(View.VISIBLE);
+      mWebText.setText(thing.getLocation().getWeb());
+    } else {
+      mWebLabel.setVisibility(View.GONE);
+      mWebText.setVisibility(View.GONE);
+    }
+
+    if (StringUtils.isNotEmpty(thing.getTip())) {
+      mTipLabel.setVisibility(View.VISIBLE);
+      mTipText.setVisibility(View.VISIBLE);
+      mTipText.setText(thing.getTip());
+    } else {
+      mTipLabel.setVisibility(View.GONE);
+      mTipText.setVisibility(View.GONE);
+    }
   }
 
   @Override
@@ -228,6 +272,13 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
 
     mAddressText = findViewById(R.id.thing_address);
     mContentsText = findViewById(R.id.thing_contents);
+    mLocationText = findViewById(R.id.thing_location);
+    mContactLabel = findViewById(R.id.thing_contact_label);
+    mContactText = findViewById(R.id.thing_contact);
+    mWebLabel = findViewById(R.id.thing_web_label);
+    mWebText = findViewById(R.id.thing_web);
+    mTipLabel = findViewById(R.id.thing_tip_label);
+    mTipText = findViewById(R.id.thing_tip);
   }
 
   private void setupReviewRecycler() {

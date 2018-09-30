@@ -175,6 +175,99 @@
         app:layout_constraintTop_toBottomOf="@id/thing_location_label"/>
 
       <TextView
+        android:id="@+id/thing_contact_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_unit_normal"
+        android:paddingStart="@dimen/spacing_unit_wide"
+        android:paddingEnd="@dimen/spacing_unit_wide"
+        android:text="@string/contact"
+        android:textColor="@color/colorOnSurfaceMediumEmphasis"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/thing_contact"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thing_location"/>
+
+      <TextView
+        android:id="@+id/thing_contact"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_unit_very_narrow"
+        android:paddingBottom="@dimen/spacing_unit_normal"
+        android:paddingStart="@dimen/spacing_unit_wide"
+        android:paddingEnd="@dimen/spacing_unit_wide"
+        android:text="@string/msg_loading"
+        android:textColor="@color/colorOnSurfaceHighEmphasis"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/thing_web_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thing_contact_label"/>
+
+      <TextView
+        android:id="@+id/thing_web_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_unit_normal"
+        android:paddingStart="@dimen/spacing_unit_wide"
+        android:paddingEnd="@dimen/spacing_unit_wide"
+        android:text="@string/web"
+        android:textColor="@color/colorOnSurfaceMediumEmphasis"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/thing_web"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thing_contact"/>
+
+      <TextView
+        android:id="@+id/thing_web"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_unit_very_narrow"
+        android:paddingBottom="@dimen/spacing_unit_normal"
+        android:paddingStart="@dimen/spacing_unit_wide"
+        android:paddingEnd="@dimen/spacing_unit_wide"
+        android:text="@string/msg_loading"
+        android:textColor="@color/colorOnSurfaceHighEmphasis"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/thing_tip_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thing_web_label"/>
+
+      <TextView
+        android:id="@+id/thing_tip_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_unit_normal"
+        android:paddingStart="@dimen/spacing_unit_wide"
+        android:paddingEnd="@dimen/spacing_unit_wide"
+        android:text="@string/tip"
+        android:textColor="@color/colorOnSurfaceMediumEmphasis"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/thing_tip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thing_web"/>
+
+      <TextView
+        android:id="@+id/thing_tip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_unit_very_narrow"
+        android:paddingBottom="@dimen/spacing_unit_normal"
+        android:paddingStart="@dimen/spacing_unit_wide"
+        android:paddingEnd="@dimen/spacing_unit_wide"
+        android:text="@string/msg_loading"
+        android:textColor="@color/colorOnSurfaceHighEmphasis"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/thing_reviews_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thing_tip_label"/>
+
+      <TextView
         android:id="@+id/thing_reviews_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -182,14 +275,16 @@
         android:text="@string/thing_reviews"
         android:textColor="@color/colorOnSurfaceMediumEmphasis"
         android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/thing_reviews_recycler"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/thing_location"/>
+        app:layout_constraintTop_toBottomOf="@id/thing_tip"/>
 
       <android.support.v7.widget.RecyclerView
         android:id="@+id/thing_reviews_recycler"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/thing_reviews_label"/>

@@ -198,7 +198,8 @@ public class ThingActivity extends AppCompatActivity implements ThingView {
   public void showDatePickerDialog(@NonNull DatePickerDialog.OnDateSetListener dateSetListener) {
     LocalDate date = LocalDate.now();
     DatePickerDialog dialog = new DatePickerDialog(this, dateSetListener,
-        date.getYear(), date.getMonthOfYear(), date.getDayOfMonth());
+        date.getYear(), date.getMonthOfYear() - 1, date.getDayOfMonth());
+    dialog.setMessage(getResources().getString(R.string.msg_due));
     dialog.show();
   }
 

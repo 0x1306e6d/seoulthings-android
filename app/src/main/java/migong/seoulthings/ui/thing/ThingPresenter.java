@@ -128,8 +128,8 @@ public class ThingPresenter implements Presenter {
 
   public void onRemindButtonClicked() {
     mView.showDatePickerDialog(((view, year, month, dayOfMonth) -> {
-      final LocalDate dueDate = new LocalDate(year, month, dayOfMonth);
-      if (LocalDate.now().isAfter(dueDate)) {
+      final LocalDate dueDate = new LocalDate(year, month + 1, dayOfMonth);
+      if (LocalDate.now().minusDays(1).isAfter(dueDate)) {
         onRemindButtonClicked();
         return;
       }

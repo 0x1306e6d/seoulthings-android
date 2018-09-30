@@ -33,6 +33,7 @@ public class DonationPresenter implements Presenter {
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
 
   private boolean mMyDonation;
+  private boolean mDonationCompleted;
   private boolean mShowGoogleMap;
   private FirebaseAPI mFirebaseAPI;
   private FirebaseUser mUser;
@@ -97,7 +98,13 @@ public class DonationPresenter implements Presenter {
           if (StringUtils.equals(mUser.getUid(), donation.getAuthorId())) {
             mMyDonation = true;
             mView.setAuthor(mUser.getDisplayName());
-            mView.setFABIcon(R.drawable.ic_edit_white_24);
+            if (donation.isComplete()) {
+              mDonationCompleted = true;
+              mView.setFABIcon(R.drawable.ic_done_white_24);
+              mView.disableFAB();
+            } else {
+              mView.setFABIcon(R.drawable.ic_edit_white_24);
+            }
             mView.finishLoading();
           } else {
             mCompositeDisposable.add(
@@ -108,7 +115,13 @@ public class DonationPresenter implements Presenter {
                         user -> {
                           mMyDonation = false;
                           mView.setAuthor(user.getDisplayName());
-                          mView.setFABIcon(R.drawable.ic_message_white_24);
+                          if (donation.isComplete()) {
+                            mDonationCompleted = true;
+                            mView.setFABIcon(R.drawable.ic_done_white_24);
+                            mView.disableFAB();
+                          } else {
+                            mView.setFABIcon(R.drawable.ic_edit_white_24);
+                          }
                           mView.finishLoading();
                         },
                         error -> {
@@ -131,6 +144,10 @@ public class DonationPresenter implements Presenter {
   }
 
   public void onAddressButtonClicked() {
+    if (mDonationCompleted) {
+      return;
+    }
+
     if (mShowGoogleMap) {
       mView.hideGoogleMap();
       mShowGoogleMap = false;

@@ -52,6 +52,7 @@ public class DonateActivity extends AppCompatActivity implements DonateView {
   private SupportMapFragment mGoogleMapFragment;
   private TextInputEditText mTitleEditText;
   private TextInputEditText mContentsEditText;
+  private Button mCompleteButton;
 
   private GoogleMap mGoogleMap;
   private Marker mGoogleMapMarker;
@@ -222,6 +223,12 @@ public class DonateActivity extends AppCompatActivity implements DonateView {
   }
 
   @Override
+  public void showCompleteButton() {
+    mCompleteButton.setVisibility(View.VISIBLE);
+    mCompleteButton.setOnClickListener(v -> mPresenter.onCompleteButtonClicked());
+  }
+
+  @Override
   public void showSnackBar(int messageResId) {
     Snackbar.make(mSubmitButton, messageResId, Snackbar.LENGTH_SHORT)
         .show();
@@ -276,6 +283,8 @@ public class DonateActivity extends AppCompatActivity implements DonateView {
     mTitleEditText.clearFocus();
     mContentsEditText = findViewById(R.id.donate_contents_edittext);
     mContentsEditText.clearFocus();
+
+    mCompleteButton = findViewById(R.id.donate_complete_button);
   }
 
   private void setupGoogleMap() {

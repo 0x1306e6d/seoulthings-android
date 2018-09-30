@@ -28,6 +28,8 @@ public interface DonationView {
 
   void setFABIcon(@DrawableRes int iconResId);
 
+  void disableFAB();
+
   void setUpdatedAt(String updatedAt);
 
   void setThoroughfare(String thoroughfare);

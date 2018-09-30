@@ -9,6 +9,7 @@ public class Donation {
 
   @Exclude
   private String mFirebaseId;
+  private boolean mComplete;
   private String mAuthorId;
   private String mTitle;
   private String mContents;
@@ -42,6 +43,14 @@ public class Donation {
 
   public void setFirebaseId(String firebaseId) {
     mFirebaseId = firebaseId;
+  }
+
+  public boolean isComplete() {
+    return mComplete;
+  }
+
+  public void setComplete(boolean complete) {
+    mComplete = complete;
   }
 
   public String getAuthorId() {
@@ -127,7 +136,8 @@ public class Donation {
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder("Donation{");
-    sb.append("authorId='").append(mAuthorId).append('\'');
+    sb.append("complete=").append(mComplete);
+    sb.append(", authorId='").append(mAuthorId).append('\'');
     sb.append(", title='").append(mTitle).append('\'');
     sb.append(", contents='").append(mContents).append('\'');
     sb.append(", dong='").append(mDong).append('\'');

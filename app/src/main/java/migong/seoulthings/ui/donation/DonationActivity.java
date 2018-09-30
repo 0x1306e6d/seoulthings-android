@@ -226,6 +226,13 @@ public class DonationActivity extends AppCompatActivity implements DonationView 
   }
 
   @Override
+  public void disableFAB() {
+    mFAB.setEnabled(false);
+    mFAB.setFocusable(false);
+    mFAB.setFocusableInTouchMode(false);
+  }
+
+  @Override
   public void setUpdatedAt(String updatedAt) {
     mUpdatedAtText.setText(updatedAt);
   }

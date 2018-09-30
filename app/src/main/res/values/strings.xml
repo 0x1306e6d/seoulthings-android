@@ -69,4 +69,5 @@
   <string name="msg_invalid_images">이미지를 추가해주세요.</string>
   <string name="msg_message">메시지를 입력해주세요.</string>
   <string name="msg_due">반납일 설정하기</string>
+  <string name="msg_complete_donation_fail">알 수 없는 이유로 나눔 완료를 실패하였습니다.</string>
 </resources>

@@ -86,6 +86,7 @@ public class DonatePresenter implements Presenter {
             }
             Log.d(TAG, "onResume: donation is " + donation);
 
+            mView.showCompleteButton();
             mView.setDonationTitle(donation.getTitle());
             mView.setDonationContents(donation.getContents());
             if (donation.getImageUrls() != null) {
@@ -167,6 +168,19 @@ public class DonatePresenter implements Presenter {
                   }
               )
       );
+    }
+  }
+
+  public void onCompleteButtonClicked() {
+    if (mReference != null) {
+      mReference.update("complete", true)
+          .addOnFailureListener(error -> {
+            Log.e(TAG, "Failed to complete donation.", error);
+
+            mView.finishSubmit();
+            mView.showSnackBar(R.string.msg_complete_donation_fail);
+          })
+          .addOnSuccessListener(v -> mView.finish());
     }
   }
 

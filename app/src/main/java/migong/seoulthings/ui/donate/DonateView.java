@@ -43,6 +43,8 @@ public interface DonateView {
 
   void setMarkerOnGoogleMap(@NonNull LatLng latLng);
 
+  void showCompleteButton();
+
   void showSnackBar(@StringRes int messageResId);
 
   void startSubmit();

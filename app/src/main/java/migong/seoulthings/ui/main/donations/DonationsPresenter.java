@@ -29,6 +29,7 @@ public class DonationsPresenter implements Presenter {
     mFirestore = FirebaseFirestore.getInstance();
 
     mQuery = mFirestore.collection("donations")
+        .whereEqualTo("complete", false)
         .orderBy("updatedAt", Direction.DESCENDING);
     mView.setQuery(mQuery);
   }

@@ -32,6 +32,7 @@
   <string name="tip">주의사항</string>
   <string name="review">한 줄 후기</string>
   <string name="complete_review">작성완료</string>
+  <string name="due">반납일</string>
 
   <string name="donate">나눔하기</string>
   <string name="title">제목</string>

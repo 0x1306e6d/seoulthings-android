@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import migong.seoulthings.ui.main.profile.ProfileView;
 import migong.seoulthings.ui.main.profile.donations.MyDonationsFragment;
+import migong.seoulthings.ui.main.profile.reminds.MyRemindsFragment;
 import migong.seoulthings.ui.main.profile.reviews.MyReviewsFragment;
-import migong.seoulthings.ui.main.profile.things.MyThingsFragment;
 
 public class ProfilePagerAdapter extends FragmentPagerAdapter {
 
@@ -19,7 +19,7 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
   public Fragment getItem(int position) {
     switch (position) {
       case ProfileView.MY_THINGS_POSITION:
-        return new MyThingsFragment();
+        return new MyRemindsFragment();
       case ProfileView.MY_DONATIONS_POSITION:
         return new MyDonationsFragment();
       case ProfileView.MY_REVIEWS_POSITION:

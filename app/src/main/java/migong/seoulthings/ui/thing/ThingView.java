@@ -1,5 +1,6 @@
 package migong.seoulthings.ui.thing;
 
+import android.app.DatePickerDialog;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -23,6 +24,8 @@ public interface ThingView {
   void setContents(String contents);
 
   void finishLoading();
+
+  void showDatePickerDialog(@NonNull DatePickerDialog.OnDateSetListener dateSetListener);
 
   void showReviewDialog(@Nullable Review review);
 

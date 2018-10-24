@@ -31,7 +31,7 @@
         android:layout_height="0dp"
         android:paddingStart="@dimen/spacing_unit_normal"
         android:paddingEnd="@dimen/spacing_unit_normal"
-        android:src="@drawable/ic_back_black_24"
+        android:src="@drawable/ic_back_white_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -43,7 +43,7 @@
         android:layout_height="0dp"
         android:gravity="center"
         android:text="@string/donate"
-        android:textColor="@color/colorOnBackgroundHighEmphasis"
+        android:textColor="@color/colorOnPrimary"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/donate_submit_button"
@@ -58,6 +58,7 @@
         android:paddingStart="@dimen/spacing_unit_narrow"
         android:paddingEnd="@dimen/spacing_unit_narrow"
         android:text="@string/complete"
+        android:textColor="@color/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

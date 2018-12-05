@@ -120,7 +120,7 @@ public class DonationPresenter implements Presenter {
                             mView.setFABIcon(R.drawable.ic_done_white_24);
                             mView.disableFAB();
                           } else {
-                            mView.setFABIcon(R.drawable.ic_edit_white_24);
+                            mView.setFABIcon(R.drawable.ic_message_white_24);
                           }
                           mView.finishLoading();
                         },

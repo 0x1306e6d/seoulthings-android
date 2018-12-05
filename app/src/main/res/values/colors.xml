@@ -4,7 +4,7 @@
   <color name="colorPrimary">#6048B4</color>
 
   <!-- Colors for background, surface and error -->
-  <color name="colorBackground">#EFEFEF</color>
+  <color name="colorBackground">#FFFFFF</color>
   <color name="colorSurface">#FFFFFF</color>
   <color name="colorError">#951F34</color>
   <color name="colorStroke">#242424</color>

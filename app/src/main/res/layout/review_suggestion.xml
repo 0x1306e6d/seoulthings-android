@@ -8,6 +8,7 @@
   android:paddingBottom="@dimen/spacing_unit_normal"
   android:paddingStart="@dimen/spacing_unit_normal"
   android:paddingEnd="@dimen/spacing_unit_normal"
+  android:background="@color/colorSurface"
   android:minHeight="88dp">
 
   <com.makeramen.roundedimageview.RoundedImageView

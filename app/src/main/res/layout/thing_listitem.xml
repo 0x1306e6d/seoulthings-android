@@ -4,7 +4,8 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="@dimen/thing_listitem_height">
+  android:layout_height="@dimen/thing_listitem_height"
+  android:background="@color/colorSurface">
 
   <ImageView
     android:id="@+id/thing_listitem_icon"

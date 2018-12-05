@@ -6,6 +6,7 @@
   android:layout_height="wrap_content"
   android:paddingTop="@dimen/spacing_unit_normal"
   android:paddingBottom="@dimen/spacing_unit_normal"
+  android:background="@color/colorSurface"
   android:minHeight="88dp">
 
   <android.support.v4.widget.ContentLoadingProgressBar

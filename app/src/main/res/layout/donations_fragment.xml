@@ -5,6 +5,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:background="@color/colorBackground"
   tools:context=".ui.main.donations.DonationsFragment">
 
   <android.support.constraint.ConstraintLayout
@@ -33,7 +34,7 @@
           android:layout_height="0dp"
           android:gravity="center"
           android:text="@string/donation"
-          android:textColor="@color/colorOnBackgroundHighEmphasis"
+          android:textColor="@color/colorOnPrimary"
           android:textSize="20sp"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +48,7 @@
           android:layout_height="0dp"
           android:paddingStart="@dimen/spacing_unit_narrow"
           android:paddingEnd="@dimen/spacing_unit_narrow"
-          android:src="@drawable/ic_search_black_24"
+          android:src="@drawable/ic_search_white_24"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toTopOf="parent"/>

@@ -5,6 +5,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:background="@color/colorBackground"
   android:focusable="true"
   android:focusableInTouchMode="true"
   tools:context=".ui.main.profile.modify.ModifyProfileActivity">
@@ -31,7 +32,7 @@
         android:layout_height="0dp"
         android:paddingStart="@dimen/spacing_unit_narrow"
         android:paddingEnd="@dimen/spacing_unit_narrow"
-        android:src="@drawable/ic_back_black_24"
+        android:src="@drawable/ic_back_white_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -43,7 +44,7 @@
         android:layout_height="0dp"
         android:gravity="center"
         android:text="@string/modify_profile"
-        android:textColor="@color/colorOnBackgroundHighEmphasis"
+        android:textColor="@color/colorOnPrimary"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,6 +59,7 @@
         android:paddingStart="@dimen/spacing_unit_narrow"
         android:paddingEnd="@dimen/spacing_unit_narrow"
         android:text="@string/complete"
+        android:textColor="@color/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -67,6 +69,7 @@
         style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:indeterminateTint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@id/modify_profile_complete_button"
         app:layout_constraintEnd_toEndOf="@id/modify_profile_complete_button"
         app:layout_constraintStart_toStartOf="@id/modify_profile_complete_button"

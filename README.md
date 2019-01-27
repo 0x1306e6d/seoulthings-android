@@ -1,6 +1,6 @@
-# seoulthings
+# seoulthings-android
 
-2018년 서울시 앱 공모전 출품작 "서울띵즈"
+2018년 서울시 앱 공모전 출품작 "서울띵즈" 안드로이드 어플리케이션
 
 ## License
 

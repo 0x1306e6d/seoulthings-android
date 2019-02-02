@@ -52,11 +52,11 @@ _클릭하면 YouTube에서 프로젝트 소개 동영상을 볼 수 있습니�
 ## 스크린샷
 
 <div style="display:flex;" >
-<img src="screenshot/1.png" width="20%">
-<img src="screenshot/2.png" width="20%">
-<img src="screenshot/3.png" width="20%">
-<img src="screenshot/4.png" width="20%">
-<img src="screenshot/5.png" width="20%">
+<img src="screenshot/1.png" width="19%">
+<img src="screenshot/2.png" width="19%">
+<img src="screenshot/3.png" width="19%">
+<img src="screenshot/4.png" width="19%">
+<img src="screenshot/5.png" width="19%">
 </div>
 
 

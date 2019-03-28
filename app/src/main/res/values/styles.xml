@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimary</item>
+    <item name="colorAccent">@color/colorPrimary</item>
+    <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">true</item>
+    <item name="android:navigationBarColor" tools:targetApi="21">#ababab</item>
+    <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
+  </style>
+
+</resources>

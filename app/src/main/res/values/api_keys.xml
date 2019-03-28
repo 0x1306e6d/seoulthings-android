@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Google Maps Platform -->
+  <string name="google_maps_platform_api_key">Your Google Maps Platform API Key</string>
+
+  <!-- Facebook -->
+  <string name="facebook_app_id">Your Facebook API Key</string>
+  <string name="fb_login_protocol_scheme">Yout Facebook Login Protocol Scheme</string>
+</resources>
